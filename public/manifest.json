@@ -9,6 +9,9 @@
   },
   "permissions": ["activeTab", "scripting"],
   "icons": {
-    "48": "vite.svg"
+    "16": "toolkit-icon-16.png",
+    "32": "toolkit-icon-32.png",
+    "48": "toolkit-icon-48.png"
   }
 }
+
