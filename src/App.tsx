@@ -1,5 +1,7 @@
 import { TabIndexHighlighter } from './components/TabIndexHighlighter'
 import { AutocompleteHighlighter } from './components/AutocompleteHighlighter'
+import { AriaRolesHighlighter } from './components/AriaRolesHighlighter'
+import { LandMarksHighlighter } from './components/LandMarksHighlighter'
 import './App.css'
 
 function App() {
@@ -8,6 +10,8 @@ function App() {
       <div className="toolkit">
         <TabIndexHighlighter />
         <AutocompleteHighlighter />
+        <AriaRolesHighlighter />
+        <LandMarksHighlighter />
       </div>
     </>
   )
