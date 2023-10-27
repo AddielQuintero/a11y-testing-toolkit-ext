@@ -1,0 +1,14 @@
+{
+  "manifest_version": 3,
+  "name": "A11y Toolkit",
+  "version": "1.0",
+  "description": "A11y Toolkit Extension",
+  "action": {
+    "default_title": "A11y Toolkit",
+    "default_popup": "index.html"
+  },
+  "permissions": ["activeTab", "scripting"],
+  "icons": {
+    "48": "vite.svg"
+  }
+}
