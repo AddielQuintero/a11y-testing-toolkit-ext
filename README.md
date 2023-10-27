@@ -1,12 +1,12 @@
 # react-testing-toolkit-ext
 
-### `react-testing-toolkit-ext` is an extension designed to enhance accessibility testing on any website. It's built with [React](https://react.dev/) and [Typescript](https://www.typescriptlang.org/), and was initialized with [`npm create vite@latest`](https://vitejs.dev/).
+`react-testing-toolkit-ext` is an extension designed to enhance accessibility testing on any website. It's built with [React](https://react.dev/) and [Typescript](https://www.typescriptlang.org/), and was initialized with [`npm create vite@latest`](https://vitejs.dev/).
 
 
 ## Features
 
-**Ease of Use:** An intuitive interface that makes accessibility testing a breeze.
-**Developed with Vite:** Benefit from a faster and more efficient development environment thanks to Vite.
+**Ease of Use:** An intuitive interface that makes accessibility testing a breeze.\
+**Developed with Vite:** Benefit from a faster and more efficient development environment thanks to Vite.\
 **Extensible:** Designed to be easily extensible and adaptable to your needs.
 
 
@@ -14,7 +14,10 @@
 
 To install this project, follow these steps:
 
-clone the repository.
+```bash 
+git clone [REPOSITORY_URL]
+
+```  
 
 ```bash 
 npm install
@@ -39,5 +42,5 @@ The build will generate a dist folder containing all the necessary files for the
 
 `Load the extension into your browser:`
 
-In Chrome: Go to `chrome://extensions/`, enable "Developer mode" and click on "Load unpacked". Select the `dist` folder.
-In Firefox: Go to `about:debugging`, click on "Load Temporary Add-on" and select any file inside the `dist` folder.
+In Chrome: Go to `chrome://extensions/`, enable "Developer mode" and click on "Load unpacked". Select the `dist` folder.\
+In your browser: Go to `about:debugging`, click on "Load Temporary Add-on" and select any file inside the `dist` folder.

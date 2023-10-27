@@ -1,10 +1,11 @@
+import { AutocompleteHighlighter } from './components/AutocompleteHighlighter'
 import './App.css'
 
 function App() {
   return (
     <>
       <div className="toolkit">
-        <h2>extension</h2>
+        <AutocompleteHighlighter />
       </div>
     </>
   )
