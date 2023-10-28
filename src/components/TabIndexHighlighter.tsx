@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import { Bs1SquareFill } from 'react-icons/bs'
+import { Bs1Square } from 'react-icons/bs'
 
 export const TabIndexHighlighter = () => {
   const [showTabIndexes, setShowTabIndexes] = useState(false)
@@ -58,5 +60,13 @@ export const TabIndexHighlighter = () => {
     })
   }
 
-  return <button onClick={handleClick}>{showTabIndexes ? 'Hide TI' : 'Show TI'}</button>
+  return (
+    <button onClick={handleClick}>
+      {showTabIndexes ? (
+        <Bs1SquareFill className="buttons__icons" />
+      ) : (
+        <Bs1Square className="buttons__icons" />
+      )}
+    </button>
+  )
 }

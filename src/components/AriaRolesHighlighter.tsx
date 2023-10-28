@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import { BsMegaphoneFill } from 'react-icons/bs'
+import { BsMegaphone } from 'react-icons/bs'
 
 export const AriaRolesHighlighter = () => {
   const [showAriaRoles, setShowAriaRoles] = useState(false)
@@ -213,5 +215,9 @@ export const AriaRolesHighlighter = () => {
     })
   }
 
-  return <button onClick={handleClick}>{showAriaRoles ? 'Hide AR' : 'Show AR'}</button>
+  return (
+    <button onClick={handleClick}>
+    {showAriaRoles ?  <BsMegaphoneFill className='buttons__icons'/> : <BsMegaphone className='buttons__icons'/>}
+    </button>
+  )
 }
