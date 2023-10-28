@@ -115,10 +115,8 @@ export const LandMarksHighlighter = () => {
     }
 
     if (showLandMarks) {
-      console.log('🚀  if:', showLandMarks)
       removeIndicators()
     } else {
-      console.log('🚀  else:', showLandMarks)
       ariaLandMarks()
       nativeLandMarks()
     }
@@ -143,7 +141,7 @@ export const LandMarksHighlighter = () => {
   }
   return (
     <CustomButton onClick={handleClick}>
-     {showLandMarks ? <BsMapFill className='buttons__icons'/> :  <BsMap className='buttons__icons'/>}
+      {showLandMarks ? <BsMapFill className="buttons__icons" /> : <BsMap className="buttons__icons" />}
     </CustomButton>
   )
 }
