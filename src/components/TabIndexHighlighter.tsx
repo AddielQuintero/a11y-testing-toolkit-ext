@@ -1,15 +1,18 @@
 import { useState } from 'react'
 import { Bs1SquareFill } from 'react-icons/bs'
 import { Bs1Square } from 'react-icons/bs'
+import { CustomButton } from './common/Button'
 
 export const TabIndexHighlighter = () => {
   const [showTabIndexes, setShowTabIndexes] = useState(false)
 
   const codeToExecute = function(showTabIndexes: boolean) {
-    if (showTabIndexes) {
+    const removeIndicators = () => {
       const indicators = document.querySelectorAll('.tabindex-indicator')
       indicators.forEach((indicator) => indicator.remove())
-    } else {
+    }
+
+    const highlightTabIndex = () => {
       const elements = document.querySelectorAll('[tabindex]')
       elements.forEach((element) => {
         if (element instanceof HTMLElement) {
@@ -40,6 +43,12 @@ export const TabIndexHighlighter = () => {
         }
       })
     }
+
+    if (showTabIndexes) {
+      removeIndicators()
+    } else {
+      highlightTabIndex()
+    }
   }
 
   const handleClick = () => {
@@ -61,12 +70,12 @@ export const TabIndexHighlighter = () => {
   }
 
   return (
-    <button onClick={handleClick}>
+    <CustomButton onClick={handleClick}>
       {showTabIndexes ? (
         <Bs1SquareFill className="buttons__icons" />
       ) : (
         <Bs1Square className="buttons__icons" />
       )}
-    </button>
+    </CustomButton>
   )
 }
