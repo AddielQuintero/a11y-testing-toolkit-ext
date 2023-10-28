@@ -1,9 +1,32 @@
-#root {
-  /* max-width: 1280px; */
-  /* margin: 0 auto; */
-  /* padding: 2rem; */
-  text-align: center;
-  padding: .5rem;
+
+
+
+button {
+  display: flex;
+  margin-bottom: 0.4rem;
+  padding: 0.3rem;
+  border-radius: 0.5rem;
+  border: 1px solid transparent;
+  font-size: 1rem;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+
+button:hover {
+  border-color: #fff;
+}
+
+button:focus,
+button:active,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+.buttons__icons {
+  font-size: 1.25rem;
 }
 
 /* .logo {

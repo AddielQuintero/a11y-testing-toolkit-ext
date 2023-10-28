@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import { BsKeyboardFill } from 'react-icons/bs'
+import { BsKeyboard } from 'react-icons/bs'
 
 export const AutocompleteHighlighter = () => {
   const [showAutoCompletes, setShowAutoCompletes] = useState(false)
@@ -21,21 +23,66 @@ export const AutocompleteHighlighter = () => {
 
     const highlightAutocomplete = () => {
       const validAutocompleteValues = [
-          'name', 'honorific-prefix', 'given-name', 'additional-name', 'family-name', 'honorific-suffix',
-           'nickname', 'username', 'new-password', 'current-password', 'one-time-code', 'organization-title',
-          'organization','street-address','address-line1','address-line2','address-line3','address-level4',
-          'address-level3','address-level2','address-level1','country','country-name','postal-code',
-          'cc-name','cc-given-name','cc-additional-name','cc-family-name','cc-number','cc-exp',
-          'cc-exp-month','cc-exp-year','cc-csc','cc-type','transaction-currency','transaction-amount',
-          'language','bday','bday-day','bday-month','bday-year','sex',
-          'url','photo','tel','tel-country-code','tel-national','tel-area-code',
-          'tel-local','tel-local-prefix','tel-local-suffix','tel-extension','email','impp',
-        ]
+        'name',
+        'honorific-prefix',
+        'given-name',
+        'additional-name',
+        'family-name',
+        'honorific-suffix',
+        'nickname',
+        'username',
+        'new-password',
+        'current-password',
+        'one-time-code',
+        'organization-title',
+        'organization',
+        'street-address',
+        'address-line1',
+        'address-line2',
+        'address-line3',
+        'address-level4',
+        'address-level3',
+        'address-level2',
+        'address-level1',
+        'country',
+        'country-name',
+        'postal-code',
+        'cc-name',
+        'cc-given-name',
+        'cc-additional-name',
+        'cc-family-name',
+        'cc-number',
+        'cc-exp',
+        'cc-exp-month',
+        'cc-exp-year',
+        'cc-csc',
+        'cc-type',
+        'transaction-currency',
+        'transaction-amount',
+        'language',
+        'bday',
+        'bday-day',
+        'bday-month',
+        'bday-year',
+        'sex',
+        'url',
+        'photo',
+        'tel',
+        'tel-country-code',
+        'tel-national',
+        'tel-area-code',
+        'tel-local',
+        'tel-local-prefix',
+        'tel-local-suffix',
+        'tel-extension',
+        'email',
+        'impp',
+      ]
       const isAriaHidden = (element: any) => element.getAttribute('aria-hidden') === 'true'
       const isDisplayNone = (style: any) => style.display === 'none'
       const isVisibilityHidden = (style: any) => style.visibility === 'hidden'
       const hasZeroSize = (element: any) => element.offsetWidth === 0 || element.offsetHeight === 0
-  
+
       const isVisible = (element: any) => {
         const style = window.getComputedStyle(element)
         return !(
@@ -45,27 +92,27 @@ export const AutocompleteHighlighter = () => {
           hasZeroSize(element)
         )
       }
-  
+
       const autocompleteCounts = {}
       const inputs = document.querySelectorAll('input')
       const visibleInputs = [...inputs].filter(isVisible)
-  
+
       const processAutocompleteValues = (input: any, autocompleteCounts: any) => {
         const autocompleteValue = input.getAttribute('autocomplete')
         autocompleteCounts[autocompleteValue] = (autocompleteCounts[autocompleteValue] || 0) + 1
       }
-  
+
       const annotateAndAttach = (input: any) => {
         const autocompleteValue = input.getAttribute('autocomplete')
-  
+
         const container = document.createElement('div')
         container.style.position = 'relative'
         container.style.display = 'inline-block'
         input.parentNode.insertBefore(container, input)
         container.appendChild(input)
-  
+
         input.style.outline = '2px solid red'
-  
+
         const span = document.createElement('span')
         span.className = 'autocomplete-indicator'
         span.style.position = 'absolute'
@@ -76,7 +123,7 @@ export const AutocompleteHighlighter = () => {
         span.style.background = 'red'
         span.style.color = 'white'
         span.style.fontSize = '11px'
-  
+
         if (!autocompleteValue) {
           span.innerText = 'No'
           console.error(`Input without autocomplete '${autocompleteValue}':`, input)
@@ -86,23 +133,21 @@ export const AutocompleteHighlighter = () => {
         } else {
           span.innerText = autocompleteValue
         }
-  
+
         container.appendChild(span)
       }
-  
+
       visibleInputs.forEach((input) => processAutocompleteValues(input, autocompleteCounts))
-  
-      console.log(
-        `${visibleInputs.length} elements with autocomplete attribute were found on this page.`
-      )
+
+      console.log(`${visibleInputs.length} elements with autocomplete attribute were found on this page.`)
       console.log('Count of each autocomplete:')
       Object.entries(autocompleteCounts).forEach(([role, count]) => {
         console.log(`${role}: ${count} occurrences`)
       })
-  
+
       visibleInputs.forEach((input) => annotateAndAttach(input))
     }
-    
+
     if (showAutoCompletes) {
       removeIndicators()
     } else {
@@ -130,5 +175,13 @@ export const AutocompleteHighlighter = () => {
     })
   }
 
-  return <button onClick={handleClick}>{showAutoCompletes ? 'Hide AC' : 'Show AC'}</button>
+  return (
+    <button onClick={handleClick}>
+      {showAutoCompletes ? (
+        <BsKeyboardFill className="buttons__icons" />
+      ) : (
+        <BsKeyboard className="buttons__icons" />
+      )}
+    </button>
+  )
 }
