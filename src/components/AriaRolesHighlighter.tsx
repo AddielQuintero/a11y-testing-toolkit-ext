@@ -1,6 +1,7 @@
 import { useState } from 'react'
-import { BsMegaphoneFill } from 'react-icons/bs'
-import { BsMegaphone } from 'react-icons/bs'
+import { BsBadgeArFill } from 'react-icons/bs'
+import { BsBadgeAr } from 'react-icons/bs'
+import { CustomButton } from './common/Button'
 
 export const AriaRolesHighlighter = () => {
   const [showAriaRoles, setShowAriaRoles] = useState(false)
@@ -216,8 +217,12 @@ export const AriaRolesHighlighter = () => {
   }
 
   return (
-    <button onClick={handleClick}>
-    {showAriaRoles ?  <BsMegaphoneFill className='buttons__icons'/> : <BsMegaphone className='buttons__icons'/>}
-    </button>
+    <CustomButton onClick={handleClick}>
+      {showAriaRoles ? 
+        <BsBadgeArFill className="buttons__icons" />
+       : 
+        <BsBadgeAr className="buttons__icons" />
+      }
+    </CustomButton>
   )
 }

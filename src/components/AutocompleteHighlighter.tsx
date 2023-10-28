@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { BsKeyboardFill } from 'react-icons/bs'
 import { BsKeyboard } from 'react-icons/bs'
+import { CustomButton } from './common/Button'
 
 export const AutocompleteHighlighter = () => {
   const [showAutoCompletes, setShowAutoCompletes] = useState(false)
@@ -176,12 +177,12 @@ export const AutocompleteHighlighter = () => {
   }
 
   return (
-    <button onClick={handleClick}>
+    <CustomButton onClick={handleClick}>
       {showAutoCompletes ? (
         <BsKeyboardFill className="buttons__icons" />
       ) : (
         <BsKeyboard className="buttons__icons" />
       )}
-    </button>
+    </CustomButton>
   )
 }

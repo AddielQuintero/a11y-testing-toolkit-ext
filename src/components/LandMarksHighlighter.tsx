@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { BsMapFill } from 'react-icons/bs'
 import { BsMap } from 'react-icons/bs'
+import { CustomButton } from './common/Button'
 
 export const LandMarksHighlighter = () => {
   const [showLandMarks, setShowLandMarks] = useState(false)
@@ -141,8 +142,8 @@ export const LandMarksHighlighter = () => {
     })
   }
   return (
-    <button onClick={handleClick}>
+    <CustomButton onClick={handleClick}>
      {showLandMarks ? <BsMapFill className='buttons__icons'/> :  <BsMap className='buttons__icons'/>}
-    </button>
+    </CustomButton>
   )
 }
