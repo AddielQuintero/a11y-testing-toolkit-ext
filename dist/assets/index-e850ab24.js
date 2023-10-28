@@ -7663,6 +7663,12 @@ function Bs1SquareFill(props) {
 function Bs1Square(props) {
   return GenIcon({ "tag": "svg", "attr": { "fill": "currentColor", "viewBox": "0 0 16 16" }, "child": [{ "tag": "path", "attr": { "d": "M9.283 4.002V12H7.971V5.338h-.065L6.072 6.656V5.385l1.899-1.383h1.312Z" } }, { "tag": "path", "attr": { "d": "M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2Zm15 0a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2Z" } }] })(props);
 }
+function BsBadgeArFill(props) {
+  return GenIcon({ "tag": "svg", "attr": { "fill": "currentColor", "viewBox": "0 0 16 16" }, "child": [{ "tag": "path", "attr": { "d": "m6.031 8.574-.734-2.426h-.052L4.51 8.574h1.52zm3.642-2.641v1.938h1.033c.66 0 1.068-.316 1.068-.95 0-.64-.422-.988-1.05-.988h-1.05z" } }, { "tag": "path", "attr": { "d": "M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm4.265 5.458h2.004L6.739 11H8L5.996 5.001H4.607L2.595 11h1.2l.47-1.542zM8.5 5v6h1.173V8.763h1.064L11.787 11h1.327L11.91 8.583C12.455 8.373 13 7.779 13 6.9c0-1.147-.773-1.9-2.105-1.9H8.5z" } }] })(props);
+}
+function BsBadgeAr(props) {
+  return GenIcon({ "tag": "svg", "attr": { "fill": "currentColor", "viewBox": "0 0 16 16" }, "child": [{ "tag": "path", "attr": { "d": "m3.794 11 .47-1.542H6.27L6.739 11H8L5.996 5.001H4.607L2.595 11h1.2zm1.503-4.852.734 2.426h-1.52l.734-2.426h.052zm5.598-1.147H8.5V11h1.173V8.763h1.064L11.787 11h1.327L11.91 8.583C12.455 8.373 13 7.779 13 6.9c0-1.147-.773-1.9-2.105-1.9zm-1.222 2.87V5.933h1.05c.63 0 1.05.347 1.05.989 0 .633-.408.95-1.067.95H9.673z" } }, { "tag": "path", "attr": { "d": "M14 3a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h12zM2 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H2z" } }] })(props);
+}
 function BsKeyboardFill(props) {
   return GenIcon({ "tag": "svg", "attr": { "fill": "currentColor", "viewBox": "0 0 16 16" }, "child": [{ "tag": "path", "attr": { "d": "M0 6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6zm13 .25v.5c0 .138.112.25.25.25h.5a.25.25 0 0 0 .25-.25v-.5a.25.25 0 0 0-.25-.25h-.5a.25.25 0 0 0-.25.25zM2.25 8a.25.25 0 0 0-.25.25v.5c0 .138.112.25.25.25h.5A.25.25 0 0 0 3 8.75v-.5A.25.25 0 0 0 2.75 8h-.5zM4 8.25v.5c0 .138.112.25.25.25h.5A.25.25 0 0 0 5 8.75v-.5A.25.25 0 0 0 4.75 8h-.5a.25.25 0 0 0-.25.25zM6.25 8a.25.25 0 0 0-.25.25v.5c0 .138.112.25.25.25h.5A.25.25 0 0 0 7 8.75v-.5A.25.25 0 0 0 6.75 8h-.5zM8 8.25v.5c0 .138.112.25.25.25h.5A.25.25 0 0 0 9 8.75v-.5A.25.25 0 0 0 8.75 8h-.5a.25.25 0 0 0-.25.25zM13.25 8a.25.25 0 0 0-.25.25v.5c0 .138.112.25.25.25h.5a.25.25 0 0 0 .25-.25v-.5a.25.25 0 0 0-.25-.25h-.5zm0 2a.25.25 0 0 0-.25.25v.5c0 .138.112.25.25.25h.5a.25.25 0 0 0 .25-.25v-.5a.25.25 0 0 0-.25-.25h-.5zm-3-2a.25.25 0 0 0-.25.25v.5c0 .138.112.25.25.25h1.5a.25.25 0 0 0 .25-.25v-.5a.25.25 0 0 0-.25-.25h-1.5zm.75 2.25v.5c0 .138.112.25.25.25h.5a.25.25 0 0 0 .25-.25v-.5a.25.25 0 0 0-.25-.25h-.5a.25.25 0 0 0-.25.25zM11.25 6a.25.25 0 0 0-.25.25v.5c0 .138.112.25.25.25h.5a.25.25 0 0 0 .25-.25v-.5a.25.25 0 0 0-.25-.25h-.5zM9 6.25v.5c0 .138.112.25.25.25h.5a.25.25 0 0 0 .25-.25v-.5A.25.25 0 0 0 9.75 6h-.5a.25.25 0 0 0-.25.25zM7.25 6a.25.25 0 0 0-.25.25v.5c0 .138.112.25.25.25h.5A.25.25 0 0 0 8 6.75v-.5A.25.25 0 0 0 7.75 6h-.5zM5 6.25v.5c0 .138.112.25.25.25h.5A.25.25 0 0 0 6 6.75v-.5A.25.25 0 0 0 5.75 6h-.5a.25.25 0 0 0-.25.25zM2.25 6a.25.25 0 0 0-.25.25v.5c0 .138.112.25.25.25h1.5A.25.25 0 0 0 4 6.75v-.5A.25.25 0 0 0 3.75 6h-1.5zM2 10.25v.5c0 .138.112.25.25.25h.5a.25.25 0 0 0 .25-.25v-.5a.25.25 0 0 0-.25-.25h-.5a.25.25 0 0 0-.25.25zM4.25 10a.25.25 0 0 0-.25.25v.5c0 .138.112.25.25.25h5.5a.25.25 0 0 0 .25-.25v-.5a.25.25 0 0 0-.25-.25h-5.5z" } }] })(props);
 }
@@ -7675,12 +7681,20 @@ function BsMapFill(props) {
 function BsMap(props) {
   return GenIcon({ "tag": "svg", "attr": { "fill": "currentColor", "viewBox": "0 0 16 16" }, "child": [{ "tag": "path", "attr": { "fillRule": "evenodd", "d": "M15.817.113A.5.5 0 0 1 16 .5v14a.5.5 0 0 1-.402.49l-5 1a.502.502 0 0 1-.196 0L5.5 15.01l-4.902.98A.5.5 0 0 1 0 15.5v-14a.5.5 0 0 1 .402-.49l5-1a.5.5 0 0 1 .196 0L10.5.99l4.902-.98a.5.5 0 0 1 .415.103zM10 1.91l-4-.8v12.98l4 .8V1.91zm1 12.98 4-.8V1.11l-4 .8v12.98zm-6-.8V1.11l-4 .8v12.98l4-.8z" } }] })(props);
 }
-function BsMegaphoneFill(props) {
-  return GenIcon({ "tag": "svg", "attr": { "fill": "currentColor", "viewBox": "0 0 16 16" }, "child": [{ "tag": "path", "attr": { "d": "M13 2.5a1.5 1.5 0 0 1 3 0v11a1.5 1.5 0 0 1-3 0v-11zm-1 .724c-2.067.95-4.539 1.481-7 1.656v6.237a25.222 25.222 0 0 1 1.088.085c2.053.204 4.038.668 5.912 1.56V3.224zm-8 7.841V4.934c-.68.027-1.399.043-2.008.053A2.02 2.02 0 0 0 0 7v2c0 1.106.896 1.996 1.994 2.009a68.14 68.14 0 0 1 .496.008 64 64 0 0 1 1.51.048zm1.39 1.081c.285.021.569.047.85.078l.253 1.69a1 1 0 0 1-.983 1.187h-.548a1 1 0 0 1-.916-.599l-1.314-2.48a65.81 65.81 0 0 1 1.692.064c.327.017.65.037.966.06z" } }] })(props);
-}
-function BsMegaphone(props) {
-  return GenIcon({ "tag": "svg", "attr": { "fill": "currentColor", "viewBox": "0 0 16 16" }, "child": [{ "tag": "path", "attr": { "d": "M13 2.5a1.5 1.5 0 0 1 3 0v11a1.5 1.5 0 0 1-3 0v-.214c-2.162-1.241-4.49-1.843-6.912-2.083l.405 2.712A1 1 0 0 1 5.51 15.1h-.548a1 1 0 0 1-.916-.599l-1.85-3.49a68.14 68.14 0 0 0-.202-.003A2.014 2.014 0 0 1 0 9V7a2.02 2.02 0 0 1 1.992-2.013 74.663 74.663 0 0 0 2.483-.075c3.043-.154 6.148-.849 8.525-2.199V2.5zm1 0v11a.5.5 0 0 0 1 0v-11a.5.5 0 0 0-1 0zm-1 1.35c-2.344 1.205-5.209 1.842-8 2.033v4.233c.18.01.359.022.537.036 2.568.189 5.093.744 7.463 1.993V3.85zm-9 6.215v-4.13a95.09 95.09 0 0 1-1.992.052A1.02 1.02 0 0 0 1 7v2c0 .55.448 1.002 1.006 1.009A60.49 60.49 0 0 1 4 10.065zm-.657.975 1.609 3.037.01.024h.548l-.002-.014-.443-2.966a68.019 68.019 0 0 0-1.722-.082z" } }] })(props);
-}
+const CustomButton = (props) => {
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(
+    "button",
+    {
+      type: props.type,
+      role: props.role,
+      style: props.style,
+      className: props.className,
+      disabled: props.disabled,
+      onClick: props.onClick,
+      children: props.children
+    }
+  );
+};
 const TabIndexHighlighter = () => {
   const [showTabIndexes, setShowTabIndexes] = reactExports.useState(false);
   const codeToExecute = function(showTabIndexes2) {
@@ -7732,7 +7746,7 @@ const TabIndexHighlighter = () => {
       }
     });
   };
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: handleClick, children: showTabIndexes ? /* @__PURE__ */ jsxRuntimeExports.jsx(Bs1SquareFill, { className: "buttons__icons" }) : /* @__PURE__ */ jsxRuntimeExports.jsx(Bs1Square, { className: "buttons__icons" }) });
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(CustomButton, { onClick: handleClick, children: showTabIndexes ? /* @__PURE__ */ jsxRuntimeExports.jsx(Bs1SquareFill, { className: "buttons__icons" }) : /* @__PURE__ */ jsxRuntimeExports.jsx(Bs1Square, { className: "buttons__icons" }) });
 };
 const AutocompleteHighlighter = () => {
   const [showAutoCompletes, setShowAutoCompletes] = reactExports.useState(false);
@@ -7884,7 +7898,7 @@ const AutocompleteHighlighter = () => {
       }
     });
   };
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: handleClick, children: showAutoCompletes ? /* @__PURE__ */ jsxRuntimeExports.jsx(BsKeyboardFill, { className: "buttons__icons" }) : /* @__PURE__ */ jsxRuntimeExports.jsx(BsKeyboard, { className: "buttons__icons" }) });
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(CustomButton, { onClick: handleClick, children: showAutoCompletes ? /* @__PURE__ */ jsxRuntimeExports.jsx(BsKeyboardFill, { className: "buttons__icons" }) : /* @__PURE__ */ jsxRuntimeExports.jsx(BsKeyboard, { className: "buttons__icons" }) });
 };
 const AriaRolesHighlighter = () => {
   const [showAriaRoles, setShowAriaRoles] = reactExports.useState(false);
@@ -8075,7 +8089,7 @@ const AriaRolesHighlighter = () => {
       }
     });
   };
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: handleClick, children: showAriaRoles ? /* @__PURE__ */ jsxRuntimeExports.jsx(BsMegaphoneFill, { className: "buttons__icons" }) : /* @__PURE__ */ jsxRuntimeExports.jsx(BsMegaphone, { className: "buttons__icons" }) });
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(CustomButton, { onClick: handleClick, children: showAriaRoles ? /* @__PURE__ */ jsxRuntimeExports.jsx(BsBadgeArFill, { className: "buttons__icons" }) : /* @__PURE__ */ jsxRuntimeExports.jsx(BsBadgeAr, { className: "buttons__icons" }) });
 };
 const LandMarksHighlighter = () => {
   const [showLandMarks, setShowLandMarks] = reactExports.useState(false);
@@ -8199,10 +8213,9 @@ const LandMarksHighlighter = () => {
       }
     });
   };
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: handleClick, children: showLandMarks ? /* @__PURE__ */ jsxRuntimeExports.jsx(BsMapFill, { className: "buttons__icons" }) : /* @__PURE__ */ jsxRuntimeExports.jsx(BsMap, { className: "buttons__icons" }) });
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(CustomButton, { onClick: handleClick, children: showLandMarks ? /* @__PURE__ */ jsxRuntimeExports.jsx(BsMapFill, { className: "buttons__icons" }) : /* @__PURE__ */ jsxRuntimeExports.jsx(BsMap, { className: "buttons__icons" }) });
 };
-const App$1 = "";
-function App() {
+function App$1() {
   return /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "toolkit", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx(TabIndexHighlighter, {}),
     /* @__PURE__ */ jsxRuntimeExports.jsx(AutocompleteHighlighter, {}),
@@ -8211,6 +8224,7 @@ function App() {
   ] }) });
 }
 const index = "";
+const App = "";
 client.createRoot(document.getElementById("root")).render(
-  /* @__PURE__ */ jsxRuntimeExports.jsx(React.StrictMode, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(App, {}) })
+  /* @__PURE__ */ jsxRuntimeExports.jsx(React.StrictMode, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(App$1, {}) })
 );
