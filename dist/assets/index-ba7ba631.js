@@ -7698,10 +7698,11 @@ const CustomButton = (props) => {
 const TabIndexHighlighter = () => {
   const [showTabIndexes, setShowTabIndexes] = reactExports.useState(false);
   const codeToExecute = function(showTabIndexes2) {
-    if (showTabIndexes2) {
+    const removeIndicators = () => {
       const indicators = document.querySelectorAll(".tabindex-indicator");
       indicators.forEach((indicator) => indicator.remove());
-    } else {
+    };
+    const highlightTabIndex = () => {
       const elements = document.querySelectorAll("[tabindex]");
       elements.forEach((element) => {
         if (element instanceof HTMLElement) {
@@ -7728,6 +7729,11 @@ const TabIndexHighlighter = () => {
           element.appendChild(span);
         }
       });
+    };
+    if (showTabIndexes2) {
+      removeIndicators();
+    } else {
+      highlightTabIndex();
     }
   };
   const handleClick = () => {

@@ -7,10 +7,12 @@ export const TabIndexHighlighter = () => {
   const [showTabIndexes, setShowTabIndexes] = useState(false)
 
   const codeToExecute = function(showTabIndexes: boolean) {
-    if (showTabIndexes) {
+    const removeIndicators = () => {
       const indicators = document.querySelectorAll('.tabindex-indicator')
       indicators.forEach((indicator) => indicator.remove())
-    } else {
+    }
+
+    const highlightTabIndex = () => {
       const elements = document.querySelectorAll('[tabindex]')
       elements.forEach((element) => {
         if (element instanceof HTMLElement) {
@@ -40,6 +42,12 @@ export const TabIndexHighlighter = () => {
           element.appendChild(span)
         }
       })
+    }
+
+    if (showTabIndexes) {
+      removeIndicators()
+    } else {
+      highlightTabIndex()
     }
   }
 
