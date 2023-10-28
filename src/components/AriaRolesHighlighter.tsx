@@ -7,7 +7,7 @@ export const AriaRolesHighlighter = () => {
   const [showAriaRoles, setShowAriaRoles] = useState(false)
 
   const codeToExecute = function(showAriaRoles: boolean) {
-    const isVisible = (element: any) => {
+    const isVisible = (element: Element) => {
       const style = window.getComputedStyle(element)
       return (
         style.display !== 'none' &&
@@ -178,7 +178,7 @@ export const AriaRolesHighlighter = () => {
         if (!validAriaRoles.includes(role)) {
           console.error(`Invalid role: ${role}`)
 
-          elements.forEach((element: any) => {
+          elements.forEach((element) => {
             if (element.getAttribute('role') === role) {
               console.error(`Element with invalid role '${role}':`, element)
 

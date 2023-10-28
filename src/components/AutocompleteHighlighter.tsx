@@ -4,64 +4,19 @@ import { BsKeyboard } from 'react-icons/bs'
 import { CustomButton } from './common/Button'
 
 export const AutocompleteHighlighter = () => {
-  const [showAutoCompletes, setShowAutoCompletes] = useState(false)
+  const [showAutoCompletes, setShowAutoCompletes] = useState<boolean>(false)
 
   const codeToExecute = function(showAutoCompletes: boolean) {
-    const validAutocompleteValues = [
-      'name',
-      'honorific-prefix',
-      'given-name',
-      'additional-name',
-      'family-name',
-      'honorific-suffix',
-      'nickname',
-      'username',
-      'new-password',
-      'current-password',
-      'one-time-code',
-      'organization-title',
-      'organization',
-      'street-address',
-      'address-line1',
-      'address-line2',
-      'address-line3',
-      'address-level4',
-      'address-level3',
-      'address-level2',
-      'address-level1',
-      'country',
-      'country-name',
-      'postal-code',
-      'cc-name',
-      'cc-given-name',
-      'cc-additional-name',
-      'cc-family-name',
-      'cc-number',
-      'cc-exp',
-      'cc-exp-month',
-      'cc-exp-year',
-      'cc-csc',
-      'cc-type',
-      'transaction-currency',
-      'transaction-amount',
-      'language',
-      'bday',
-      'bday-day',
-      'bday-month',
-      'bday-year',
-      'sex',
-      'url',
-      'photo',
-      'tel',
-      'tel-country-code',
-      'tel-national',
-      'tel-area-code',
-      'tel-local',
-      'tel-local-prefix',
-      'tel-local-suffix',
-      'tel-extension',
-      'email',
-      'impp',
+    const validAutocompleteValues: string[] = [
+      'name', 'honorific-prefix', 'given-name', 'additional-name', 'family-name', 'honorific-suffix',
+      'nickname', 'username', 'new-password', 'current-password', 'one-time-code', 'organization-title',
+      'organization', 'street-address', 'address-line1', 'address-line2', 'address-line3', 'address-level4',
+      'address-level3', 'address-level2', 'address-level1', 'country', 'country-name', 'postal-code',
+      'cc-name', 'cc-given-name', 'cc-additional-name', 'cc-family-name', 'cc-number', 'cc-exp',
+      'cc-exp-month', 'cc-exp-year', 'cc-csc', 'cc-type', 'transaction-currency', 'transaction-amount',
+      'language', 'bday', 'bday-day', 'bday-month', 'bday-year', 'sex',
+      'url', 'photo', 'tel', 'tel-country-code', 'tel-national', 'tel-area-code',
+      'tel-local', 'tel-local-prefix', 'tel-local-suffix', 'tel-extension', 'email', 'impp',
     ]
     const removeIndicators = () => {
       const indicators = document.querySelectorAll('.autocomplete-indicator')
@@ -78,11 +33,11 @@ export const AutocompleteHighlighter = () => {
       })
     }
 
-    const isVisible = (element: any) => {
-      const isAriaHidden = (element: any) => element.getAttribute('aria-hidden') === 'true'
-      const isDisplayNone = (style: any) => style.display === 'none'
-      const isVisibilityHidden = (style: any) => style.visibility === 'hidden'
-      const hasZeroSize = (element: any) => element.offsetWidth === 0 || element.offsetHeight === 0
+    const isVisible = (element: HTMLElement) => {
+      const isAriaHidden = (element: HTMLElement) => element.getAttribute('aria-hidden') === 'true'
+      const isDisplayNone = (style: CSSStyleDeclaration) => style.display === 'none'
+      const isVisibilityHidden = (style: CSSStyleDeclaration) => style.visibility === 'hidden'
+      const hasZeroSize = (element: HTMLElement) => element.offsetWidth === 0 || element.offsetHeight === 0
       const style = window.getComputedStyle(element)
       return !(
         isAriaHidden(element) ||
@@ -91,22 +46,26 @@ export const AutocompleteHighlighter = () => {
         hasZeroSize(element)
       )
     }
-    const autocompleteCounts = {}
+    const autocompleteCounts: Record<string, number> = {}
     const inputs = document.querySelectorAll('input')
     const visibleInputs = [...inputs].filter(isVisible)
 
-    const processAutocompleteValues = (input: any, autocompleteCounts: any) => {
+    const processAutocompleteValues = (input: HTMLInputElement, autocompleteCounts: Record<string, number>) => {
       const autocompleteValue = input.getAttribute('autocomplete')
-      autocompleteCounts[autocompleteValue] = (autocompleteCounts[autocompleteValue] || 0) + 1
+      if (autocompleteValue !== null) { 
+        autocompleteCounts[autocompleteValue] = (autocompleteCounts[autocompleteValue] || 0) + 1
+      }
     }
 
-    const highlightAutocomplete = (input: any) => {
+    const highlightAutocomplete = (input: HTMLInputElement) => {
       const autocompleteValue = input.getAttribute('autocomplete')
 
       const container = document.createElement('div')
       container.style.position = 'relative'
       container.style.display = 'inline-block'
-      input.parentNode.insertBefore(container, input)
+      if (input.parentNode) {
+        input.parentNode.insertBefore(container, input)
+      }
       container.appendChild(input)
 
       input.style.outline = '2px solid red'

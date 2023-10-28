@@ -40,7 +40,7 @@ export const LandMarksHighlighter = () => {
       })
     }
 
-    const highlightElement = (element: any, label: any, color: any) => {
+    const highlightElement = (element: HTMLElement, label: string, color: string) => {
       element.style.outline = `2px solid ${color === '#00F' ? color : 'none'}`
       element.style.border = `2px solid ${color === 'red' ? color : 'none'}`
 
@@ -71,7 +71,7 @@ export const LandMarksHighlighter = () => {
         const elements = document.querySelectorAll(`[role="${role}"]`)
         const formattedRole = 'a' + role.charAt(0).toUpperCase() + role.slice(1)
         elements.forEach((element) => {
-          highlightElement(element, formattedRole, colors.aria) // store the label element
+          highlightElement(element as HTMLElement, formattedRole, colors.aria) // store the label element
           highlightedElements.add(element)
           ariaLandmarkCount++
         })
@@ -94,7 +94,7 @@ export const LandMarksHighlighter = () => {
           if (element.hasAttribute('role')) {
             highlightedElements.add(element)
           } else if (!highlightedElements.has(element)) {
-            highlightElement(element, item.selector, colors.native)
+            highlightElement(element as HTMLElement, item.selector, colors.native)
           }
           nativeLandmarkCount++
         })

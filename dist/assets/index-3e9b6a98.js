@@ -7840,14 +7840,18 @@ const AutocompleteHighlighter = () => {
     const visibleInputs = [...inputs].filter(isVisible);
     const processAutocompleteValues = (input, autocompleteCounts2) => {
       const autocompleteValue = input.getAttribute("autocomplete");
-      autocompleteCounts2[autocompleteValue] = (autocompleteCounts2[autocompleteValue] || 0) + 1;
+      if (autocompleteValue !== null) {
+        autocompleteCounts2[autocompleteValue] = (autocompleteCounts2[autocompleteValue] || 0) + 1;
+      }
     };
     const highlightAutocomplete = (input) => {
       const autocompleteValue = input.getAttribute("autocomplete");
       const container = document.createElement("div");
       container.style.position = "relative";
       container.style.display = "inline-block";
-      input.parentNode.insertBefore(container, input);
+      if (input.parentNode) {
+        input.parentNode.insertBefore(container, input);
+      }
       container.appendChild(input);
       input.style.outline = "2px solid red";
       const span = document.createElement("span");
@@ -8195,10 +8199,8 @@ const LandMarksHighlighter = () => {
       }
     };
     if (showLandMarks2) {
-      console.log("🚀  if:", showLandMarks2);
       removeIndicators();
     } else {
-      console.log("🚀  else:", showLandMarks2);
       ariaLandMarks();
       nativeLandMarks();
     }
