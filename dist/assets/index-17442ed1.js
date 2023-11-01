@@ -7681,6 +7681,9 @@ function BsMapFill(props) {
 function BsMap(props) {
   return GenIcon({ "tag": "svg", "attr": { "fill": "currentColor", "viewBox": "0 0 16 16" }, "child": [{ "tag": "path", "attr": { "fillRule": "evenodd", "d": "M15.817.113A.5.5 0 0 1 16 .5v14a.5.5 0 0 1-.402.49l-5 1a.502.502 0 0 1-.196 0L5.5 15.01l-4.902.98A.5.5 0 0 1 0 15.5v-14a.5.5 0 0 1 .402-.49l5-1a.5.5 0 0 1 .196 0L10.5.99l4.902-.98a.5.5 0 0 1 .415.103zM10 1.91l-4-.8v12.98l4 .8V1.91zm1 12.98 4-.8V1.11l-4 .8v12.98zm-6-.8V1.11l-4 .8v12.98l4-.8z" } }] })(props);
 }
+function BsSearch(props) {
+  return GenIcon({ "tag": "svg", "attr": { "fill": "currentColor", "viewBox": "0 0 16 16" }, "child": [{ "tag": "path", "attr": { "d": "M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" } }] })(props);
+}
 const CustomButton = (props) => {
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
     "button",
@@ -7757,6 +7760,62 @@ const TabIndexHighlighter = () => {
 const AutocompleteHighlighter = () => {
   const [showAutoCompletes, setShowAutoCompletes] = reactExports.useState(false);
   const codeToExecute = function(showAutoCompletes2) {
+    const validAutocompleteValues = [
+      "name",
+      "honorific-prefix",
+      "given-name",
+      "additional-name",
+      "family-name",
+      "honorific-suffix",
+      "nickname",
+      "username",
+      "new-password",
+      "current-password",
+      "one-time-code",
+      "organization-title",
+      "organization",
+      "street-address",
+      "address-line1",
+      "address-line2",
+      "address-line3",
+      "address-level4",
+      "address-level3",
+      "address-level2",
+      "address-level1",
+      "country",
+      "country-name",
+      "postal-code",
+      "cc-name",
+      "cc-given-name",
+      "cc-additional-name",
+      "cc-family-name",
+      "cc-number",
+      "cc-exp",
+      "cc-exp-month",
+      "cc-exp-year",
+      "cc-csc",
+      "cc-type",
+      "transaction-currency",
+      "transaction-amount",
+      "language",
+      "bday",
+      "bday-day",
+      "bday-month",
+      "bday-year",
+      "sex",
+      "url",
+      "photo",
+      "tel",
+      "tel-country-code",
+      "tel-national",
+      "tel-area-code",
+      "tel-local",
+      "tel-local-prefix",
+      "tel-local-suffix",
+      "tel-extension",
+      "email",
+      "impp"
+    ];
     const removeIndicators = () => {
       const indicators = document.querySelectorAll(".autocomplete-indicator");
       indicators.forEach((indicator) => {
@@ -7771,119 +7830,67 @@ const AutocompleteHighlighter = () => {
         }
       });
     };
-    const highlightAutocomplete = () => {
-      const validAutocompleteValues = [
-        "name",
-        "honorific-prefix",
-        "given-name",
-        "additional-name",
-        "family-name",
-        "honorific-suffix",
-        "nickname",
-        "username",
-        "new-password",
-        "current-password",
-        "one-time-code",
-        "organization-title",
-        "organization",
-        "street-address",
-        "address-line1",
-        "address-line2",
-        "address-line3",
-        "address-level4",
-        "address-level3",
-        "address-level2",
-        "address-level1",
-        "country",
-        "country-name",
-        "postal-code",
-        "cc-name",
-        "cc-given-name",
-        "cc-additional-name",
-        "cc-family-name",
-        "cc-number",
-        "cc-exp",
-        "cc-exp-month",
-        "cc-exp-year",
-        "cc-csc",
-        "cc-type",
-        "transaction-currency",
-        "transaction-amount",
-        "language",
-        "bday",
-        "bday-day",
-        "bday-month",
-        "bday-year",
-        "sex",
-        "url",
-        "photo",
-        "tel",
-        "tel-country-code",
-        "tel-national",
-        "tel-area-code",
-        "tel-local",
-        "tel-local-prefix",
-        "tel-local-suffix",
-        "tel-extension",
-        "email",
-        "impp"
-      ];
-      const isAriaHidden = (element) => element.getAttribute("aria-hidden") === "true";
-      const isDisplayNone = (style) => style.display === "none";
-      const isVisibilityHidden = (style) => style.visibility === "hidden";
-      const hasZeroSize = (element) => element.offsetWidth === 0 || element.offsetHeight === 0;
-      const isVisible = (element) => {
-        const style = window.getComputedStyle(element);
-        return !(isAriaHidden(element) || isDisplayNone(style) || isVisibilityHidden(style) || hasZeroSize(element));
-      };
-      const autocompleteCounts = {};
-      const inputs = document.querySelectorAll("input");
-      const visibleInputs = [...inputs].filter(isVisible);
-      const processAutocompleteValues = (input, autocompleteCounts2) => {
-        const autocompleteValue = input.getAttribute("autocomplete");
+    const isVisible = (element) => {
+      const isAriaHidden = (element2) => element2.getAttribute("aria-hidden") === "true";
+      const isDisplayNone = (style2) => style2.display === "none";
+      const isVisibilityHidden = (style2) => style2.visibility === "hidden";
+      const hasZeroSize = (element2) => element2.offsetWidth === 0 || element2.offsetHeight === 0;
+      const style = window.getComputedStyle(element);
+      return !(isAriaHidden(element) || isDisplayNone(style) || isVisibilityHidden(style) || hasZeroSize(element));
+    };
+    const autocompleteCounts = {};
+    const inputs = document.querySelectorAll("input");
+    const visibleInputs = [...inputs].filter(isVisible);
+    const processAutocompleteValues = (input, autocompleteCounts2) => {
+      const autocompleteValue = input.getAttribute("autocomplete");
+      if (autocompleteValue !== null) {
         autocompleteCounts2[autocompleteValue] = (autocompleteCounts2[autocompleteValue] || 0) + 1;
-      };
-      const annotateAndAttach = (input) => {
-        const autocompleteValue = input.getAttribute("autocomplete");
-        const container = document.createElement("div");
-        container.style.position = "relative";
-        container.style.display = "inline-block";
+      }
+    };
+    const highlightAutocomplete = (input) => {
+      const autocompleteValue = input.getAttribute("autocomplete");
+      const container = document.createElement("div");
+      container.style.position = "relative";
+      container.style.display = "inline-block";
+      if (input.parentNode) {
         input.parentNode.insertBefore(container, input);
-        container.appendChild(input);
-        input.style.outline = "2px solid red";
-        const span = document.createElement("span");
-        span.className = "autocomplete-indicator";
-        span.style.position = "absolute";
-        span.style.padding = "2px";
-        span.style.top = "0";
-        span.style.left = "0";
-        span.style.zIndex = "999";
-        span.style.background = "red";
-        span.style.color = "white";
-        span.style.fontSize = "11px";
-        if (!autocompleteValue) {
-          span.innerText = "No";
-          console.error(`Input without autocomplete '${autocompleteValue}':`, input);
-        } else if (!validAutocompleteValues.includes(autocompleteValue)) {
-          span.innerText = "⚠️";
-          console.error(`Input with invalid autocomplete '${autocompleteValue}':`, input);
-        } else {
-          span.innerText = autocompleteValue;
-        }
-        container.appendChild(span);
-      };
+      }
+      container.appendChild(input);
+      input.style.outline = "2px solid red";
+      const span = document.createElement("span");
+      span.className = "autocomplete-indicator";
+      span.style.position = "absolute";
+      span.style.padding = "2px";
+      span.style.top = "0";
+      span.style.left = "0";
+      span.style.zIndex = "999";
+      span.style.background = "red";
+      span.style.color = "white";
+      span.style.fontSize = "11px";
+      if (!autocompleteValue) {
+        span.innerText = "No";
+        console.error(`Input without autocomplete '${autocompleteValue}':`, input);
+      } else if (!validAutocompleteValues.includes(autocompleteValue)) {
+        span.innerText = "⚠️";
+        console.error(`Input with invalid autocomplete '${autocompleteValue}':`, input);
+      } else {
+        span.innerText = autocompleteValue;
+      }
+      container.appendChild(span);
+    };
+    const annotateAndAttach = () => {
       visibleInputs.forEach((input) => processAutocompleteValues(input, autocompleteCounts));
       console.log(`${visibleInputs.length} elements with autocomplete attribute were found on this page.`);
       console.log("Count of each autocomplete:");
       Object.entries(autocompleteCounts).forEach(([role, count]) => {
         console.log(`${role}: ${count} occurrences`);
       });
-      visibleInputs.forEach((input) => annotateAndAttach(input));
+      visibleInputs.forEach((input) => highlightAutocomplete(input));
     };
     if (showAutoCompletes2) {
       removeIndicators();
     } else {
-      highlightAutocomplete();
+      annotateAndAttach();
     }
   };
   const handleClick = () => {
@@ -8195,10 +8202,8 @@ const LandMarksHighlighter = () => {
       }
     };
     if (showLandMarks2) {
-      console.log("🚀  if:", showLandMarks2);
       removeIndicators();
     } else {
-      console.log("🚀  else:", showLandMarks2);
       ariaLandMarks();
       nativeLandMarks();
     }
@@ -8221,12 +8226,131 @@ const LandMarksHighlighter = () => {
   };
   return /* @__PURE__ */ jsxRuntimeExports.jsx(CustomButton, { onClick: handleClick, children: showLandMarks ? /* @__PURE__ */ jsxRuntimeExports.jsx(BsMapFill, { className: "buttons__icons" }) : /* @__PURE__ */ jsxRuntimeExports.jsx(BsMap, { className: "buttons__icons" }) });
 };
+const headingIcon = "/assets/headingsIcon-31119357.svg";
+const HeadingsHighlighter = () => {
+  const [showHeadings, setShowHeadings] = reactExports.useState(false);
+  const handleClick = () => {
+    setShowHeadings(!showHeadings);
+  };
+  const iconClass = showHeadings ? "svg-active" : "svg-default";
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(CustomButton, { onClick: handleClick, className: iconClass, children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: headingIcon, className: "svg-icon", alt: "Heading Icon" }) });
+};
+window.showTooltip = false;
+const TargetSize = () => {
+  const [isActive, setIsActive] = reactExports.useState(false);
+  const iconClass = isActive ? "icon-active" : "icon-default";
+  const codeToExecute = (isActive2) => {
+    let currentElement = null;
+    let tooltip;
+    if (!document.querySelector(".a11y-toolkit-size-tooltip")) {
+      tooltip = document.createElement("figure");
+      tooltip.style.display = "flex";
+      tooltip.style.flexDirection = "column";
+      tooltip.style.position = "absolute";
+      tooltip.style.borderRadius = "8px";
+      tooltip.style.background = "hsla(0, 0%, 10%, 0.8)";
+      tooltip.style.fontSize = "14px";
+      tooltip.style.fontWeight = "bold";
+      tooltip.style.backdropFilter = "blur(5px)";
+      tooltip.style.boxShadow = " rgba(0, 0, 0, 0.35) 0px 5px 15px";
+      tooltip.style.transition = "top 0.2s, left 0.2s";
+      tooltip.style.fontFamily = " monospace";
+      tooltip.style.zIndex = "9999";
+      tooltip.className = "a11y-toolkit-size-tooltip";
+      document.body.appendChild(tooltip);
+    } else {
+      tooltip = document.querySelector(".a11y-toolkit-size-tooltip");
+    }
+    window.handleMouseOver = (event) => {
+      if (!window.showTooltip)
+        return;
+      const element = event.target;
+      if (element !== currentElement) {
+        const computedStyle = window.getComputedStyle(element);
+        let width = element.style.width || computedStyle.width;
+        let height = element.style.height || computedStyle.height;
+        const widthValue = parseFloat(width);
+        const heightValue = parseFloat(height);
+        let elementName = element.tagName.toLowerCase();
+        let idOrClass = element.id ? `#${element.id}` : element.className ? `.${element.className.split(" ")[0]}` : "";
+        const tooltipWidth = tooltip.offsetWidth;
+        const tooltipHeight = tooltip.offsetHeight;
+        let tooltipLeft = event.clientX;
+        let tooltipTop = event.clientY;
+        if (tooltipLeft + tooltipWidth * 1.5 > window.innerWidth || event.clientX > window.innerWidth / 2) {
+          tooltipLeft = event.clientX - tooltipWidth * 1.5;
+        }
+        if (event.clientY < window.innerHeight / 2) {
+          tooltipTop = event.clientY + 20;
+        } else {
+          tooltipTop = event.clientY - tooltipHeight - 20;
+        }
+        tooltip.style.top = `${tooltipTop}px`;
+        tooltip.style.left = `${tooltipLeft}px`;
+        element.style.outline = "2px dotted black";
+        element.style.boxShadow = "0 0 5px 5px white";
+        let codeBackgroundColor = "hsla(0, 0%, 10%, 0.9)";
+        let codeColor = "hotpink";
+        if (widthValue < 24 || heightValue < 24) {
+          codeBackgroundColor = "#990000";
+          codeColor = "white";
+          element.style.background = "#990000";
+          element.style.backgroundColor = "#990000";
+        }
+        tooltip.innerHTML = `
+          <header style="padding: 10px;">
+            <strong style="color: white;">&lt${elementName}&gt${idOrClass}</strong>
+          </header>
+          <code style="background: ${codeBackgroundColor}; padding: 10px; border-radius: 8px; display: grid; grid-template-columns: max-content auto; gap: 0.25em 0.5em;">
+            <span style="color: ${codeColor};">Width:</span><span style="color: white;"> ${width}</span>
+            <span style="color: ${codeColor};">Height:</span><span style="color: white;">  ${height}</span>
+          </code>`;
+        currentElement = element;
+      }
+    };
+    document.body.addEventListener("mouseover", window.handleMouseOver);
+    document.body.addEventListener("mouseout", () => {
+      if (currentElement) {
+        currentElement.style.outline = "";
+        currentElement.style.boxShadow = "";
+        currentElement.style.background = "";
+        currentElement.style.backgroundColor = "";
+      }
+    });
+    if (isActive2) {
+      window.showTooltip = false;
+      const indicators = document.querySelectorAll(".a11y-toolkit-size-tooltip");
+      indicators.forEach((indicator) => indicator.remove());
+    } else {
+      window.showTooltip = true;
+    }
+  };
+  const handleClick = () => {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      const currentTab = tabs[0];
+      if (currentTab && currentTab.id) {
+        const tabId = currentTab.id;
+        chrome.scripting.executeScript(
+          {
+            target: { tabId },
+            func: codeToExecute,
+            args: [isActive]
+          },
+          () => setIsActive(!isActive)
+        );
+      }
+    });
+  };
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(CustomButton, { onClick: handleClick, children: /* @__PURE__ */ jsxRuntimeExports.jsx(BsSearch, { className: iconClass }) });
+};
 function App$1() {
   return /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "toolkit", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(HeadingsHighlighter, {}),
     /* @__PURE__ */ jsxRuntimeExports.jsx(TabIndexHighlighter, {}),
     /* @__PURE__ */ jsxRuntimeExports.jsx(AutocompleteHighlighter, {}),
     /* @__PURE__ */ jsxRuntimeExports.jsx(AriaRolesHighlighter, {}),
-    /* @__PURE__ */ jsxRuntimeExports.jsx(LandMarksHighlighter, {})
+    /* @__PURE__ */ jsxRuntimeExports.jsx(LandMarksHighlighter, {}),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(TargetSize, {})
   ] }) });
 }
 const index = "";
