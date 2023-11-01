@@ -8236,7 +8236,7 @@ const HeadingsHighlighter = () => {
   return /* @__PURE__ */ jsxRuntimeExports.jsx(CustomButton, { onClick: handleClick, className: iconClass, children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: headingIcon, className: "svg-icon", alt: "Heading Icon" }) });
 };
 window.showTooltip = false;
-const TargetSizeScript = () => {
+const TargetSize = () => {
   const [isActive, setIsActive] = reactExports.useState(false);
   const iconClass = isActive ? "icon-active" : "icon-default";
   const codeToExecute = (isActive2) => {
@@ -8350,7 +8350,7 @@ function App$1() {
     /* @__PURE__ */ jsxRuntimeExports.jsx(AutocompleteHighlighter, {}),
     /* @__PURE__ */ jsxRuntimeExports.jsx(AriaRolesHighlighter, {}),
     /* @__PURE__ */ jsxRuntimeExports.jsx(LandMarksHighlighter, {}),
-    /* @__PURE__ */ jsxRuntimeExports.jsx(TargetSizeScript, {})
+    /* @__PURE__ */ jsxRuntimeExports.jsx(TargetSize, {})
   ] }) });
 }
 const index = "";

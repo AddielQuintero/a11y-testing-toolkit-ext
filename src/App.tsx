@@ -3,6 +3,7 @@ import { AutocompleteHighlighter } from './components/AutocompleteHighlighter'
 import { AriaRolesHighlighter } from './components/AriaRolesHighlighter'
 import { LandMarksHighlighter } from './components/LandMarksHighlighter'
 import { HeadingsHighlighter } from './components/HeadingsHighlighter'
+import { TargetSize } from './components/TargetSize'
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <AutocompleteHighlighter />
         <AriaRolesHighlighter />
         <LandMarksHighlighter />
+        <TargetSize />
       </div>
     </>
   )
