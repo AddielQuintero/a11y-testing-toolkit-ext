@@ -7681,6 +7681,9 @@ function BsMapFill(props) {
 function BsMap(props) {
   return GenIcon({ "tag": "svg", "attr": { "fill": "currentColor", "viewBox": "0 0 16 16" }, "child": [{ "tag": "path", "attr": { "fillRule": "evenodd", "d": "M15.817.113A.5.5 0 0 1 16 .5v14a.5.5 0 0 1-.402.49l-5 1a.502.502 0 0 1-.196 0L5.5 15.01l-4.902.98A.5.5 0 0 1 0 15.5v-14a.5.5 0 0 1 .402-.49l5-1a.5.5 0 0 1 .196 0L10.5.99l4.902-.98a.5.5 0 0 1 .415.103zM10 1.91l-4-.8v12.98l4 .8V1.91zm1 12.98 4-.8V1.11l-4 .8v12.98zm-6-.8V1.11l-4 .8v12.98l4-.8z" } }] })(props);
 }
+function BsSearch(props) {
+  return GenIcon({ "tag": "svg", "attr": { "fill": "currentColor", "viewBox": "0 0 16 16" }, "child": [{ "tag": "path", "attr": { "d": "M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" } }] })(props);
+}
 const CustomButton = (props) => {
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
     "button",
@@ -8223,12 +8226,131 @@ const LandMarksHighlighter = () => {
   };
   return /* @__PURE__ */ jsxRuntimeExports.jsx(CustomButton, { onClick: handleClick, children: showLandMarks ? /* @__PURE__ */ jsxRuntimeExports.jsx(BsMapFill, { className: "buttons__icons" }) : /* @__PURE__ */ jsxRuntimeExports.jsx(BsMap, { className: "buttons__icons" }) });
 };
+const headingIcon = "/assets/headingsIcon-31119357.svg";
+const HeadingsHighlighter = () => {
+  const [showHeadings, setShowHeadings] = reactExports.useState(false);
+  const handleClick = () => {
+    setShowHeadings(!showHeadings);
+  };
+  const iconClass = showHeadings ? "svg-active" : "svg-default";
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(CustomButton, { onClick: handleClick, className: iconClass, children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: headingIcon, className: "svg-icon", alt: "Heading Icon" }) });
+};
+window.showTooltip = false;
+const TargetSizeScript = () => {
+  const [isActive, setIsActive] = reactExports.useState(false);
+  const iconClass = isActive ? "icon-active" : "icon-default";
+  const codeToExecute = (isActive2) => {
+    let currentElement = null;
+    let tooltip;
+    if (!document.querySelector(".a11y-toolkit-size-tooltip")) {
+      tooltip = document.createElement("figure");
+      tooltip.style.display = "flex";
+      tooltip.style.flexDirection = "column";
+      tooltip.style.position = "absolute";
+      tooltip.style.borderRadius = "8px";
+      tooltip.style.background = "hsla(0, 0%, 10%, 0.8)";
+      tooltip.style.fontSize = "14px";
+      tooltip.style.fontWeight = "bold";
+      tooltip.style.backdropFilter = "blur(5px)";
+      tooltip.style.boxShadow = " rgba(0, 0, 0, 0.35) 0px 5px 15px";
+      tooltip.style.transition = "top 0.2s, left 0.2s";
+      tooltip.style.fontFamily = " monospace";
+      tooltip.style.zIndex = "9999";
+      tooltip.className = "a11y-toolkit-size-tooltip";
+      document.body.appendChild(tooltip);
+    } else {
+      tooltip = document.querySelector(".a11y-toolkit-size-tooltip");
+    }
+    window.handleMouseOver = (event) => {
+      if (!window.showTooltip)
+        return;
+      const element = event.target;
+      if (element !== currentElement) {
+        const computedStyle = window.getComputedStyle(element);
+        let width = element.style.width || computedStyle.width;
+        let height = element.style.height || computedStyle.height;
+        const widthValue = parseFloat(width);
+        const heightValue = parseFloat(height);
+        let elementName = element.tagName.toLowerCase();
+        let idOrClass = element.id ? `#${element.id}` : element.className ? `.${element.className.split(" ")[0]}` : "";
+        const tooltipWidth = tooltip.offsetWidth;
+        const tooltipHeight = tooltip.offsetHeight;
+        let tooltipLeft = event.clientX;
+        let tooltipTop = event.clientY;
+        if (tooltipLeft + tooltipWidth * 1.5 > window.innerWidth || event.clientX > window.innerWidth / 2) {
+          tooltipLeft = event.clientX - tooltipWidth * 1.5;
+        }
+        if (event.clientY < window.innerHeight / 2) {
+          tooltipTop = event.clientY + 20;
+        } else {
+          tooltipTop = event.clientY - tooltipHeight - 20;
+        }
+        tooltip.style.top = `${tooltipTop}px`;
+        tooltip.style.left = `${tooltipLeft}px`;
+        element.style.outline = "2px dotted black";
+        element.style.boxShadow = "0 0 5px 5px white";
+        let codeBackgroundColor = "hsla(0, 0%, 10%, 0.9)";
+        let codeColor = "hotpink";
+        if (widthValue < 24 || heightValue < 24) {
+          codeBackgroundColor = "#990000";
+          codeColor = "white";
+          element.style.background = "#990000";
+          element.style.backgroundColor = "#990000";
+        }
+        tooltip.innerHTML = `
+          <header style="padding: 10px;">
+            <strong style="color: white;">&lt${elementName}&gt${idOrClass}</strong>
+          </header>
+          <code style="background: ${codeBackgroundColor}; padding: 10px; border-radius: 8px; display: grid; grid-template-columns: max-content auto; gap: 0.25em 0.5em;">
+            <span style="color: ${codeColor};">Width:</span><span style="color: white;"> ${width}</span>
+            <span style="color: ${codeColor};">Height:</span><span style="color: white;">  ${height}</span>
+          </code>`;
+        currentElement = element;
+      }
+    };
+    document.body.addEventListener("mouseover", window.handleMouseOver);
+    document.body.addEventListener("mouseout", () => {
+      if (currentElement) {
+        currentElement.style.outline = "";
+        currentElement.style.boxShadow = "";
+        currentElement.style.background = "";
+        currentElement.style.backgroundColor = "";
+      }
+    });
+    if (isActive2) {
+      window.showTooltip = false;
+      const indicators = document.querySelectorAll(".a11y-toolkit-size-tooltip");
+      indicators.forEach((indicator) => indicator.remove());
+    } else {
+      window.showTooltip = true;
+    }
+  };
+  const handleClick = () => {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      const currentTab = tabs[0];
+      if (currentTab && currentTab.id) {
+        const tabId = currentTab.id;
+        chrome.scripting.executeScript(
+          {
+            target: { tabId },
+            func: codeToExecute,
+            args: [isActive]
+          },
+          () => setIsActive(!isActive)
+        );
+      }
+    });
+  };
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(CustomButton, { onClick: handleClick, children: /* @__PURE__ */ jsxRuntimeExports.jsx(BsSearch, { className: iconClass }) });
+};
 function App$1() {
   return /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "toolkit", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(HeadingsHighlighter, {}),
     /* @__PURE__ */ jsxRuntimeExports.jsx(TabIndexHighlighter, {}),
     /* @__PURE__ */ jsxRuntimeExports.jsx(AutocompleteHighlighter, {}),
     /* @__PURE__ */ jsxRuntimeExports.jsx(AriaRolesHighlighter, {}),
-    /* @__PURE__ */ jsxRuntimeExports.jsx(LandMarksHighlighter, {})
+    /* @__PURE__ */ jsxRuntimeExports.jsx(LandMarksHighlighter, {}),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(TargetSizeScript, {})
   ] }) });
 }
 const index = "";

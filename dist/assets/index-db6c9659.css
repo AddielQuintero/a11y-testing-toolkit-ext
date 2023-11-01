@@ -40,6 +40,26 @@ body {
   position: relative;
 }
 
+.svg-default .svg-icon {
+  filter: invert(1);
+  background-color: transparent;
+}
+
+.svg-active .svg-icon {
+  filter: invert(0);
+  background-color: white;
+}
+
+.icon-default {
+  color: #fff;
+  background-color: transparent;
+}
+
+.icon-active {
+  color: #000;
+  background-color: white;
+}
+
 button {
   display: flex;
   margin-bottom: 0.4rem;
