@@ -8242,6 +8242,8 @@ const TargetSize = () => {
   const codeToExecute = (isActive2) => {
     let currentElement = null;
     let tooltip;
+    let widthValue = 0;
+    let heightValue = 0;
     if (!document.querySelector(".a11y-toolkit-size-tooltip")) {
       tooltip = document.createElement("figure");
       tooltip.style.display = "flex";
@@ -8261,6 +8263,18 @@ const TargetSize = () => {
     } else {
       tooltip = document.querySelector(".a11y-toolkit-size-tooltip");
     }
+    const isSmall = (width, height) => {
+      return width < 24 || height < 24;
+    };
+    const printElement = (event) => {
+      if (!window.showTooltip)
+        return;
+      if (event.key === "Control" || event.key === "Ctrl") {
+        if (isSmall(widthValue, heightValue)) {
+          console.log(currentElement);
+        }
+      }
+    };
     window.handleMouseOver = (event) => {
       if (!window.showTooltip)
         return;
@@ -8269,8 +8283,14 @@ const TargetSize = () => {
         const computedStyle = window.getComputedStyle(element);
         let width = element.style.width || computedStyle.width;
         let height = element.style.height || computedStyle.height;
-        const widthValue = parseFloat(width);
-        const heightValue = parseFloat(height);
+        if (width === "auto") {
+          width = `${element.offsetWidth}px`;
+        }
+        if (height === "auto") {
+          height = `${element.offsetHeight}px`;
+        }
+        widthValue = parseFloat(width);
+        heightValue = parseFloat(height);
         let elementName = element.tagName.toLowerCase();
         let idOrClass = element.id ? `#${element.id}` : element.className ? `.${element.className.split(" ")[0]}` : "";
         const tooltipWidth = tooltip.offsetWidth;
@@ -8291,7 +8311,7 @@ const TargetSize = () => {
         element.style.boxShadow = "0 0 5px 5px white";
         let codeBackgroundColor = "hsla(0, 0%, 10%, 0.9)";
         let codeColor = "hotpink";
-        if (widthValue < 24 || heightValue < 24) {
+        if (isSmall(widthValue, heightValue)) {
           codeBackgroundColor = "#990000";
           codeColor = "white";
           element.style.background = "#990000";
@@ -8309,6 +8329,7 @@ const TargetSize = () => {
       }
     };
     document.body.addEventListener("mouseover", window.handleMouseOver);
+    document.body.addEventListener("keydown", printElement);
     document.body.addEventListener("mouseout", () => {
       if (currentElement) {
         currentElement.style.outline = "";

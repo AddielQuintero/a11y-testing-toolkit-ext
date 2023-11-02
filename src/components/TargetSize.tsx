@@ -18,6 +18,8 @@ export const TargetSize = () => {
   const codeToExecute = (isActive: boolean) => {
     let currentElement: HTMLElement | null = null
     let tooltip: HTMLElement
+    let widthValue: number = 0
+    let heightValue: number = 0
 
     if (!document.querySelector('.a11y-toolkit-size-tooltip')) {
       tooltip = document.createElement('figure')
@@ -40,6 +42,19 @@ export const TargetSize = () => {
       tooltip = document.querySelector('.a11y-toolkit-size-tooltip') as HTMLElement
     }
 
+    const isSmall = (width: number, height: number) => {
+      return width < 24 || height < 24
+    }
+
+    const printElement = (event: KeyboardEvent) => {
+      if (!window.showTooltip) return
+      if (event.key === 'Control' || event.key === 'Ctrl') {
+        if (isSmall(widthValue, heightValue)) {
+          console.log(currentElement)
+        }
+      }
+    }
+
     window.handleMouseOver = (event: MouseEvent) => {
       if (!window.showTooltip) return
       const element = event.target as HTMLElement
@@ -48,8 +63,16 @@ export const TargetSize = () => {
         let width = element.style.width || computedStyle.width
         let height = element.style.height || computedStyle.height
 
-        const widthValue = parseFloat(width)
-        const heightValue = parseFloat(height)
+        if (width === 'auto') {
+          width = `${element.offsetWidth}px`
+        }
+
+        if (height === 'auto') {
+          height = `${element.offsetHeight}px`
+        }
+
+        widthValue = parseFloat(width)
+        heightValue = parseFloat(height)
 
         let elementName = element.tagName.toLowerCase()
         let idOrClass = element.id
@@ -81,7 +104,7 @@ export const TargetSize = () => {
         let codeBackgroundColor = 'hsla(0, 0%, 10%, 0.9)'
         let codeColor = 'hotpink'
 
-        if (widthValue < 24 || heightValue < 24) {
+        if (isSmall(widthValue, heightValue)) {
           codeBackgroundColor = '#990000'
           codeColor = 'white'
           element.style.background = '#990000'
@@ -102,6 +125,8 @@ export const TargetSize = () => {
     }
 
     document.body.addEventListener('mouseover', window.handleMouseOver)
+
+    document.body.addEventListener('keydown', printElement)
 
     document.body.addEventListener('mouseout', () => {
       if (currentElement) {
