@@ -11,7 +11,11 @@ declare global {
 
 window.showTooltip = false
 
-export const TargetSize = () => {
+interface TargetSizeProps {
+  setTooltipText: (tooltipText: string) => void
+}
+
+export const TargetSize = ({ setTooltipText }: TargetSizeProps) => {
   const [isActive, setIsActive] = useState<boolean>(false)
   const iconClass = isActive ? 'icon-active' : 'icon-default'
 
@@ -165,7 +169,11 @@ export const TargetSize = () => {
   }
 
   return (
-    <CustomButton onClick={handleClick}>
+    <CustomButton
+      onMouseEnter={() => setTooltipText('Target Size')}
+      onMouseLeave={() => setTooltipText('')}
+      onClick={handleClick}
+    >
       <BsSearch className={iconClass} />
     </CustomButton>
   )

@@ -3,20 +3,69 @@ import { BsKeyboardFill } from 'react-icons/bs'
 import { BsKeyboard } from 'react-icons/bs'
 import { CustomButton } from './common/Button'
 
-export const AutocompleteHighlighter = () => {
+interface AutocompleteProps {
+  setTooltipText: (tooltipText: string) => void
+}
+
+export const AutocompleteHighlighter = ({ setTooltipText }: AutocompleteProps) => {
   const [showAutoCompletes, setShowAutoCompletes] = useState<boolean>(false)
 
   const codeToExecute = function(showAutoCompletes: boolean) {
     const validAutocompleteValues: string[] = [
-      'name', 'honorific-prefix', 'given-name', 'additional-name', 'family-name', 'honorific-suffix',
-      'nickname', 'username', 'new-password', 'current-password', 'one-time-code', 'organization-title',
-      'organization', 'street-address', 'address-line1', 'address-line2', 'address-line3', 'address-level4',
-      'address-level3', 'address-level2', 'address-level1', 'country', 'country-name', 'postal-code',
-      'cc-name', 'cc-given-name', 'cc-additional-name', 'cc-family-name', 'cc-number', 'cc-exp',
-      'cc-exp-month', 'cc-exp-year', 'cc-csc', 'cc-type', 'transaction-currency', 'transaction-amount',
-      'language', 'bday', 'bday-day', 'bday-month', 'bday-year', 'sex',
-      'url', 'photo', 'tel', 'tel-country-code', 'tel-national', 'tel-area-code',
-      'tel-local', 'tel-local-prefix', 'tel-local-suffix', 'tel-extension', 'email', 'impp',
+      'name',
+      'honorific-prefix',
+      'given-name',
+      'additional-name',
+      'family-name',
+      'honorific-suffix',
+      'nickname',
+      'username',
+      'new-password',
+      'current-password',
+      'one-time-code',
+      'organization-title',
+      'organization',
+      'street-address',
+      'address-line1',
+      'address-line2',
+      'address-line3',
+      'address-level4',
+      'address-level3',
+      'address-level2',
+      'address-level1',
+      'country',
+      'country-name',
+      'postal-code',
+      'cc-name',
+      'cc-given-name',
+      'cc-additional-name',
+      'cc-family-name',
+      'cc-number',
+      'cc-exp',
+      'cc-exp-month',
+      'cc-exp-year',
+      'cc-csc',
+      'cc-type',
+      'transaction-currency',
+      'transaction-amount',
+      'language',
+      'bday',
+      'bday-day',
+      'bday-month',
+      'bday-year',
+      'sex',
+      'url',
+      'photo',
+      'tel',
+      'tel-country-code',
+      'tel-national',
+      'tel-area-code',
+      'tel-local',
+      'tel-local-prefix',
+      'tel-local-suffix',
+      'tel-extension',
+      'email',
+      'impp',
     ]
     const removeIndicators = () => {
       const indicators = document.querySelectorAll('.autocomplete-indicator')
@@ -50,9 +99,12 @@ export const AutocompleteHighlighter = () => {
     const inputs = document.querySelectorAll('input')
     const visibleInputs = [...inputs].filter(isVisible)
 
-    const processAutocompleteValues = (input: HTMLInputElement, autocompleteCounts: Record<string, number>) => {
+    const processAutocompleteValues = (
+      input: HTMLInputElement,
+      autocompleteCounts: Record<string, number>
+    ) => {
       const autocompleteValue = input.getAttribute('autocomplete')
-      if (autocompleteValue !== null) { 
+      if (autocompleteValue !== null) {
         autocompleteCounts[autocompleteValue] = (autocompleteCounts[autocompleteValue] || 0) + 1
       }
     }
@@ -134,7 +186,11 @@ export const AutocompleteHighlighter = () => {
   }
 
   return (
-    <CustomButton onClick={handleClick}>
+    <CustomButton
+      onMouseEnter={() => setTooltipText('Autocomplete')}
+      onMouseLeave={() => setTooltipText('')}
+      onClick={handleClick}
+    >
       {showAutoCompletes ? (
         <BsKeyboardFill className="buttons__icons" />
       ) : (

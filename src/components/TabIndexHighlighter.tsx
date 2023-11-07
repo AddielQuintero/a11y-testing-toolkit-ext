@@ -3,7 +3,11 @@ import { Bs1SquareFill } from 'react-icons/bs'
 import { Bs1Square } from 'react-icons/bs'
 import { CustomButton } from './common/Button'
 
-export const TabIndexHighlighter = () => {
+interface TabIndexProps {
+  setTooltipText: (tooltipText: string) => void;
+}
+
+export const TabIndexHighlighter = ({ setTooltipText }: TabIndexProps) => {
   const [showTabIndexes, setShowTabIndexes] = useState(false)
 
   const codeToExecute = function(showTabIndexes: boolean) {
@@ -70,7 +74,11 @@ export const TabIndexHighlighter = () => {
   }
 
   return (
-    <CustomButton onClick={handleClick}>
+    <CustomButton
+      onMouseEnter={() => setTooltipText('Tab Index')}
+      onMouseLeave={() => setTooltipText('')}
+      onClick={handleClick}
+    >
       {showTabIndexes ? (
         <Bs1SquareFill className="buttons__icons" />
       ) : (

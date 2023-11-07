@@ -7694,11 +7694,13 @@ const CustomButton = (props) => {
       className: props.className,
       disabled: props.disabled,
       onClick: props.onClick,
+      onMouseEnter: props.onMouseEnter,
+      onMouseLeave: props.onMouseLeave,
       children: props.children
     }
   );
 };
-const TabIndexHighlighter = () => {
+const TabIndexHighlighter = ({ setTooltipText }) => {
   const [showTabIndexes, setShowTabIndexes] = reactExports.useState(false);
   const codeToExecute = function(showTabIndexes2) {
     const removeIndicators = () => {
@@ -7755,9 +7757,17 @@ const TabIndexHighlighter = () => {
       }
     });
   };
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(CustomButton, { onClick: handleClick, children: showTabIndexes ? /* @__PURE__ */ jsxRuntimeExports.jsx(Bs1SquareFill, { className: "buttons__icons" }) : /* @__PURE__ */ jsxRuntimeExports.jsx(Bs1Square, { className: "buttons__icons" }) });
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(
+    CustomButton,
+    {
+      onMouseEnter: () => setTooltipText("Tab Index"),
+      onMouseLeave: () => setTooltipText(""),
+      onClick: handleClick,
+      children: showTabIndexes ? /* @__PURE__ */ jsxRuntimeExports.jsx(Bs1SquareFill, { className: "buttons__icons" }) : /* @__PURE__ */ jsxRuntimeExports.jsx(Bs1Square, { className: "buttons__icons" })
+    }
+  );
 };
-const AutocompleteHighlighter = () => {
+const AutocompleteHighlighter = ({ setTooltipText }) => {
   const [showAutoCompletes, setShowAutoCompletes] = reactExports.useState(false);
   const codeToExecute = function(showAutoCompletes2) {
     const validAutocompleteValues = [
@@ -7911,9 +7921,17 @@ const AutocompleteHighlighter = () => {
       }
     });
   };
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(CustomButton, { onClick: handleClick, children: showAutoCompletes ? /* @__PURE__ */ jsxRuntimeExports.jsx(BsKeyboardFill, { className: "buttons__icons" }) : /* @__PURE__ */ jsxRuntimeExports.jsx(BsKeyboard, { className: "buttons__icons" }) });
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(
+    CustomButton,
+    {
+      onMouseEnter: () => setTooltipText("Autocomplete"),
+      onMouseLeave: () => setTooltipText(""),
+      onClick: handleClick,
+      children: showAutoCompletes ? /* @__PURE__ */ jsxRuntimeExports.jsx(BsKeyboardFill, { className: "buttons__icons" }) : /* @__PURE__ */ jsxRuntimeExports.jsx(BsKeyboard, { className: "buttons__icons" })
+    }
+  );
 };
-const AriaRolesHighlighter = () => {
+const AriaRolesHighlighter = ({ setTooltipText }) => {
   const [showAriaRoles, setShowAriaRoles] = reactExports.useState(false);
   const codeToExecute = function(showAriaRoles2) {
     const isVisible = (element) => {
@@ -8102,9 +8120,17 @@ const AriaRolesHighlighter = () => {
       }
     });
   };
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(CustomButton, { onClick: handleClick, children: showAriaRoles ? /* @__PURE__ */ jsxRuntimeExports.jsx(BsBadgeArFill, { className: "buttons__icons" }) : /* @__PURE__ */ jsxRuntimeExports.jsx(BsBadgeAr, { className: "buttons__icons" }) });
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(
+    CustomButton,
+    {
+      onMouseEnter: () => setTooltipText("Aria Roles"),
+      onMouseLeave: () => setTooltipText(""),
+      onClick: handleClick,
+      children: showAriaRoles ? /* @__PURE__ */ jsxRuntimeExports.jsx(BsBadgeArFill, { className: "buttons__icons" }) : /* @__PURE__ */ jsxRuntimeExports.jsx(BsBadgeAr, { className: "buttons__icons" })
+    }
+  );
 };
-const LandMarksHighlighter = () => {
+const LandMarksHighlighter = ({ setTooltipText }) => {
   const [showLandMarks, setShowLandMarks] = reactExports.useState(false);
   const codeToExecute = function(showLandMarks2) {
     const landmarksNative = [
@@ -8224,19 +8250,166 @@ const LandMarksHighlighter = () => {
       }
     });
   };
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(CustomButton, { onClick: handleClick, children: showLandMarks ? /* @__PURE__ */ jsxRuntimeExports.jsx(BsMapFill, { className: "buttons__icons" }) : /* @__PURE__ */ jsxRuntimeExports.jsx(BsMap, { className: "buttons__icons" }) });
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(
+    CustomButton,
+    {
+      onMouseEnter: () => setTooltipText("Land Marks"),
+      onMouseLeave: () => setTooltipText(""),
+      onClick: handleClick,
+      children: showLandMarks ? /* @__PURE__ */ jsxRuntimeExports.jsx(BsMapFill, { className: "buttons__icons" }) : /* @__PURE__ */ jsxRuntimeExports.jsx(BsMap, { className: "buttons__icons" })
+    }
+  );
 };
 const headingIcon = "/assets/headingsIcon-31119357.svg";
-const HeadingsHighlighter = () => {
+const HeadingsHighlighter = ({ setTooltipText }) => {
   const [showHeadings, setShowHeadings] = reactExports.useState(false);
   const handleClick = () => {
     setShowHeadings(!showHeadings);
   };
   const iconClass = showHeadings ? "svg-active" : "svg-default";
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(CustomButton, { onClick: handleClick, className: iconClass, children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: headingIcon, className: "svg-icon", alt: "Heading Icon" }) });
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(
+    CustomButton,
+    {
+      onMouseEnter: () => setTooltipText("Headings"),
+      onMouseLeave: () => setTooltipText(""),
+      onClick: handleClick,
+      className: iconClass,
+      children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: headingIcon, className: "svg-icon", alt: "Heading Icon" })
+    }
+  );
+};
+const listItem = "/assets/listItem-7bf3a845.svg";
+const ListItemsHighlighter = ({ setTooltipText }) => {
+  const [showListItems, setShowListItems] = reactExports.useState(false);
+  const iconClass = showListItems ? "svg-active" : "svg-default";
+  const codeToExecute = function(showListItems2) {
+    const colors = { aria: "#00F", native: "red" };
+    let span;
+    let ariaMarkCount = 0;
+    let nativeMarkCount = 0;
+    const roleCounts = {};
+    const removeIndicators = () => {
+      const indicators = document.querySelectorAll(".listItems-indicator");
+      indicators.forEach((indicator) => {
+        const container = indicator.parentElement;
+        if (container) {
+          container.style.outline = "";
+          container.style.position = "";
+        }
+        indicator.remove();
+      });
+    };
+    const highlightElement = (element, label, color) => {
+      const existingIndicator = element.querySelector(".listItems-indicator");
+      if (existingIndicator) {
+        return;
+      }
+      element.style.outline = `${label === "LI" || label === "listitem" ? "1px" : "2px"} solid ${color}`;
+      const positionStyle = window.getComputedStyle(element).position;
+      if (positionStyle === "static") {
+        element.style.position = "relative";
+      }
+      span = document.createElement("span");
+      span.className = "listItems-indicator";
+      span.style.position = "relative";
+      span.style.padding = "2px";
+      span.style.zIndex = "999";
+      span.style.background = color;
+      span.style.color = "white";
+      span.style.fontSize = "11px";
+      span.innerText = label;
+      if (label === "LI" || label === "listitem") {
+        element.insertAdjacentElement("beforeend", span);
+      } else {
+        element.insertAdjacentElement("afterbegin", span);
+      }
+    };
+    const logElement = (element) => {
+      console.log(element);
+    };
+    const logElementCounts = () => {
+      const elements = ariaMarkCount + nativeMarkCount;
+      console.log(`${elements} elements with role attribute were found on this page.`);
+      Object.entries(roleCounts).forEach(([role, count]) => {
+        console.log(`${role}: ${count} occurrences`);
+      });
+    };
+    const highlightListItems = () => {
+      const ariaLists = document.querySelectorAll("[role='list']");
+      const ariaListItems = document.querySelectorAll("[role='listitem']");
+      ariaLists.forEach((element) => {
+        const role = element.getAttribute("role");
+        if (element instanceof HTMLElement && role) {
+          highlightElement(element, "list", colors.aria);
+          roleCounts[role] = (roleCounts[role] || 0) + 1;
+          logElement(element);
+        }
+        ariaMarkCount++;
+      });
+      ariaListItems.forEach((element) => {
+        const role = element.getAttribute("role");
+        if (element instanceof HTMLElement && role) {
+          highlightElement(element, "listitem", colors.aria);
+          roleCounts[role] = (roleCounts[role] || 0) + 1;
+          logElement(element);
+        }
+        ariaMarkCount++;
+      });
+      const pageLists = document.querySelectorAll("ul:not([role]), ol:not([role])");
+      const pageListItems = document.querySelectorAll("li:not([role])");
+      pageLists.forEach((element) => {
+        if (element instanceof HTMLElement) {
+          highlightElement(element, element.tagName, colors.native);
+          logElement(element);
+          roleCounts[element.tagName] = (roleCounts[element.tagName] || 0) + 1;
+        }
+        nativeMarkCount++;
+      });
+      pageListItems.forEach((element) => {
+        if (element instanceof HTMLElement) {
+          highlightElement(element, element.tagName, colors.native);
+          logElement(element);
+          roleCounts[element.tagName] = (roleCounts[element.tagName] || 0) + 1;
+        }
+        nativeMarkCount++;
+      });
+      logElementCounts();
+    };
+    if (showListItems2) {
+      removeIndicators();
+    } else {
+      highlightListItems();
+    }
+  };
+  const handleClick = () => {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      const currentTab = tabs[0];
+      if (currentTab && currentTab.id) {
+        const tabId = currentTab.id;
+        chrome.scripting.executeScript(
+          {
+            target: { tabId },
+            func: codeToExecute,
+            args: [showListItems]
+          },
+          () => setShowListItems(!showListItems)
+        );
+      }
+    });
+  };
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(
+    CustomButton,
+    {
+      onMouseEnter: () => setTooltipText("List Items"),
+      onMouseLeave: () => setTooltipText(""),
+      onClick: handleClick,
+      className: iconClass,
+      children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: listItem, className: "svg-icon", alt: "listItem Icon" })
+    }
+  );
 };
 window.showTooltip = false;
-const TargetSize = () => {
+const TargetSize = ({ setTooltipText }) => {
   const [isActive, setIsActive] = reactExports.useState(false);
   const iconClass = isActive ? "icon-active" : "icon-default";
   const codeToExecute = (isActive2) => {
@@ -8362,16 +8535,29 @@ const TargetSize = () => {
       }
     });
   };
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(CustomButton, { onClick: handleClick, children: /* @__PURE__ */ jsxRuntimeExports.jsx(BsSearch, { className: iconClass }) });
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(
+    CustomButton,
+    {
+      onMouseEnter: () => setTooltipText("Target Size"),
+      onMouseLeave: () => setTooltipText(""),
+      onClick: handleClick,
+      children: /* @__PURE__ */ jsxRuntimeExports.jsx(BsSearch, { className: iconClass })
+    }
+  );
 };
 function App$1() {
+  const [tooltipText, setTooltipText] = reactExports.useState("");
   return /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "toolkit", children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx(HeadingsHighlighter, {}),
-    /* @__PURE__ */ jsxRuntimeExports.jsx(TabIndexHighlighter, {}),
-    /* @__PURE__ */ jsxRuntimeExports.jsx(AutocompleteHighlighter, {}),
-    /* @__PURE__ */ jsxRuntimeExports.jsx(AriaRolesHighlighter, {}),
-    /* @__PURE__ */ jsxRuntimeExports.jsx(LandMarksHighlighter, {}),
-    /* @__PURE__ */ jsxRuntimeExports.jsx(TargetSize, {})
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "toolkit__container", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(HeadingsHighlighter, { setTooltipText }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(ListItemsHighlighter, { setTooltipText }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(TabIndexHighlighter, { setTooltipText }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(AutocompleteHighlighter, { setTooltipText }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(AriaRolesHighlighter, { setTooltipText }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(LandMarksHighlighter, { setTooltipText }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(TargetSize, { setTooltipText })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "toolkit__title", children: tooltipText })
   ] }) });
 }
 const index = "";

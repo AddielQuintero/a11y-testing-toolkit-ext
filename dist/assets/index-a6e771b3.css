@@ -39,53 +39,52 @@ body {
 } */.toolkit {
   position: relative;
 }
-
+.toolkit__container {
+  display: flex;
+  gap: 0.4rem;
+}
+.toolkit__title {
+  min-height: 1.25rem;
+  margin-top: 0.4rem;
+}
 .svg-default .svg-icon {
   filter: invert(1);
   background-color: transparent;
 }
-
 .svg-active .svg-icon {
   filter: invert(0);
   background-color: white;
 }
-
 .icon-default {
   color: #fff;
   background-color: transparent;
 }
-
 .icon-active {
   color: #000;
   background-color: white;
 }
-
 button {
   display: flex;
-  margin-bottom: 0.4rem;
   padding: 0.3rem;
   border-radius: 0.5rem;
-  border: 1px solid transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  outline: none;
   font-size: 1rem;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
+  background-color: transparent;
+  transition: border 0.25s, outline 0.25s;
 }
-
 button:hover {
-  border-color: #fff;
+  border: 1px solid #fff;
+  outline: none;
 }
-
 button:focus, button:active, button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  outline: 1px solid #fff;
 }
-
 button.buttons__icons {
   font-size: 1.25rem;
 }
-
 .tooltip {
   visibility: hidden;
   width: 120px;
@@ -98,7 +97,6 @@ button.buttons__icons {
   position: absolute;
   z-index: 1;
 }
-
 button:hover .tooltip {
   visibility: visible;
 }

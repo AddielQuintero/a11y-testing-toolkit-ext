@@ -3,7 +3,11 @@ import { BsMapFill } from 'react-icons/bs'
 import { BsMap } from 'react-icons/bs'
 import { CustomButton } from './common/Button'
 
-export const LandMarksHighlighter = () => {
+interface LandMarksProps {
+  setTooltipText: (tooltipText: string) => void
+}
+
+export const LandMarksHighlighter = ({ setTooltipText }: LandMarksProps) => {
   const [showLandMarks, setShowLandMarks] = useState(false)
 
   const codeToExecute = function(showLandMarks: boolean) {
@@ -140,7 +144,11 @@ export const LandMarksHighlighter = () => {
     })
   }
   return (
-    <CustomButton onClick={handleClick}>
+    <CustomButton
+      onMouseEnter={() => setTooltipText('Land Marks')}
+      onMouseLeave={() => setTooltipText('')}
+      onClick={handleClick}
+    >
       {showLandMarks ? <BsMapFill className="buttons__icons" /> : <BsMap className="buttons__icons" />}
     </CustomButton>
   )

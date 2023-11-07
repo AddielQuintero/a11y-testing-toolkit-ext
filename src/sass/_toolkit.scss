@@ -1,5 +1,15 @@
 .toolkit {
   position: relative;
+
+  &__container {
+    display: flex;
+    gap: 0.4rem;
+  }
+
+  &__title {
+    min-height: 1.25rem;
+    margin-top: 0.4rem;
+  }
 }
 
 .svg-default .svg-icon {
