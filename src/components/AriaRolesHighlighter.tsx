@@ -3,7 +3,11 @@ import { BsBadgeArFill } from 'react-icons/bs'
 import { BsBadgeAr } from 'react-icons/bs'
 import { CustomButton } from './common/Button'
 
-export const AriaRolesHighlighter = () => {
+interface AriaRolesProps {
+  setTooltipText: (tooltipText: string) => void;
+}
+
+export const AriaRolesHighlighter = ({ setTooltipText }: AriaRolesProps) => {
   const [showAriaRoles, setShowAriaRoles] = useState(false)
 
   const codeToExecute = function(showAriaRoles: boolean) {
@@ -217,12 +221,16 @@ export const AriaRolesHighlighter = () => {
   }
 
   return (
-    <CustomButton onClick={handleClick}>
-      {showAriaRoles ? 
+    <CustomButton
+      onMouseEnter={() => setTooltipText('Aria Roles')}
+      onMouseLeave={() => setTooltipText('')}
+      onClick={handleClick}
+    >
+      {showAriaRoles ? (
         <BsBadgeArFill className="buttons__icons" />
-       : 
+      ) : (
         <BsBadgeAr className="buttons__icons" />
-      }
+      )}
     </CustomButton>
   )
 }
