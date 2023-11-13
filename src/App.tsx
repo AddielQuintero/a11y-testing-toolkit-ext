@@ -7,7 +7,7 @@ import { HeadingsHighlighter } from './components/HeadingsHighlighter'
 import { ListItemsHighlighter } from './components/ListItemsHighlighter'
 import { ImageAltTextHighlighter } from './components/ImageAltTextHighlighter'
 import { FocusIndicatorHighlighter } from './components/FocusIndicatorHighlighter'
-// import { TextSpacingHighlighter } from './components/TextSpacingHighlighter'
+import { TextSpacingHighlighter } from './components/TextSpacingHighlighter'
 // import { CurrentlyFocusedHighlighter } from './components/CurrentlyFocusedHighlighter'
 import { TargetSize } from './components/TargetSize'
 
@@ -23,8 +23,8 @@ function App() {
           <ImageAltTextHighlighter setTooltipText={setTooltipText} />
           <TabIndexHighlighter setTooltipText={setTooltipText} />
           <FocusIndicatorHighlighter setTooltipText={setTooltipText} />
-          {/* <CurrentlyFocusedHighlighter setTooltipText={setTooltipText} />
-          <TextSpacingHighlighter setTooltipText={setTooltipText} /> */}
+          {/* <CurrentlyFocusedHighlighter setTooltipText={setTooltipText} />*/}
+          <TextSpacingHighlighter setTooltipText={setTooltipText} /> 
           <AutocompleteHighlighter setTooltipText={setTooltipText} />
           <AriaRolesHighlighter setTooltipText={setTooltipText} />
           <LandMarksHighlighter setTooltipText={setTooltipText} />
