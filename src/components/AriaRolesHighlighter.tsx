@@ -4,13 +4,95 @@ import { BsBadgeAr } from 'react-icons/bs'
 import { CustomButton } from './common/Button'
 
 interface AriaRolesProps {
-  setTooltipText: (tooltipText: string) => void;
+  setTooltipText: (tooltipText: string) => void
 }
 
 export const AriaRolesHighlighter = ({ setTooltipText }: AriaRolesProps) => {
   const [showAriaRoles, setShowAriaRoles] = useState(false)
 
   const codeToExecute = function(showAriaRoles: boolean) {
+    const colors = { aria: '#00F', native: 'red' }
+    const validAriaRoles = [
+      // Roles de widgets
+      'button',
+      'checkbox',
+      'gridcell',
+      'link',
+      'menuitem',
+      'menuitemcheckbox',
+      'menuitemradio',
+      'option',
+      'progressbar',
+      'radio',
+      'scrollbar',
+      'searchbox',
+      'separator',
+      'slider',
+      'spinbutton',
+      'switch',
+      'tab',
+      'tabpanel',
+      'textbox',
+      'treeitem',
+      // Composite roles
+      'combobox',
+      'grid',
+      'listbox',
+      'menu',
+      'menubar',
+      'radiogroup',
+      'tablist',
+      'tree',
+      'treegrid',
+      // Document structure functions
+      'application',
+      'article',
+      'cell',
+      'columnheader',
+      'definition',
+      'directory',
+      'document',
+      'feed',
+      'figure',
+      'group',
+      'heading',
+      'img',
+      'list',
+      'listitem',
+      'math',
+      'none',
+      'note',
+      'presentation',
+      'row',
+      'rowgroup',
+      'rowheader',
+      'separator',
+      'table',
+      'term',
+      'toolbar',
+      'tooltip',
+      // Featured roles
+      'banner',
+      'complementary',
+      'contentinfo',
+      'form',
+      'main',
+      'navigation',
+      'region',
+      'search',
+      // Roles de región en vivo
+      'alert',
+      'log',
+      'marquee',
+      'status',
+      'timer',
+      // Window roles
+      'alertdialog',
+      'dialog',
+    ]
+    const elements = document.querySelectorAll('[role]')
+    const roleCounts: { [key: string]: number } = {}
+
     const isVisible = (element: Element) => {
       const style = window.getComputedStyle(element)
       return (
@@ -21,12 +103,37 @@ export const AriaRolesHighlighter = ({ setTooltipText }: AriaRolesProps) => {
       )
     }
 
+    const addImportantStyle = (element: Element, property: string, value: string) => {
+      let styleSheet = document.getElementById('importantStyles') as HTMLStyleElement | null
+      if (!styleSheet) {
+        styleSheet = document.createElement('style')
+        styleSheet.id = 'importantStyles'
+        document.head.appendChild(styleSheet)
+      }
+
+      if (!element.id) {
+        element.id = 'a11yToolkit-' + Math.random().toString(36).substr(2, 9)
+      }
+
+      if (styleSheet.sheet) {
+        styleSheet.sheet.insertRule(
+          `#${element.id} { ${property}: ${value} !important; }`,
+          styleSheet.sheet.cssRules.length
+        )
+      }
+    }
+
     const removeIndicators = () => {
-      const indicators = document.querySelectorAll('.ariaRoles-indicator')
+      const styleSheet = document.getElementById('importantStyles')
+      if (styleSheet) {
+        styleSheet.remove()
+      }
+      
+      const indicators = document.querySelectorAll('.a11yToolkit-ariaRoles-indicator')
       indicators.forEach((indicator) => {
         const container = indicator.parentElement
         if (container) {
-          container.style.outline = ''
+          // container.style.outline = ''
           container.style.position = ''
         }
         indicator.remove()
@@ -35,35 +142,38 @@ export const AriaRolesHighlighter = ({ setTooltipText }: AriaRolesProps) => {
 
     const highlightValidRoles = (element: HTMLElement, role: string) => {
       const positionStyle = window.getComputedStyle(element).position
-      if (element instanceof HTMLElement) {
+      if (element) {
         if (positionStyle === 'static') {
           element.style.position = 'relative'
         }
 
-        element.style.outline = '2px solid blue'
+        // element.style.outline = '2px solid blue'
+        addImportantStyle(element, 'outline', `2px solid ${colors.aria}`)
         const label = document.createElement('span')
         label.innerText = role
-        label.className = 'ariaRoles-indicator'
+        label.className = 'a11yToolkit-ariaRoles-indicator'
         label.style.position = 'absolute'
         label.style.padding = '2px'
         label.style.top = '0'
         label.style.left = '0'
         label.style.zIndex = '999'
         label.style.background = '#00F'
+        label.style.fontSize = '11px'
         label.style.color = 'white'
         element.appendChild(label)
       }
     }
 
     const highlightInvalidRoles = (element: HTMLElement) => {
-      element.style.outline = '2px solid red'
       const positionStyle = window.getComputedStyle(element).position
       if (positionStyle === 'static') {
         element.style.position = 'relative'
       }
-
+      
+      // element.style.outline = '2px solid red'
+      addImportantStyle(element, 'outline', `2px solid ${colors.native}`)
       const warningIcon = document.createElement('span')
-      warningIcon.className = 'ariaRoles-indicator'
+      warningIcon.className = 'a11yToolkit-ariaRoles-indicator'
       warningIcon.innerText = ' ⚠️'
       warningIcon.style.padding = '2px'
       warningIcon.style.position = 'absolute'
@@ -74,87 +184,6 @@ export const AriaRolesHighlighter = ({ setTooltipText }: AriaRolesProps) => {
     }
 
     const highlightAriaRoles = () => {
-      const validAriaRoles = [
-        // Roles de widgets
-        'button',
-        'checkbox',
-        'gridcell',
-        'link',
-        'menuitem',
-        'menuitemcheckbox',
-        'menuitemradio',
-        'option',
-        'progressbar',
-        'radio',
-        'scrollbar',
-        'searchbox',
-        'separator',
-        'slider',
-        'spinbutton',
-        'switch',
-        'tab',
-        'tabpanel',
-        'textbox',
-        'treeitem',
-        // Composite roles
-        'combobox',
-        'grid',
-        'listbox',
-        'menu',
-        'menubar',
-        'radiogroup',
-        'tablist',
-        'tree',
-        'treegrid',
-        // Document structure functions
-        'application',
-        'article',
-        'cell',
-        'columnheader',
-        'definition',
-        'directory',
-        'document',
-        'feed',
-        'figure',
-        'group',
-        'heading',
-        'img',
-        'list',
-        'listitem',
-        'math',
-        'none',
-        'note',
-        'presentation',
-        'row',
-        'rowgroup',
-        'rowheader',
-        'separator',
-        'table',
-        'term',
-        'toolbar',
-        'tooltip',
-        // Featured roles
-        'banner',
-        'complementary',
-        'contentinfo',
-        'form',
-        'main',
-        'navigation',
-        'region',
-        'search',
-        // Roles de región en vivo
-        'alert',
-        'log',
-        'marquee',
-        'status',
-        'timer',
-        // Window roles
-        'alertdialog',
-        'dialog',
-      ]
-      const elements = document.querySelectorAll('[role]')
-      const roleCounts: { [key: string]: number } = {}
-
       elements.forEach((element) => {
         const role = element.getAttribute('role')
 
