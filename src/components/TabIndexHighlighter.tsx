@@ -12,7 +12,7 @@ export const TabIndexHighlighter = ({ setTooltipText }: TabIndexProps) => {
 
   const codeToExecute = function(showTabIndexes: boolean) {
     const removeIndicators = () => {
-      const indicators = document.querySelectorAll('.tabindex-indicator')
+      const indicators = document.querySelectorAll('.a11yToolkit-tabindex-indicator')
       indicators.forEach((indicator) => indicator.remove())
     }
 
@@ -27,7 +27,7 @@ export const TabIndexHighlighter = ({ setTooltipText }: TabIndexProps) => {
           }
 
           const span = document.createElement('span')
-          span.className = 'tabindex-indicator'
+          span.className = 'a11yToolkit-tabindex-indicator'
           span.style.position = 'absolute'
           span.style.padding = '2px'
           span.style.top = '0'
