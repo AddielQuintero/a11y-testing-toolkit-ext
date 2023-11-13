@@ -67,18 +67,41 @@ export const AutocompleteHighlighter = ({ setTooltipText }: AutocompleteProps) =
       'email',
       'impp',
     ]
+
+    const addImportantStyle = (element: Element, property: string, value: string) => {
+      let styleSheet = document.getElementById('importantStyles') as HTMLStyleElement | null
+      if (!styleSheet) {
+        styleSheet = document.createElement('style')
+        styleSheet.id = 'importantStyles'
+        document.head.appendChild(styleSheet)
+      }
+
+      if (!element.id) {
+        element.id = 'a11yToolkit-' + Math.random().toString(36).substr(2, 9)
+      }
+
+      if (styleSheet.sheet) {
+        styleSheet.sheet.insertRule(
+          `#${element.id} { ${property}: ${value} !important;}`,
+          styleSheet.sheet.cssRules.length
+        )
+      }
+    }
+
     const removeIndicators = () => {
-      const indicators = document.querySelectorAll('.autocomplete-indicator')
-      indicators.forEach((indicator) => {
-        const container = indicator.parentElement
-        if (container) {
-          const input = container.querySelector('input')
-          if (input) {
-            container.before(input)
-            input.style.outline = ''
-          }
-          container.remove()
+      const styleSheet = document.getElementById('importantStyles')
+      if (styleSheet) {
+        styleSheet.remove()
+      }
+
+      const containers = document.querySelectorAll('.a11yToolkit-autocomplete-container')
+      containers.forEach((container) => {
+        const element = container.querySelector('input')
+        if (element) {
+          container.before(element)
+          element.style.outline = ''
         }
+        container.remove()
       })
     }
 
@@ -110,40 +133,45 @@ export const AutocompleteHighlighter = ({ setTooltipText }: AutocompleteProps) =
     }
 
     const highlightAutocomplete = (input: HTMLInputElement) => {
-      const autocompleteValue = input.getAttribute('autocomplete')
+      let container = input.closest('.a11yToolkit-autocomplete-container') as HTMLElement
+      if (!container) {
+        const autocompleteValue = input.getAttribute('autocomplete')
 
-      const container = document.createElement('div')
-      container.style.position = 'relative'
-      container.style.display = 'inline-block'
-      if (input.parentNode) {
-        input.parentNode.insertBefore(container, input)
+        container = document.createElement('div')
+        container.classList.add('a11yToolkit-autocomplete-container')
+        container.style.position = 'relative'
+        container.style.display = 'inline-block'
+        if (input.parentNode) {
+          input.parentNode.insertBefore(container, input)
+        }
+        container.appendChild(input)
+
+        // input.style.outline = '2px solid red'
+        addImportantStyle(input, 'outline', `2px solid red`)
+
+        const span = document.createElement('span')
+        span.className = 'a11yToolkit-autocomplete-indicator'
+        span.style.position = 'absolute'
+        span.style.padding = '2px'
+        span.style.top = '0'
+        span.style.left = '0'
+        span.style.zIndex = '999'
+        span.style.background = 'red'
+        span.style.color = 'white'
+        span.style.fontSize = '11px'
+
+        if (!autocompleteValue) {
+          span.innerText = 'No'
+          console.error(`Input without autocomplete '${autocompleteValue}':`, input)
+        } else if (!validAutocompleteValues.includes(autocompleteValue)) {
+          span.innerText = '⚠️'
+          console.error(`Input with invalid autocomplete '${autocompleteValue}':`, input)
+        } else {
+          span.innerText = autocompleteValue
+        }
+
+        container.appendChild(span)
       }
-      container.appendChild(input)
-
-      input.style.outline = '2px solid red'
-
-      const span = document.createElement('span')
-      span.className = 'autocomplete-indicator'
-      span.style.position = 'absolute'
-      span.style.padding = '2px'
-      span.style.top = '0'
-      span.style.left = '0'
-      span.style.zIndex = '999'
-      span.style.background = 'red'
-      span.style.color = 'white'
-      span.style.fontSize = '11px'
-
-      if (!autocompleteValue) {
-        span.innerText = 'No'
-        console.error(`Input without autocomplete '${autocompleteValue}':`, input)
-      } else if (!validAutocompleteValues.includes(autocompleteValue)) {
-        span.innerText = '⚠️'
-        console.error(`Input with invalid autocomplete '${autocompleteValue}':`, input)
-      } else {
-        span.innerText = autocompleteValue
-      }
-
-      container.appendChild(span)
     }
 
     const annotateAndAttach = () => {

@@ -18,8 +18,33 @@ export const ListItemsHighlighter = ({ setTooltipText }: ListItemsProps) => {
     let nativeMarkCount = 0
     const roleCounts: { [key: string]: number } = {}
 
+    const addImportantStyle = (element: Element, property: string, value: string) => {
+      let styleSheet = document.getElementById('importantStyles') as HTMLStyleElement | null
+      if (!styleSheet) {
+        styleSheet = document.createElement('style')
+        styleSheet.id = 'importantStyles'
+        document.head.appendChild(styleSheet)
+      }
+
+      if (!element.id) {
+        element.id = 'a11yToolkit-' + Math.random().toString(36).substr(2, 9)
+      }
+
+      if (styleSheet.sheet) {
+        styleSheet.sheet.insertRule(
+          `#${element.id} { ${property}: ${value} !important;}`,
+          styleSheet.sheet.cssRules.length
+        )
+      }
+    }
+
     const removeIndicators = () => {
-      const indicators = document.querySelectorAll('.listItems-indicator')
+      const styleSheet = document.getElementById('importantStyles')
+      if (styleSheet) {
+        styleSheet.remove()
+      }
+
+      const indicators = document.querySelectorAll('.a11yToolkit-listItems-indicator')
       indicators.forEach((indicator) => {
         const container = indicator.parentElement
         if (container) {
@@ -31,12 +56,14 @@ export const ListItemsHighlighter = ({ setTooltipText }: ListItemsProps) => {
     }
 
     const highlightElement = (element: HTMLElement, label: string, color: string) => {
-      const existingIndicator = element.querySelector('.listItems-indicator')
+      const existingIndicator = element.querySelector('.a11yToolkit-listItems-indicator')
       if (existingIndicator) {
         return
       }
 
-      element.style.outline = `${label === 'LI' || label === 'listitem' ? '1px' : '2px'} solid ${color}`
+      let value = `${label === 'LI' || label === 'aLI' ? '1px' : '2px'} solid ${color}`
+
+      addImportantStyle(element, 'outline', value)
 
       const positionStyle = window.getComputedStyle(element).position
       if (positionStyle === 'static') {
@@ -44,7 +71,7 @@ export const ListItemsHighlighter = ({ setTooltipText }: ListItemsProps) => {
       }
 
       span = document.createElement('span')
-      span.className = 'listItems-indicator'
+      span.className = 'a11yToolkit-listItems-indicator'
       span.style.position = 'relative'
       span.style.padding = '2px'
       span.style.zIndex = '999'
@@ -53,7 +80,7 @@ export const ListItemsHighlighter = ({ setTooltipText }: ListItemsProps) => {
       span.style.fontSize = '11px'
       span.innerText = label
 
-      if (label === 'LI' || label === 'listitem') {
+      if (label === 'LI' || label === 'aLI') {
         element.insertAdjacentElement('beforeend', span)
       } else {
         element.insertAdjacentElement('afterbegin', span)
@@ -79,7 +106,7 @@ export const ListItemsHighlighter = ({ setTooltipText }: ListItemsProps) => {
       ariaLists.forEach((element) => {
         const role = element.getAttribute('role')
         if (element instanceof HTMLElement && role) {
-          highlightElement(element, 'list', colors.aria)
+          highlightElement(element, 'aL', colors.aria)
           roleCounts[role] = (roleCounts[role] || 0) + 1
           logElement(element)
         }
@@ -89,9 +116,8 @@ export const ListItemsHighlighter = ({ setTooltipText }: ListItemsProps) => {
       ariaListItems.forEach((element) => {
         const role = element.getAttribute('role')
         if (element instanceof HTMLElement && role) {
-          highlightElement(element, 'listitem', colors.aria)
+          highlightElement(element, 'aLI', colors.aria)
           roleCounts[role] = (roleCounts[role] || 0) + 1
-          logElement(element)
         }
         ariaMarkCount++
       })
@@ -111,7 +137,6 @@ export const ListItemsHighlighter = ({ setTooltipText }: ListItemsProps) => {
       pageListItems.forEach((element) => {
         if (element instanceof HTMLElement) {
           highlightElement(element, element.tagName, colors.native)
-          logElement(element)
           roleCounts[element.tagName] = (roleCounts[element.tagName] || 0) + 1
         }
         nativeMarkCount++

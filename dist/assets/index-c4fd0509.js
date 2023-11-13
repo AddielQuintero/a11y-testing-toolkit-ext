@@ -7669,6 +7669,12 @@ function BsBadgeArFill(props) {
 function BsBadgeAr(props) {
   return GenIcon({ "tag": "svg", "attr": { "fill": "currentColor", "viewBox": "0 0 16 16" }, "child": [{ "tag": "path", "attr": { "d": "m3.794 11 .47-1.542H6.27L6.739 11H8L5.996 5.001H4.607L2.595 11h1.2zm1.503-4.852.734 2.426h-1.52l.734-2.426h.052zm5.598-1.147H8.5V11h1.173V8.763h1.064L11.787 11h1.327L11.91 8.583C12.455 8.373 13 7.779 13 6.9c0-1.147-.773-1.9-2.105-1.9zm-1.222 2.87V5.933h1.05c.63 0 1.05.347 1.05.989 0 .633-.408.95-1.067.95H9.673z" } }, { "tag": "path", "attr": { "d": "M14 3a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h12zM2 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H2z" } }] })(props);
 }
+function BsImageFill(props) {
+  return GenIcon({ "tag": "svg", "attr": { "fill": "currentColor", "viewBox": "0 0 16 16" }, "child": [{ "tag": "path", "attr": { "d": "M.002 3a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-12a2 2 0 0 1-2-2V3zm1 9v1a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12zm5-6.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0z" } }] })(props);
+}
+function BsImage(props) {
+  return GenIcon({ "tag": "svg", "attr": { "fill": "currentColor", "viewBox": "0 0 16 16" }, "child": [{ "tag": "path", "attr": { "d": "M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" } }, { "tag": "path", "attr": { "d": "M2.002 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2h-12zm12 1a1 1 0 0 1 1 1v6.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12V3a1 1 0 0 1 1-1h12z" } }] })(props);
+}
 function BsKeyboardFill(props) {
   return GenIcon({ "tag": "svg", "attr": { "fill": "currentColor", "viewBox": "0 0 16 16" }, "child": [{ "tag": "path", "attr": { "d": "M0 6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6zm13 .25v.5c0 .138.112.25.25.25h.5a.25.25 0 0 0 .25-.25v-.5a.25.25 0 0 0-.25-.25h-.5a.25.25 0 0 0-.25.25zM2.25 8a.25.25 0 0 0-.25.25v.5c0 .138.112.25.25.25h.5A.25.25 0 0 0 3 8.75v-.5A.25.25 0 0 0 2.75 8h-.5zM4 8.25v.5c0 .138.112.25.25.25h.5A.25.25 0 0 0 5 8.75v-.5A.25.25 0 0 0 4.75 8h-.5a.25.25 0 0 0-.25.25zM6.25 8a.25.25 0 0 0-.25.25v.5c0 .138.112.25.25.25h.5A.25.25 0 0 0 7 8.75v-.5A.25.25 0 0 0 6.75 8h-.5zM8 8.25v.5c0 .138.112.25.25.25h.5A.25.25 0 0 0 9 8.75v-.5A.25.25 0 0 0 8.75 8h-.5a.25.25 0 0 0-.25.25zM13.25 8a.25.25 0 0 0-.25.25v.5c0 .138.112.25.25.25h.5a.25.25 0 0 0 .25-.25v-.5a.25.25 0 0 0-.25-.25h-.5zm0 2a.25.25 0 0 0-.25.25v.5c0 .138.112.25.25.25h.5a.25.25 0 0 0 .25-.25v-.5a.25.25 0 0 0-.25-.25h-.5zm-3-2a.25.25 0 0 0-.25.25v.5c0 .138.112.25.25.25h1.5a.25.25 0 0 0 .25-.25v-.5a.25.25 0 0 0-.25-.25h-1.5zm.75 2.25v.5c0 .138.112.25.25.25h.5a.25.25 0 0 0 .25-.25v-.5a.25.25 0 0 0-.25-.25h-.5a.25.25 0 0 0-.25.25zM11.25 6a.25.25 0 0 0-.25.25v.5c0 .138.112.25.25.25h.5a.25.25 0 0 0 .25-.25v-.5a.25.25 0 0 0-.25-.25h-.5zM9 6.25v.5c0 .138.112.25.25.25h.5a.25.25 0 0 0 .25-.25v-.5A.25.25 0 0 0 9.75 6h-.5a.25.25 0 0 0-.25.25zM7.25 6a.25.25 0 0 0-.25.25v.5c0 .138.112.25.25.25h.5A.25.25 0 0 0 8 6.75v-.5A.25.25 0 0 0 7.75 6h-.5zM5 6.25v.5c0 .138.112.25.25.25h.5A.25.25 0 0 0 6 6.75v-.5A.25.25 0 0 0 5.75 6h-.5a.25.25 0 0 0-.25.25zM2.25 6a.25.25 0 0 0-.25.25v.5c0 .138.112.25.25.25h1.5A.25.25 0 0 0 4 6.75v-.5A.25.25 0 0 0 3.75 6h-1.5zM2 10.25v.5c0 .138.112.25.25.25h.5a.25.25 0 0 0 .25-.25v-.5a.25.25 0 0 0-.25-.25h-.5a.25.25 0 0 0-.25.25zM4.25 10a.25.25 0 0 0-.25.25v.5c0 .138.112.25.25.25h5.5a.25.25 0 0 0 .25-.25v-.5a.25.25 0 0 0-.25-.25h-5.5z" } }] })(props);
 }
@@ -7704,7 +7710,7 @@ const TabIndexHighlighter = ({ setTooltipText }) => {
   const [showTabIndexes, setShowTabIndexes] = reactExports.useState(false);
   const codeToExecute = function(showTabIndexes2) {
     const removeIndicators = () => {
-      const indicators = document.querySelectorAll(".tabindex-indicator");
+      const indicators = document.querySelectorAll(".a11yToolkit-tabindex-indicator");
       indicators.forEach((indicator) => indicator.remove());
     };
     const highlightTabIndex = () => {
@@ -7717,7 +7723,7 @@ const TabIndexHighlighter = ({ setTooltipText }) => {
             element.style.position = "relative";
           }
           const span = document.createElement("span");
-          span.className = "tabindex-indicator";
+          span.className = "a11yToolkit-tabindex-indicator";
           span.style.position = "absolute";
           span.style.padding = "2px";
           span.style.top = "0";
@@ -7826,18 +7832,36 @@ const AutocompleteHighlighter = ({ setTooltipText }) => {
       "email",
       "impp"
     ];
+    const addImportantStyle = (element, property, value) => {
+      let styleSheet = document.getElementById("importantStyles");
+      if (!styleSheet) {
+        styleSheet = document.createElement("style");
+        styleSheet.id = "importantStyles";
+        document.head.appendChild(styleSheet);
+      }
+      if (!element.id) {
+        element.id = "a11yToolkit-" + Math.random().toString(36).substr(2, 9);
+      }
+      if (styleSheet.sheet) {
+        styleSheet.sheet.insertRule(
+          `#${element.id} { ${property}: ${value} !important;}`,
+          styleSheet.sheet.cssRules.length
+        );
+      }
+    };
     const removeIndicators = () => {
-      const indicators = document.querySelectorAll(".autocomplete-indicator");
-      indicators.forEach((indicator) => {
-        const container = indicator.parentElement;
-        if (container) {
-          const input = container.querySelector("input");
-          if (input) {
-            container.before(input);
-            input.style.outline = "";
-          }
-          container.remove();
+      const styleSheet = document.getElementById("importantStyles");
+      if (styleSheet) {
+        styleSheet.remove();
+      }
+      const containers = document.querySelectorAll(".a11yToolkit-autocomplete-container");
+      containers.forEach((container) => {
+        const element = container.querySelector("input");
+        if (element) {
+          container.before(element);
+          element.style.outline = "";
         }
+        container.remove();
       });
     };
     const isVisible = (element) => {
@@ -7858,35 +7882,39 @@ const AutocompleteHighlighter = ({ setTooltipText }) => {
       }
     };
     const highlightAutocomplete = (input) => {
-      const autocompleteValue = input.getAttribute("autocomplete");
-      const container = document.createElement("div");
-      container.style.position = "relative";
-      container.style.display = "inline-block";
-      if (input.parentNode) {
-        input.parentNode.insertBefore(container, input);
+      let container = input.closest(".a11yToolkit-autocomplete-container");
+      if (!container) {
+        const autocompleteValue = input.getAttribute("autocomplete");
+        container = document.createElement("div");
+        container.classList.add("a11yToolkit-autocomplete-container");
+        container.style.position = "relative";
+        container.style.display = "inline-block";
+        if (input.parentNode) {
+          input.parentNode.insertBefore(container, input);
+        }
+        container.appendChild(input);
+        addImportantStyle(input, "outline", `2px solid red`);
+        const span = document.createElement("span");
+        span.className = "a11yToolkit-autocomplete-indicator";
+        span.style.position = "absolute";
+        span.style.padding = "2px";
+        span.style.top = "0";
+        span.style.left = "0";
+        span.style.zIndex = "999";
+        span.style.background = "red";
+        span.style.color = "white";
+        span.style.fontSize = "11px";
+        if (!autocompleteValue) {
+          span.innerText = "No";
+          console.error(`Input without autocomplete '${autocompleteValue}':`, input);
+        } else if (!validAutocompleteValues.includes(autocompleteValue)) {
+          span.innerText = "⚠️";
+          console.error(`Input with invalid autocomplete '${autocompleteValue}':`, input);
+        } else {
+          span.innerText = autocompleteValue;
+        }
+        container.appendChild(span);
       }
-      container.appendChild(input);
-      input.style.outline = "2px solid red";
-      const span = document.createElement("span");
-      span.className = "autocomplete-indicator";
-      span.style.position = "absolute";
-      span.style.padding = "2px";
-      span.style.top = "0";
-      span.style.left = "0";
-      span.style.zIndex = "999";
-      span.style.background = "red";
-      span.style.color = "white";
-      span.style.fontSize = "11px";
-      if (!autocompleteValue) {
-        span.innerText = "No";
-        console.error(`Input without autocomplete '${autocompleteValue}':`, input);
-      } else if (!validAutocompleteValues.includes(autocompleteValue)) {
-        span.innerText = "⚠️";
-        console.error(`Input with invalid autocomplete '${autocompleteValue}':`, input);
-      } else {
-        span.innerText = autocompleteValue;
-      }
-      container.appendChild(span);
     };
     const annotateAndAttach = () => {
       visibleInputs.forEach((input) => processAutocompleteValues(input, autocompleteCounts));
@@ -7934,16 +7962,117 @@ const AutocompleteHighlighter = ({ setTooltipText }) => {
 const AriaRolesHighlighter = ({ setTooltipText }) => {
   const [showAriaRoles, setShowAriaRoles] = reactExports.useState(false);
   const codeToExecute = function(showAriaRoles2) {
+    const colors = { aria: "#00F", native: "red" };
+    const validAriaRoles = [
+      // Roles de widgets
+      "button",
+      "checkbox",
+      "gridcell",
+      "link",
+      "menuitem",
+      "menuitemcheckbox",
+      "menuitemradio",
+      "option",
+      "progressbar",
+      "radio",
+      "scrollbar",
+      "searchbox",
+      "separator",
+      "slider",
+      "spinbutton",
+      "switch",
+      "tab",
+      "tabpanel",
+      "textbox",
+      "treeitem",
+      // Composite roles
+      "combobox",
+      "grid",
+      "listbox",
+      "menu",
+      "menubar",
+      "radiogroup",
+      "tablist",
+      "tree",
+      "treegrid",
+      // Document structure functions
+      "application",
+      "article",
+      "cell",
+      "columnheader",
+      "definition",
+      "directory",
+      "document",
+      "feed",
+      "figure",
+      "group",
+      "heading",
+      "img",
+      "list",
+      "listitem",
+      "math",
+      "none",
+      "note",
+      "presentation",
+      "row",
+      "rowgroup",
+      "rowheader",
+      "separator",
+      "table",
+      "term",
+      "toolbar",
+      "tooltip",
+      // Featured roles
+      "banner",
+      "complementary",
+      "contentinfo",
+      "form",
+      "main",
+      "navigation",
+      "region",
+      "search",
+      // Roles de región en vivo
+      "alert",
+      "log",
+      "marquee",
+      "status",
+      "timer",
+      // Window roles
+      "alertdialog",
+      "dialog"
+    ];
+    const elements = document.querySelectorAll("[role]");
+    const roleCounts = {};
     const isVisible = (element) => {
       const style = window.getComputedStyle(element);
       return style.display !== "none" && style.visibility !== "hidden" && element.getAttribute("role") !== "presentation" && element.getAttribute("role") !== "none";
     };
+    const addImportantStyle = (element, property, value) => {
+      let styleSheet = document.getElementById("importantStyles");
+      if (!styleSheet) {
+        styleSheet = document.createElement("style");
+        styleSheet.id = "importantStyles";
+        document.head.appendChild(styleSheet);
+      }
+      if (!element.id) {
+        element.id = "a11yToolkit-" + Math.random().toString(36).substr(2, 9);
+      }
+      if (styleSheet.sheet) {
+        styleSheet.sheet.insertRule(
+          `#${element.id} { ${property}: ${value} !important; }`,
+          styleSheet.sheet.cssRules.length
+        );
+      }
+    };
     const removeIndicators = () => {
-      const indicators = document.querySelectorAll(".ariaRoles-indicator");
+      const styleSheet = document.getElementById("importantStyles");
+      if (styleSheet) {
+        styleSheet.remove();
+      }
+      const indicators = document.querySelectorAll(".a11yToolkit-ariaRoles-indicator");
       indicators.forEach((indicator) => {
         const container = indicator.parentElement;
         if (container) {
-          container.style.outline = "";
           container.style.position = "";
         }
         indicator.remove();
@@ -7951,32 +8080,33 @@ const AriaRolesHighlighter = ({ setTooltipText }) => {
     };
     const highlightValidRoles = (element, role) => {
       const positionStyle = window.getComputedStyle(element).position;
-      if (element instanceof HTMLElement) {
+      if (element) {
         if (positionStyle === "static") {
           element.style.position = "relative";
         }
-        element.style.outline = "2px solid blue";
+        addImportantStyle(element, "outline", `2px solid ${colors.aria}`);
         const label = document.createElement("span");
         label.innerText = role;
-        label.className = "ariaRoles-indicator";
+        label.className = "a11yToolkit-ariaRoles-indicator";
         label.style.position = "absolute";
         label.style.padding = "2px";
         label.style.top = "0";
         label.style.left = "0";
         label.style.zIndex = "999";
         label.style.background = "#00F";
+        label.style.fontSize = "11px";
         label.style.color = "white";
         element.appendChild(label);
       }
     };
     const highlightInvalidRoles = (element) => {
-      element.style.outline = "2px solid red";
       const positionStyle = window.getComputedStyle(element).position;
       if (positionStyle === "static") {
         element.style.position = "relative";
       }
+      addImportantStyle(element, "outline", `2px solid ${colors.native}`);
       const warningIcon = document.createElement("span");
-      warningIcon.className = "ariaRoles-indicator";
+      warningIcon.className = "a11yToolkit-ariaRoles-indicator";
       warningIcon.innerText = " ⚠️";
       warningIcon.style.padding = "2px";
       warningIcon.style.position = "absolute";
@@ -7986,86 +8116,6 @@ const AriaRolesHighlighter = ({ setTooltipText }) => {
       element.appendChild(warningIcon);
     };
     const highlightAriaRoles = () => {
-      const validAriaRoles = [
-        // Roles de widgets
-        "button",
-        "checkbox",
-        "gridcell",
-        "link",
-        "menuitem",
-        "menuitemcheckbox",
-        "menuitemradio",
-        "option",
-        "progressbar",
-        "radio",
-        "scrollbar",
-        "searchbox",
-        "separator",
-        "slider",
-        "spinbutton",
-        "switch",
-        "tab",
-        "tabpanel",
-        "textbox",
-        "treeitem",
-        // Composite roles
-        "combobox",
-        "grid",
-        "listbox",
-        "menu",
-        "menubar",
-        "radiogroup",
-        "tablist",
-        "tree",
-        "treegrid",
-        // Document structure functions
-        "application",
-        "article",
-        "cell",
-        "columnheader",
-        "definition",
-        "directory",
-        "document",
-        "feed",
-        "figure",
-        "group",
-        "heading",
-        "img",
-        "list",
-        "listitem",
-        "math",
-        "none",
-        "note",
-        "presentation",
-        "row",
-        "rowgroup",
-        "rowheader",
-        "separator",
-        "table",
-        "term",
-        "toolbar",
-        "tooltip",
-        // Featured roles
-        "banner",
-        "complementary",
-        "contentinfo",
-        "form",
-        "main",
-        "navigation",
-        "region",
-        "search",
-        // Roles de región en vivo
-        "alert",
-        "log",
-        "marquee",
-        "status",
-        "timer",
-        // Window roles
-        "alertdialog",
-        "dialog"
-      ];
-      const elements = document.querySelectorAll("[role]");
-      const roleCounts = {};
       elements.forEach((element) => {
         const role = element.getAttribute("role");
         if (role) {
@@ -8263,10 +8313,109 @@ const LandMarksHighlighter = ({ setTooltipText }) => {
 const headingIcon = "/assets/headingsIcon-31119357.svg";
 const HeadingsHighlighter = ({ setTooltipText }) => {
   const [showHeadings, setShowHeadings] = reactExports.useState(false);
-  const handleClick = () => {
-    setShowHeadings(!showHeadings);
-  };
   const iconClass = showHeadings ? "svg-active" : "svg-default";
+  const codeToExecute = function(showListItems) {
+    const colors = { aria: "#00F", native: "red" };
+    const pageHeadings = document.querySelectorAll("h1,h2,h3,h4,h5,h6");
+    const ariaHeadings = document.querySelectorAll("[role='heading']");
+    const addImportantStyle = (element, property, value) => {
+      let styleSheet = document.getElementById("importantStyles");
+      if (!styleSheet) {
+        styleSheet = document.createElement("style");
+        styleSheet.id = "importantStyles";
+        document.head.appendChild(styleSheet);
+      }
+      if (!element.id) {
+        element.id = "a11yToolkit-" + Math.random().toString(36).substr(2, 9);
+      }
+      if (styleSheet.sheet) {
+        styleSheet.sheet.insertRule(
+          `#${element.id} { ${property}: ${value} !important;}`,
+          styleSheet.sheet.cssRules.length
+        );
+      }
+    };
+    const removeIndicators = () => {
+      const styleSheet = document.getElementById("importantStyles");
+      if (styleSheet) {
+        styleSheet.remove();
+      }
+      const indicators = document.querySelectorAll(".a11yToolkit-headings-indicator");
+      indicators.forEach((indicator) => {
+        const container = indicator.parentElement;
+        if (container) {
+          container.style.outline = "";
+          container.style.position = "";
+        }
+        indicator.remove();
+      });
+    };
+    const ensureUniqueIndicator = (element, label) => {
+      return !Array.from(element.getElementsByClassName("a11yToolkit-headings-indicator")).some(
+        (indicator) => indicator.textContent === label
+      );
+    };
+    const highlightElement = (element, label, color) => {
+      if (ensureUniqueIndicator(element, label)) {
+        const positionStyle = window.getComputedStyle(element).position;
+        if (positionStyle === "static") {
+          element.style.position = "relative";
+        }
+        const existingIndicators = element.getElementsByClassName("a11yToolkit-headings-indicator");
+        const span = document.createElement("span");
+        span.className = "a11yToolkit-headings-indicator";
+        span.style.position = "absolute";
+        span.style.top = "0";
+        span.style.left = `${existingIndicators.length * 24}px`;
+        span.style.padding = "2px";
+        span.style.zIndex = "999";
+        span.style.background = color;
+        span.style.color = "white";
+        span.style.fontSize = "11px";
+        span.innerText = label;
+        element.insertAdjacentElement("afterbegin", span);
+      }
+    };
+    const highlightHeadings = () => {
+      ariaHeadings.forEach((element) => {
+        const ariaLevel = element.getAttribute("aria-level");
+        if (element instanceof HTMLElement && ariaLevel) {
+          highlightElement(element, "aH" + ariaLevel, colors.aria);
+          addImportantStyle(element, "outline", `2px solid ${colors.aria}`);
+        }
+      });
+      pageHeadings.forEach((element) => {
+        if (element instanceof HTMLElement) {
+          const hasAria = element.hasAttribute("role") && element.getAttribute("role") === "heading";
+          highlightElement(element, element.tagName, colors.native);
+          if (!hasAria) {
+            addImportantStyle(element, "outline", `2px solid ${colors.native}`);
+          }
+        }
+      });
+    };
+    if (showListItems) {
+      removeIndicators();
+    } else {
+      highlightHeadings();
+    }
+  };
+  const handleClick = () => {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      const currentTab = tabs[0];
+      if (currentTab && currentTab.id) {
+        const tabId = currentTab.id;
+        chrome.scripting.executeScript(
+          {
+            target: { tabId },
+            func: codeToExecute,
+            args: [showHeadings]
+          },
+          () => setShowHeadings(!showHeadings)
+        );
+      }
+    });
+  };
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
     CustomButton,
     {
@@ -8288,8 +8437,29 @@ const ListItemsHighlighter = ({ setTooltipText }) => {
     let ariaMarkCount = 0;
     let nativeMarkCount = 0;
     const roleCounts = {};
+    const addImportantStyle = (element, property, value) => {
+      let styleSheet = document.getElementById("importantStyles");
+      if (!styleSheet) {
+        styleSheet = document.createElement("style");
+        styleSheet.id = "importantStyles";
+        document.head.appendChild(styleSheet);
+      }
+      if (!element.id) {
+        element.id = "a11yToolkit-" + Math.random().toString(36).substr(2, 9);
+      }
+      if (styleSheet.sheet) {
+        styleSheet.sheet.insertRule(
+          `#${element.id} { ${property}: ${value} !important;}`,
+          styleSheet.sheet.cssRules.length
+        );
+      }
+    };
     const removeIndicators = () => {
-      const indicators = document.querySelectorAll(".listItems-indicator");
+      const styleSheet = document.getElementById("importantStyles");
+      if (styleSheet) {
+        styleSheet.remove();
+      }
+      const indicators = document.querySelectorAll(".a11yToolkit-listItems-indicator");
       indicators.forEach((indicator) => {
         const container = indicator.parentElement;
         if (container) {
@@ -8300,17 +8470,18 @@ const ListItemsHighlighter = ({ setTooltipText }) => {
       });
     };
     const highlightElement = (element, label, color) => {
-      const existingIndicator = element.querySelector(".listItems-indicator");
+      const existingIndicator = element.querySelector(".a11yToolkit-listItems-indicator");
       if (existingIndicator) {
         return;
       }
-      element.style.outline = `${label === "LI" || label === "listitem" ? "1px" : "2px"} solid ${color}`;
+      let value = `${label === "LI" || label === "aLI" ? "1px" : "2px"} solid ${color}`;
+      addImportantStyle(element, "outline", value);
       const positionStyle = window.getComputedStyle(element).position;
       if (positionStyle === "static") {
         element.style.position = "relative";
       }
       span = document.createElement("span");
-      span.className = "listItems-indicator";
+      span.className = "a11yToolkit-listItems-indicator";
       span.style.position = "relative";
       span.style.padding = "2px";
       span.style.zIndex = "999";
@@ -8318,7 +8489,7 @@ const ListItemsHighlighter = ({ setTooltipText }) => {
       span.style.color = "white";
       span.style.fontSize = "11px";
       span.innerText = label;
-      if (label === "LI" || label === "listitem") {
+      if (label === "LI" || label === "aLI") {
         element.insertAdjacentElement("beforeend", span);
       } else {
         element.insertAdjacentElement("afterbegin", span);
@@ -8340,7 +8511,7 @@ const ListItemsHighlighter = ({ setTooltipText }) => {
       ariaLists.forEach((element) => {
         const role = element.getAttribute("role");
         if (element instanceof HTMLElement && role) {
-          highlightElement(element, "list", colors.aria);
+          highlightElement(element, "aL", colors.aria);
           roleCounts[role] = (roleCounts[role] || 0) + 1;
           logElement(element);
         }
@@ -8349,9 +8520,8 @@ const ListItemsHighlighter = ({ setTooltipText }) => {
       ariaListItems.forEach((element) => {
         const role = element.getAttribute("role");
         if (element instanceof HTMLElement && role) {
-          highlightElement(element, "listitem", colors.aria);
+          highlightElement(element, "aLI", colors.aria);
           roleCounts[role] = (roleCounts[role] || 0) + 1;
-          logElement(element);
         }
         ariaMarkCount++;
       });
@@ -8368,7 +8538,6 @@ const ListItemsHighlighter = ({ setTooltipText }) => {
       pageListItems.forEach((element) => {
         if (element instanceof HTMLElement) {
           highlightElement(element, element.tagName, colors.native);
-          logElement(element);
           roleCounts[element.tagName] = (roleCounts[element.tagName] || 0) + 1;
         }
         nativeMarkCount++;
@@ -8405,6 +8574,251 @@ const ListItemsHighlighter = ({ setTooltipText }) => {
       onClick: handleClick,
       className: iconClass,
       children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: listItem, className: "svg-icon", alt: "listItem Icon" })
+    }
+  );
+};
+const ImageAltTextHighlighter = ({ setTooltipText }) => {
+  const [showImageAltText, setShowImageAltText] = reactExports.useState(false);
+  const codeToExecute = function(showImageAltText2) {
+    const colors = { aria: "#00F", native: "red" };
+    const elements = document.querySelectorAll("img, [role='img']");
+    const roleCounts = {};
+    const addImportantStyle = (element, property, value) => {
+      let styleSheet = document.getElementById("importantStyles");
+      if (!styleSheet) {
+        styleSheet = document.createElement("style");
+        styleSheet.id = "importantStyles";
+        document.head.appendChild(styleSheet);
+      }
+      if (!element.id) {
+        element.id = "a11yToolkit-" + Math.random().toString(36).substr(2, 9);
+      }
+      if (styleSheet.sheet) {
+        styleSheet.sheet.insertRule(
+          `#${element.id} { ${property}: ${value} !important; }`,
+          styleSheet.sheet.cssRules.length
+        );
+      }
+    };
+    const removeIndicators = () => {
+      const styleSheet = document.getElementById("importantStyles");
+      if (styleSheet) {
+        styleSheet.remove();
+      }
+      const containers = document.querySelectorAll(".a11yToolkit-image-alt-text-container");
+      containers.forEach((container) => {
+        Array.from(container.querySelectorAll('img, [role="img"]')).forEach((element) => {
+          container.before(element);
+        });
+        container.remove();
+      });
+    };
+    const highlightElement = (element, label, color) => {
+      let container = element.closest(".a11yToolkit-image-alt-text-container");
+      if (!container) {
+        container = document.createElement("div");
+        container.classList.add("a11yToolkit-image-alt-text-container");
+        element.before(container);
+        container.appendChild(element);
+        addImportantStyle(element, "outline", `2px solid ${color}`);
+        const span = document.createElement("span");
+        span.className = "a11yToolkit-imageAltText-indicator";
+        span.style.position = "relative";
+        span.style.padding = "2px";
+        span.style.zIndex = "999";
+        span.style.background = color;
+        span.style.color = "white";
+        span.style.fontSize = "11px";
+        span.innerText = label;
+        container.insertAdjacentElement("afterbegin", span);
+      }
+    };
+    const logElementCounts = () => {
+      console.log(`${elements.length} elements IMG and RoleIMG were found on this page.`);
+      Object.entries(roleCounts).forEach(([role, count]) => {
+        console.log(`${role}: ${count} occurrences`);
+      });
+    };
+    const highlightImageAltText = () => {
+      elements.forEach((element) => {
+        if (element) {
+          const alt = element.getAttribute("alt") || "No alt text";
+          const ariaRole = element.getAttribute("role");
+          const ariaLabel = element.getAttribute("aria-label") || "No alt text";
+          if (ariaRole === "img") {
+            highlightElement(element, ariaLabel, colors.aria);
+            roleCounts["RoleIMG"] = (roleCounts["RoleIMG"] || 0) + 1;
+          }
+          highlightElement(element, alt, colors.native);
+          if (element.tagName !== "DIV") {
+            roleCounts[element.tagName] = (roleCounts[element.tagName] || 0) + 1;
+          }
+        }
+      });
+      logElementCounts();
+    };
+    if (showImageAltText2) {
+      removeIndicators();
+    } else {
+      highlightImageAltText();
+    }
+  };
+  const handleClick = () => {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      const currentTab = tabs[0];
+      if (currentTab && currentTab.id) {
+        const tabId = currentTab.id;
+        chrome.scripting.executeScript(
+          {
+            target: { tabId },
+            func: codeToExecute,
+            args: [showImageAltText]
+          },
+          () => setShowImageAltText(!showImageAltText)
+        );
+      }
+    });
+  };
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(
+    CustomButton,
+    {
+      onMouseEnter: () => setTooltipText("Image alt text"),
+      onMouseLeave: () => setTooltipText(""),
+      onClick: handleClick,
+      children: showImageAltText ? /* @__PURE__ */ jsxRuntimeExports.jsx(BsImageFill, { className: "buttons__icons" }) : /* @__PURE__ */ jsxRuntimeExports.jsx(BsImage, { className: "buttons__icons" })
+    }
+  );
+};
+const focusIndicatorIcon = "/assets/focusIndicator-f404f415.svg";
+const FocusIndicatorHighlighter = ({ setTooltipText }) => {
+  const [showFocusIndicator, setFocusIndicator] = reactExports.useState(false);
+  const iconClass = showFocusIndicator ? "svg-active" : "svg-default";
+  const codeToExecute = function(showFocusIndicator2) {
+    const preventDefaultClick = (event) => {
+      event.preventDefault();
+    };
+    const highlightFocusIndicator = () => {
+      const style = document.createElement("style");
+      style.innerHTML = `
+          :focus {
+            outline: 3px solid red; 
+            box-shadow: 0 0 0 5px cyan; 
+          }
+        `;
+      document.head.appendChild(style);
+      const focusableElements = document.querySelectorAll("a, button, input, [tabindex]");
+      focusableElements.forEach((element) => {
+        element.addEventListener("click", preventDefaultClick);
+      });
+    };
+    const removeIndicators = () => {
+      const styles = document.head.querySelectorAll("style");
+      for (let style of styles) {
+        if (style.innerHTML.includes(":focus {")) {
+          document.head.removeChild(style);
+        }
+      }
+      const focusableElements = document.querySelectorAll("a, button, input, [tabindex]");
+      focusableElements.forEach((element) => {
+        element.removeEventListener("click", preventDefaultClick);
+      });
+    };
+    if (showFocusIndicator2) {
+      removeIndicators();
+    } else {
+      highlightFocusIndicator();
+    }
+  };
+  const handleClick = () => {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      const currentTab = tabs[0];
+      if (currentTab && currentTab.id) {
+        const tabId = currentTab.id;
+        chrome.scripting.executeScript(
+          {
+            target: { tabId },
+            func: codeToExecute,
+            args: [showFocusIndicator]
+          },
+          () => setFocusIndicator(!showFocusIndicator)
+        );
+      }
+    });
+  };
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(
+    CustomButton,
+    {
+      onMouseEnter: () => setTooltipText("Focus Indicator"),
+      onMouseLeave: () => setTooltipText(""),
+      onClick: handleClick,
+      className: iconClass,
+      children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: focusIndicatorIcon, className: "svg-icon", alt: "Heading Icon" })
+    }
+  );
+};
+const TextSpacingIcon = "/assets/textSpacing-110b945b.svg";
+const TextSpacingHighlighter = ({ setTooltipText }) => {
+  const [showTextSpacing, setTextSpacing] = reactExports.useState(false);
+  const iconClass = showTextSpacing ? "svg-active" : "svg-default";
+  const codeToExecute = function(showTextSpacing2) {
+  };
+  const handleClick = () => {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      const currentTab = tabs[0];
+      if (currentTab && currentTab.id) {
+        const tabId = currentTab.id;
+        chrome.scripting.executeScript(
+          {
+            target: { tabId },
+            func: codeToExecute,
+            args: [showTextSpacing]
+          },
+          () => setTextSpacing(!showTextSpacing)
+        );
+      }
+    });
+  };
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(
+    CustomButton,
+    {
+      onMouseEnter: () => setTooltipText("Text Spacing"),
+      onMouseLeave: () => setTooltipText(""),
+      onClick: handleClick,
+      className: iconClass,
+      children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: TextSpacingIcon, className: "svg-icon", alt: "Text Spacing Icon" })
+    }
+  );
+};
+const CurrentlyFocusedIcon = "/assets/currentlyFocused-6c7aa420.svg";
+const CurrentlyFocusedHighlighter = ({ setTooltipText }) => {
+  const [showCurrentlyFocused, setCurrentlyFocused] = reactExports.useState(false);
+  const iconClass = showCurrentlyFocused ? "svg-active" : "svg-default";
+  const codeToExecute = function(showCurrentlyFocused2) {
+  };
+  const handleClick = () => {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      const currentTab = tabs[0];
+      if (currentTab && currentTab.id) {
+        const tabId = currentTab.id;
+        chrome.scripting.executeScript(
+          {
+            target: { tabId },
+            func: codeToExecute,
+            args: [showCurrentlyFocused]
+          },
+          () => setCurrentlyFocused(!showCurrentlyFocused)
+        );
+      }
+    });
+  };
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(
+    CustomButton,
+    {
+      onMouseEnter: () => setTooltipText("Print currently focused element in console"),
+      onMouseLeave: () => setTooltipText(""),
+      onClick: handleClick,
+      className: iconClass,
+      children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: CurrentlyFocusedIcon, className: "svg-icon", alt: "Focus Indicator Icon" })
     }
   );
 };
@@ -8551,7 +8965,11 @@ function App$1() {
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "toolkit__container", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(HeadingsHighlighter, { setTooltipText }),
       /* @__PURE__ */ jsxRuntimeExports.jsx(ListItemsHighlighter, { setTooltipText }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(ImageAltTextHighlighter, { setTooltipText }),
       /* @__PURE__ */ jsxRuntimeExports.jsx(TabIndexHighlighter, { setTooltipText }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(FocusIndicatorHighlighter, { setTooltipText }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(CurrentlyFocusedHighlighter, { setTooltipText }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(TextSpacingHighlighter, { setTooltipText }),
       /* @__PURE__ */ jsxRuntimeExports.jsx(AutocompleteHighlighter, { setTooltipText }),
       /* @__PURE__ */ jsxRuntimeExports.jsx(AriaRolesHighlighter, { setTooltipText }),
       /* @__PURE__ */ jsxRuntimeExports.jsx(LandMarksHighlighter, { setTooltipText }),
