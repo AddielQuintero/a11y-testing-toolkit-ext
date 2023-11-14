@@ -7,7 +7,7 @@
     "default_title": "A11y Toolkit",
     "default_popup": "index.html"
   },
-  "permissions": ["activeTab", "scripting"],
+  "permissions": ["activeTab", "scripting", "storage"],
   "icons": {
     "16": "toolkit-icon-16.png",
     "32": "toolkit-icon-32.png",

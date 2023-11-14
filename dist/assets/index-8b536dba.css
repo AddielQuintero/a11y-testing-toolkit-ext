@@ -51,8 +51,14 @@ body {
   filter: invert(1);
   background-color: transparent;
 }
+.svg-default {
+  background-color: transparent;
+}
 .svg-active .svg-icon {
   filter: invert(0);
+  background-color: white;
+}
+.svg-active {
   background-color: white;
 }
 .icon-default {
@@ -73,14 +79,11 @@ button {
   font-weight: 500;
   font-family: inherit;
   background-color: transparent;
+  cursor: pointer;
   transition: border 0.25s, outline 0.25s;
 }
 button:hover {
   border: 1px solid #fff;
-  outline: none;
-}
-button:focus, button:active, button:focus-visible {
-  outline: 1px solid #fff;
 }
 button.buttons__icons {
   font-size: 1.25rem;
