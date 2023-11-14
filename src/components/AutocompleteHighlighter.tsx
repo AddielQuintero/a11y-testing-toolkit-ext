@@ -1,14 +1,10 @@
-import { useState } from 'react'
-import { BsKeyboardFill } from 'react-icons/bs'
-import { BsKeyboard } from 'react-icons/bs'
+import autoComplete from '../assets/autoComplete.svg'
 import { CustomButton } from './common/Button'
+import { useLocalStorage } from '../hooks/useLocalStorage.hook'
+import { TooltipProps } from '../types/Tooltip'
 
-interface AutocompleteProps {
-  setTooltipText: (tooltipText: string) => void
-}
-
-export const AutocompleteHighlighter = ({ setTooltipText }: AutocompleteProps) => {
-  const [showAutoCompletes, setShowAutoCompletes] = useState<boolean>(false)
+export const AutocompleteHighlighter = ({ setTooltipText }: TooltipProps) => {
+  const [showAutoCompletes, setShowAutoCompletes, iconClass] = useLocalStorage('AutocompleteActive', false)
 
   const codeToExecute = function(showAutoCompletes: boolean) {
     const validAutocompleteValues: string[] = [
@@ -77,7 +73,11 @@ export const AutocompleteHighlighter = ({ setTooltipText }: AutocompleteProps) =
       }
 
       if (!element.id) {
-        element.id = 'a11yToolkit-' + Math.random().toString(36).substr(2, 9)
+        element.id =
+          'a11yToolkit-' +
+          Math.random()
+            .toString(36)
+            .substr(2, 9)
       }
 
       if (styleSheet.sheet) {
@@ -218,12 +218,9 @@ export const AutocompleteHighlighter = ({ setTooltipText }: AutocompleteProps) =
       onMouseEnter={() => setTooltipText('Autocomplete')}
       onMouseLeave={() => setTooltipText('')}
       onClick={handleClick}
+      className={iconClass}
     >
-      {showAutoCompletes ? (
-        <BsKeyboardFill className="buttons__icons" />
-      ) : (
-        <BsKeyboard className="buttons__icons" />
-      )}
+      <img src={autoComplete} className="svg-icon" alt="Heading Icon" />
     </CustomButton>
   )
 }

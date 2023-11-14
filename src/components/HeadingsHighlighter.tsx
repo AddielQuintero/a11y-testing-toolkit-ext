@@ -1,14 +1,11 @@
-import { useState } from 'react'
+// import { useState } from 'react'
 import { CustomButton } from './common/Button'
 import headingIcon from '../assets/headingsIcon.svg'
+import { useLocalStorage } from '../hooks/useLocalStorage.hook'
+import { TooltipProps } from '../types/Tooltip'
 
-interface HeadingsProps {
-  setTooltipText: (tooltipText: string) => void
-}
-
-export const HeadingsHighlighter = ({ setTooltipText }: HeadingsProps) => {
-  const [showHeadings, setShowHeadings] = useState<boolean>(false)
-  const iconClass = showHeadings ? 'svg-active' : 'svg-default'
+export const HeadingsHighlighter = ({ setTooltipText }: TooltipProps) => {
+  const [showHeadings, setShowHeadings, iconClass] = useLocalStorage('HeadingsActive', false)
 
   const codeToExecute = function(showListItems: boolean) {
     const colors = { aria: '#00F', native: 'red' }

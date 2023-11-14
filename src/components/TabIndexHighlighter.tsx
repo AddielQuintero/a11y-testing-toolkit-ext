@@ -1,14 +1,10 @@
-import { useState } from 'react'
-import { Bs1SquareFill } from 'react-icons/bs'
-import { Bs1Square } from 'react-icons/bs'
+import tabIndex from '../assets/tabIndex.svg'
 import { CustomButton } from './common/Button'
+import { useLocalStorage } from '../hooks/useLocalStorage.hook'
+import { TooltipProps } from '../types/Tooltip'
 
-interface TabIndexProps {
-  setTooltipText: (tooltipText: string) => void;
-}
-
-export const TabIndexHighlighter = ({ setTooltipText }: TabIndexProps) => {
-  const [showTabIndexes, setShowTabIndexes] = useState(false)
+export const TabIndexHighlighter = ({ setTooltipText }: TooltipProps) => {
+  const [showTabIndexes, setShowTabIndexes, iconClass] = useLocalStorage('TabIndexActive', false)
 
   const codeToExecute = function(showTabIndexes: boolean) {
     const removeIndicators = () => {
@@ -39,7 +35,7 @@ export const TabIndexHighlighter = ({ setTooltipText }: TabIndexProps) => {
           span.innerText = valueTabIndex
 
           const numericValueTabIndex = parseInt(valueTabIndex, 10)
-          if (numericValueTabIndex > 1) {
+          if (numericValueTabIndex >= 1) {
             span.innerText += '⚠️'
           }
 
@@ -78,12 +74,9 @@ export const TabIndexHighlighter = ({ setTooltipText }: TabIndexProps) => {
       onMouseEnter={() => setTooltipText('Tab Index')}
       onMouseLeave={() => setTooltipText('')}
       onClick={handleClick}
+      className={iconClass}
     >
-      {showTabIndexes ? (
-        <Bs1SquareFill className="buttons__icons" />
-      ) : (
-        <Bs1Square className="buttons__icons" />
-      )}
+      <img src={tabIndex} className="svg-icon" alt="Focus Indicator Icon" />
     </CustomButton>
   )
 }

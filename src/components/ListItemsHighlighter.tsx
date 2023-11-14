@@ -1,15 +1,10 @@
-import { useState } from 'react'
 import { CustomButton } from './common/Button'
 import listItem from '../assets/listItem.svg'
+import { useLocalStorage } from '../hooks/useLocalStorage.hook'
+import { TooltipProps } from '../types/Tooltip'
 
-interface ListItemsProps {
-  setTooltipText: (tooltipText: string) => void
-}
-
-export const ListItemsHighlighter = ({ setTooltipText }: ListItemsProps) => {
-  const [showListItems, setShowListItems] = useState<boolean>(false)
-
-  const iconClass = showListItems ? 'svg-active' : 'svg-default'
+export const ListItemsHighlighter = ({ setTooltipText }: TooltipProps) => {
+  const [showListItems, setShowListItems, iconClass] = useLocalStorage('ListItemsActive', false)
 
   const codeToExecute = function(showListItems: boolean) {
     const colors = { aria: '#00F', native: 'red' }
@@ -27,7 +22,11 @@ export const ListItemsHighlighter = ({ setTooltipText }: ListItemsProps) => {
       }
 
       if (!element.id) {
-        element.id = 'a11yToolkit-' + Math.random().toString(36).substr(2, 9)
+        element.id =
+          'a11yToolkit-' +
+          Math.random()
+            .toString(36)
+            .substr(2, 9)
       }
 
       if (styleSheet.sheet) {

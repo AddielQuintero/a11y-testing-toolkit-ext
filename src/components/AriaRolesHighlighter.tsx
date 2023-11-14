@@ -1,14 +1,10 @@
-import { useState } from 'react'
-import { BsBadgeArFill } from 'react-icons/bs'
-import { BsBadgeAr } from 'react-icons/bs'
+import ariaRoles from '../assets/ariaRoles.svg'
 import { CustomButton } from './common/Button'
+import { useLocalStorage } from '../hooks/useLocalStorage.hook'
+import { TooltipProps } from '../types/Tooltip'
 
-interface AriaRolesProps {
-  setTooltipText: (tooltipText: string) => void
-}
-
-export const AriaRolesHighlighter = ({ setTooltipText }: AriaRolesProps) => {
-  const [showAriaRoles, setShowAriaRoles] = useState(false)
+export const AriaRolesHighlighter = ({ setTooltipText }: TooltipProps) => {
+  const [showAriaRoles, setShowAriaRoles, iconClass] = useLocalStorage('AriaRolesActive', false)
 
   const codeToExecute = function(showAriaRoles: boolean) {
     const colors = { aria: '#00F', native: 'red' }
@@ -112,7 +108,11 @@ export const AriaRolesHighlighter = ({ setTooltipText }: AriaRolesProps) => {
       }
 
       if (!element.id) {
-        element.id = 'a11yToolkit-' + Math.random().toString(36).substr(2, 9)
+        element.id =
+          'a11yToolkit-' +
+          Math.random()
+            .toString(36)
+            .substr(2, 9)
       }
 
       if (styleSheet.sheet) {
@@ -128,7 +128,7 @@ export const AriaRolesHighlighter = ({ setTooltipText }: AriaRolesProps) => {
       if (styleSheet) {
         styleSheet.remove()
       }
-      
+
       const indicators = document.querySelectorAll('.a11yToolkit-ariaRoles-indicator')
       indicators.forEach((indicator) => {
         const container = indicator.parentElement
@@ -169,7 +169,7 @@ export const AriaRolesHighlighter = ({ setTooltipText }: AriaRolesProps) => {
       if (positionStyle === 'static') {
         element.style.position = 'relative'
       }
-      
+
       // element.style.outline = '2px solid red'
       addImportantStyle(element, 'outline', `2px solid ${colors.native}`)
       const warningIcon = document.createElement('span')
@@ -254,12 +254,9 @@ export const AriaRolesHighlighter = ({ setTooltipText }: AriaRolesProps) => {
       onMouseEnter={() => setTooltipText('Aria Roles')}
       onMouseLeave={() => setTooltipText('')}
       onClick={handleClick}
+      className={iconClass}
     >
-      {showAriaRoles ? (
-        <BsBadgeArFill className="buttons__icons" />
-      ) : (
-        <BsBadgeAr className="buttons__icons" />
-      )}
+      <img src={ariaRoles} className="svg-icon" alt="Focus Indicator Icon" />
     </CustomButton>
   )
 }

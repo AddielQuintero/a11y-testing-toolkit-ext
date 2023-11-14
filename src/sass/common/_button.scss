@@ -2,30 +2,26 @@ button {
   display: flex;
   padding: 0.3rem;
   border-radius: 0.5rem;
-  // border: 1px solid transparent;
   border: 1px solid rgba(255, 255, 255, 0.2);
   outline: none;
   font-size: 1rem;
   font-weight: 500;
   font-family: inherit;
   background-color: transparent;
-  // cursor: pointer;
+  cursor: pointer;
   // transition: border-color 0.25s;
   transition: border 0.25s, outline 0.25s;
 
   &:hover {
-    // border-color: #fff;
     border: 1px solid #fff;
-    outline: none;
   }
 
-  &:focus,
-  &:active,
-  &:focus-visible {
-    // outline: 1px auto -webkit-focus-ring-color;
-    outline: 1px solid #fff
-    // background-color: #fff;
-  }
+  // &:focus,
+  // &:active,
+  // &:focus-visible {
+  // outline: 1px solid #fff;
+  // background-color: #fff;
+  // }
 
   &.buttons__icons {
     font-size: 1.25rem;
