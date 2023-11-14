@@ -24,7 +24,7 @@ function App() {
           <TabIndexHighlighter setTooltipText={setTooltipText} />
           <FocusIndicatorHighlighter setTooltipText={setTooltipText} />
           <CurrentlyFocusedHighlighter setTooltipText={setTooltipText} />
-          <TextSpacingHighlighter setTooltipText={setTooltipText} /> 
+          <TextSpacingHighlighter setTooltipText={setTooltipText} />
           <AutocompleteHighlighter setTooltipText={setTooltipText} />
           <AriaRolesHighlighter setTooltipText={setTooltipText} />
           <LandMarksHighlighter setTooltipText={setTooltipText} />
