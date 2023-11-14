@@ -1,21 +1,28 @@
-import { useState } from 'react'
 import { CustomButton } from './common/Button'
 import TextSpacingIcon from '../assets/textSpacing.svg'
+import { useLocalStorage } from '../hooks/useLocalStorage.hook'
+import { TooltipProps } from '../types/Tooltip'
 
-interface TextSpacingProps {
-  setTooltipText: (tooltipText: string) => void
-}
-
-export const TextSpacingHighlighter = ({ setTooltipText }: TextSpacingProps) => {
-  const [showTextSpacing, setTextSpacing] = useState<boolean>(false)
-  const iconClass = showTextSpacing ? 'svg-active' : 'svg-default'
+export const TextSpacingHighlighter = ({ setTooltipText }: TooltipProps) => {
+  const [showTextSpacing, setTextSpacing, iconClass] = useLocalStorage('TextSpacingHActive', false)
 
   const codeToExecute = function(showTextSpacing: boolean) {
-    // const colors = { aria: '#00F', native: 'red' }
+    const removeIndicators = () => {
+      document.querySelectorAll('*').forEach((element: any) => {
+        element.style.removeProperty('word-spacing')
+        element.style.removeProperty('line-height')
+        element.style.removeProperty('letter-spacing')
+      })
+    }
 
-    const removeIndicators = () => {}
+    const highlightTextSpacing = () => {
+      document.querySelectorAll('*').forEach((element: any) => {
+        element.style.setProperty('word-spacing', '0.16em', 'important')
+        element.style.setProperty('line-height', '1.5', 'important')
+        element.style.setProperty('letter-spacing', '0.12em', 'important')
+      })
+    }
 
-    const highlightTextSpacing = () => {}
     if (showTextSpacing) {
       removeIndicators()
     } else {
