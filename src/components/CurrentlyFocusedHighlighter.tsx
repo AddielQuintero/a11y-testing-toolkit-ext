@@ -1,21 +1,63 @@
-import { useState } from 'react'
 import { CustomButton } from './common/Button'
 import CurrentlyFocusedIcon from '../assets/currentlyFocused.svg'
+import { useLocalStorage } from '../hooks/useLocalStorage.hook'
+import { TooltipProps } from '../types/Tooltip'
 
-interface CurrentlyFocusedProps {
-  setTooltipText: (tooltipText: string) => void
+declare global {
+  interface Window {
+    myExtensionKeyDownHandler?: (event: KeyboardEvent) => void
+    myExtensionPreventDefaultClick?: (event: Event) => void
+  }
 }
 
-export const CurrentlyFocusedHighlighter = ({ setTooltipText }: CurrentlyFocusedProps) => {
-  const [showCurrentlyFocused, setCurrentlyFocused] = useState<boolean>(false)
-  const iconClass = showCurrentlyFocused ? 'svg-active' : 'svg-default'
+export const CurrentlyFocusedHighlighter = ({ setTooltipText }: TooltipProps) => {
+  const [showCurrentlyFocused, setCurrentlyFocused, iconClass] = useLocalStorage(
+    'CurrentlyFocusedActive',
+    false
+  )
 
   const codeToExecute = function(showCurrentlyFocused: boolean) {
-    // const colors = { aria: '#00F', native: 'red' }
+    const focusableElements = document.querySelectorAll('a, button, input, [tabindex]')
 
-    const removeIndicators = () => {}
+    if (!window.myExtensionKeyDownHandler) {
+      window.myExtensionKeyDownHandler = (event: KeyboardEvent) => {
+        if (event.key === 'Control' || event.key === 'Ctrl') {
+          console.clear()
+          console.log('Current Focused Element:')
+          console.log(document.activeElement)
+        }
+      }
+    }
 
-    const highlightCurrentlyFocused = () => {}
+    if (!window.myExtensionPreventDefaultClick) {
+      window.myExtensionPreventDefaultClick = (event: any) => {
+        event.preventDefault()
+      }
+    }
+
+    const removeIndicators = () => {
+      if (window.myExtensionKeyDownHandler) {
+        document.body.removeEventListener('keydown', window.myExtensionKeyDownHandler)
+      }
+
+      focusableElements.forEach((element) => {
+        if (window.myExtensionPreventDefaultClick) {
+          element.removeEventListener('click', window.myExtensionPreventDefaultClick)
+        }
+      })
+    }
+
+    const highlightCurrentlyFocused = () => {
+      if (window.myExtensionKeyDownHandler) {
+        document.body.addEventListener('keydown', window.myExtensionKeyDownHandler)
+      }
+
+      focusableElements.forEach((element) => {
+        if (window.myExtensionPreventDefaultClick) {
+          element.addEventListener('click', window.myExtensionPreventDefaultClick)
+        }
+      })
+    }
 
     if (showCurrentlyFocused) {
       removeIndicators()
