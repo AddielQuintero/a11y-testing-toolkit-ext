@@ -1,48 +1,33 @@
-import { useState } from 'react'
+// import { useState, useEffect } from 'react'
 import { CustomButton } from './common/Button'
 import focusIndicatorIcon from '../assets/focusIndicator.svg'
+import { useLocalStorage } from '../hooks/useLocalStorage.hook'
+import { TooltipProps } from '../types/Tooltip'
 
-interface FocusIndicatorProps {
-  setTooltipText: (tooltipText: string) => void
-}
-
-export const FocusIndicatorHighlighter = ({ setTooltipText }: FocusIndicatorProps) => {
-  const [showFocusIndicator, setFocusIndicator] = useState<boolean>(false)
-  const iconClass = showFocusIndicator ? 'svg-active' : 'svg-default'
+export const FocusIndicatorHighlighter = ({ setTooltipText }: TooltipProps) => {
+  const [showFocusIndicator, setFocusIndicator, iconClass] = useLocalStorage('FocusIndicatorActive', false)
 
   const codeToExecute = function(showFocusIndicator: boolean) {
-    const preventDefaultClick = (event: any) => {
-      event.preventDefault()
+    const styleElementId = 'a11yToolkit-focus-indicator-style'
+
+    const removeIndicators = () => {
+      const existingStyleElement = document.getElementById(styleElementId)
+      if (existingStyleElement) {
+        document.head.removeChild(existingStyleElement)
+      }
     }
 
     const highlightFocusIndicator = () => {
-      const style = document.createElement('style')
-      style.innerHTML = `
-          :focus {
-            outline: 3px solid red; 
-            box-shadow: 0 0 0 5px cyan; 
-          }
-        `
-      document.head.appendChild(style)
+      const styleElement = document.createElement('style')
+      styleElement.id = styleElementId
+      styleElement.innerHTML = ` a:focus, *:focus {
+                                box-shadow: rgb(0 255 255) 0px 0px 0px 8px !important;
+                                outline: rgb(255, 0, 0) solid 4px !important;
+                                outline-offset: 1px !important;
+                                border-radius: 2px;
+                            }`
 
-      const focusableElements = document.querySelectorAll('a, button, input, [tabindex]')
-      focusableElements.forEach((element) => {
-        element.addEventListener('click', preventDefaultClick)
-      })
-    }
-
-    const removeIndicators = () => {
-      const styles = document.head.querySelectorAll('style')
-      for (let style of styles) {
-        if (style.innerHTML.includes(':focus {')) {
-          document.head.removeChild(style)
-        }
-      }
-
-      const focusableElements = document.querySelectorAll('a, button, input, [tabindex]')
-      focusableElements.forEach((element) => {
-        element.removeEventListener('click', preventDefaultClick)
-      })
+      document.head.appendChild(styleElement)
     }
 
     if (showFocusIndicator) {

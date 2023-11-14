@@ -1,14 +1,10 @@
-import { useState } from 'react'
-import { BsMapFill } from 'react-icons/bs'
-import { BsMap } from 'react-icons/bs'
+import landMarks from '../assets/landMarks.svg'
 import { CustomButton } from './common/Button'
+import { useLocalStorage } from '../hooks/useLocalStorage.hook'
+import { TooltipProps } from '../types/Tooltip'
 
-interface LandMarksProps {
-  setTooltipText: (tooltipText: string) => void
-}
-
-export const LandMarksHighlighter = ({ setTooltipText }: LandMarksProps) => {
-  const [showLandMarks, setShowLandMarks] = useState(false)
+export const LandMarksHighlighter = ({ setTooltipText }: TooltipProps) => {
+  const [showLandMarks, setShowLandMarks, iconClass] = useLocalStorage('LandMarksActive', false)
 
   const codeToExecute = function(showLandMarks: boolean) {
     const landmarksNative = [
@@ -148,8 +144,9 @@ export const LandMarksHighlighter = ({ setTooltipText }: LandMarksProps) => {
       onMouseEnter={() => setTooltipText('Land Marks')}
       onMouseLeave={() => setTooltipText('')}
       onClick={handleClick}
+      className={iconClass}
     >
-      {showLandMarks ? <BsMapFill className="buttons__icons" /> : <BsMap className="buttons__icons" />}
+      <img src={landMarks} className="svg-icon" alt="Focus Indicator Icon" />
     </CustomButton>
   )
 }

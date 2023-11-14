@@ -1,13 +1,10 @@
-import { useState } from 'react'
 import { CustomButton } from './common/Button'
-import { BsImage, BsImageFill } from 'react-icons/bs'
+import imageAltText from '../assets/imageAltText.svg'
+import { useLocalStorage } from '../hooks/useLocalStorage.hook'
+import { TooltipProps } from '../types/Tooltip'
 
-interface ImageAltTextProps {
-  setTooltipText: (tooltipText: string) => void
-}
-
-export const ImageAltTextHighlighter = ({ setTooltipText }: ImageAltTextProps) => {
-  const [showImageAltText, setShowImageAltText] = useState<boolean>(false)
+export const ImageAltTextHighlighter = ({ setTooltipText }: TooltipProps) => {
+  const [showImageAltText, setShowImageAltText, iconClass] = useLocalStorage('ImageAltTextActive', false)
 
   const codeToExecute = function(showImageAltText: boolean) {
     const colors = { aria: '#00F', native: 'red' }
@@ -23,7 +20,11 @@ export const ImageAltTextHighlighter = ({ setTooltipText }: ImageAltTextProps) =
       }
 
       if (!element.id) {
-        element.id = 'a11yToolkit-' + Math.random().toString(36).substr(2, 9)
+        element.id =
+          'a11yToolkit-' +
+          Math.random()
+            .toString(36)
+            .substr(2, 9)
       }
 
       if (styleSheet.sheet) {
@@ -131,8 +132,9 @@ export const ImageAltTextHighlighter = ({ setTooltipText }: ImageAltTextProps) =
       onMouseEnter={() => setTooltipText('Image alt text')}
       onMouseLeave={() => setTooltipText('')}
       onClick={handleClick}
+      className={iconClass}
     >
-      {showImageAltText ? <BsImageFill className="buttons__icons" /> : <BsImage className="buttons__icons" />}
+      <img src={imageAltText} className="svg-icon" alt="Heading Icon" />
     </CustomButton>
   )
 }

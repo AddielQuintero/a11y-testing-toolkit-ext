@@ -1,6 +1,7 @@
-import { useState } from 'react'
 import { CustomButton } from './common/Button'
-import { BsSearch } from 'react-icons/bs'
+import targetSize from '../assets/targetSize.svg'
+import { useLocalStorage } from '../hooks/useLocalStorage.hook'
+import { TooltipProps } from '../types/Tooltip'
 
 declare global {
   interface Window {
@@ -11,13 +12,8 @@ declare global {
 
 window.showTooltip = false
 
-interface TargetSizeProps {
-  setTooltipText: (tooltipText: string) => void
-}
-
-export const TargetSize = ({ setTooltipText }: TargetSizeProps) => {
-  const [isActive, setIsActive] = useState<boolean>(false)
-  const iconClass = isActive ? 'icon-active' : 'icon-default'
+export const TargetSize = ({ setTooltipText }: TooltipProps) => {
+  const [isActive, setIsActive, iconClass] = useLocalStorage('TargetSizeActive', false)
 
   const codeToExecute = (isActive: boolean) => {
     let currentElement: HTMLElement | null = null
@@ -60,6 +56,7 @@ export const TargetSize = ({ setTooltipText }: TargetSizeProps) => {
     }
 
     window.handleMouseOver = (event: MouseEvent) => {
+      console.log('🚀  event:', event)
       if (!window.showTooltip) return
       const element = event.target as HTMLElement
       if (element !== currentElement) {
@@ -173,8 +170,9 @@ export const TargetSize = ({ setTooltipText }: TargetSizeProps) => {
       onMouseEnter={() => setTooltipText('Target Size')}
       onMouseLeave={() => setTooltipText('')}
       onClick={handleClick}
+      className={iconClass}
     >
-      <BsSearch className={iconClass} />
+      <img src={targetSize} className="svg-icon" alt="Heading Icon" />
     </CustomButton>
   )
 }

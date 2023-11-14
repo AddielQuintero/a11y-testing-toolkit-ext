@@ -17,8 +17,16 @@
   background-color: transparent;
 }
 
+.svg-default {
+  background-color: transparent;
+}
+
 .svg-active .svg-icon {
   filter: invert(0);
+  background-color: white;
+}
+
+.svg-active {
   background-color: white;
 }
 
