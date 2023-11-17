@@ -13,44 +13,15 @@ export const ListItemsHighlighter = ({ setTooltipText }: TooltipProps) => {
     let nativeMarkCount = 0
     const roleCounts: { [key: string]: number } = {}
 
-    const addImportantStyle = (element: Element, property: string, value: string) => {
-      let styleSheet = document.getElementById('importantStyles') as HTMLStyleElement | null
-      if (!styleSheet) {
-        styleSheet = document.createElement('style')
-        styleSheet.id = 'importantStyles'
-        document.head.appendChild(styleSheet)
-      }
-
-      if (!element.id) {
-        element.id =
-          'a11yToolkit-' +
-          Math.random()
-            .toString(36)
-            .substr(2, 9)
-      }
-
-      if (styleSheet.sheet) {
-        styleSheet.sheet.insertRule(
-          `#${element.id} { ${property}: ${value} !important;}`,
-          styleSheet.sheet.cssRules.length
-        )
-      }
-    }
-
     const removeIndicators = () => {
-      const styleSheet = document.getElementById('importantStyles')
-      if (styleSheet) {
-        styleSheet.remove()
-      }
-
-      const indicators = document.querySelectorAll('.a11yToolkit-listItems-indicator')
-      indicators.forEach((indicator) => {
-        const container = indicator.parentElement
-        if (container) {
-          container.style.outline = ''
-          container.style.position = ''
+      const elements = document.querySelectorAll('.a11yToolkit-listItems-indicator')
+      elements.forEach((indicator) => {
+        const parentElement = indicator.parentElement
+        if (parentElement) {
+          parentElement.style.outline = ''
+          parentElement.style.position = ''
+          parentElement.removeChild(indicator)
         }
-        indicator.remove()
       })
     }
 
@@ -60,30 +31,23 @@ export const ListItemsHighlighter = ({ setTooltipText }: TooltipProps) => {
         return
       }
 
-      let value = `${label === 'LI' || label === 'aLI' ? '1px' : '2px'} solid ${color}`
+      let cssSpanBase = `position: relative; padding: 2px; z-index: 999; background: ${color}; color: white;`
+      let cssOutlineBase = `outline: 2px solid ${color} !important;`
 
-      addImportantStyle(element, 'outline', value)
-
-      const positionStyle = window.getComputedStyle(element).position
-      if (positionStyle === 'static') {
-        element.style.position = 'relative'
+      if (label === 'LI' || label === 'aLI') {
+        // cssSpanBase += ` position: absolute; right: 0; bottom: 0; `
+        cssOutlineBase += `outline: 1px solid ${color} !important; `
       }
+
+      element.style.cssText += cssOutlineBase
 
       span = document.createElement('span')
       span.className = 'a11yToolkit-listItems-indicator'
-      span.style.position = 'relative'
-      span.style.padding = '2px'
-      span.style.zIndex = '999'
-      span.style.background = color
-      span.style.color = 'white'
-      span.style.fontSize = '11px'
+      span.style.cssText = cssSpanBase
       span.innerText = label
 
-      if (label === 'LI' || label === 'aLI') {
-        element.insertAdjacentElement('beforeend', span)
-      } else {
-        element.insertAdjacentElement('afterbegin', span)
-      }
+      // const position = (label === 'LI' || label === 'aLI') ? 'beforeend' : 'afterbegin';
+      element.insertAdjacentElement('afterbegin', span)
     }
 
     const logElement = (element: HTMLElement) => {
@@ -99,87 +63,33 @@ export const ListItemsHighlighter = ({ setTooltipText }: TooltipProps) => {
     }
 
     const highlightListItems = () => {
-      const ariaLists = document.querySelectorAll("[role='list']")
-      const ariaListItems = document.querySelectorAll("[role='listitem']")
+      const ariaLists = document.querySelectorAll("[role='list'], [role='listitem']")
+      const nativeLists = document.querySelectorAll(
+        'ul:not([role="list"]), ul[role]:not([role="list"]), ol:not([role="list"]), ol[role]:not([role="list"]), li:not([role="listitem"]), li[role]:not([role="listitem"])'
+      )
 
-      ariaLists.forEach((element) => {
-        const role = element.getAttribute('role')
-        if (element instanceof HTMLElement && role) {
-          highlightElement(element, 'aL', colors.aria)
-          roleCounts[role] = (roleCounts[role] || 0) + 1
+      ariaLists.forEach((element: any) => {
+        let role = element.getAttribute('role')
+        let name = role === 'list' ? 'aL' : 'aLI'
+        highlightElement(element, name, colors.aria)
+        roleCounts[role] = (roleCounts[role] || 0) + 1
+        if (name === 'aL') {
           logElement(element)
         }
         ariaMarkCount++
       })
 
-      ariaListItems.forEach((element) => {
-        const role = element.getAttribute('role')
-        if (element instanceof HTMLElement && role) {
-          highlightElement(element, 'aLI', colors.aria)
-          roleCounts[role] = (roleCounts[role] || 0) + 1
-        }
-        ariaMarkCount++
-      })
-
-      const pageLists = document.querySelectorAll('ul:not([role]), ol:not([role])')
-      const pageListItems = document.querySelectorAll('li:not([role])')
-
-      pageLists.forEach((element) => {
-        if (element instanceof HTMLElement) {
-          highlightElement(element, element.tagName, colors.native)
+      nativeLists.forEach((element: any) => {
+        highlightElement(element, element.tagName, colors.native)
+        if (element.tagName === 'UL' || element.tagName === 'OL') {
           logElement(element)
-          roleCounts[element.tagName] = (roleCounts[element.tagName] || 0) + 1
         }
-        nativeMarkCount++
-      })
-
-      pageListItems.forEach((element) => {
-        if (element instanceof HTMLElement) {
-          highlightElement(element, element.tagName, colors.native)
-          roleCounts[element.tagName] = (roleCounts[element.tagName] || 0) + 1
-        }
+        roleCounts[element.tagName] = (roleCounts[element.tagName] || 0) + 1
         nativeMarkCount++
       })
 
       logElementCounts()
     }
-
-    // const highlightListItems = () => {
-    //   const pageLists = document.querySelectorAll('ul,ol')
-    //   const pageListItems = document.querySelectorAll('li')
-    //   const ariaLists = document.querySelectorAll("[role='list']")
-    //   const ariaListItems = document.querySelectorAll("[role='listitem']")
-
-    //   ariaLists.forEach((element) => {
-    //     if (element instanceof HTMLElement) {
-    //       const role = element.getAttribute('role')
-    //       if (role) {
-    //         highlightElement(element, role, colors.aria)
-    //       }
-    //     }
-    //   })
-
-    //   ariaListItems.forEach((element) => {
-    //     if (element instanceof HTMLElement) {
-    //       const role = element.getAttribute('role')
-    //       if (role) {
-    //         highlightElement(element, role, colors.aria)
-    //       }
-    //     }
-    //   })
-
-    //   pageLists.forEach((element) => {
-    //     if (element instanceof HTMLElement) {
-    //       highlightElement(element, element.tagName, colors.native)
-    //     }
-    //   })
-
-    //   pageListItems.forEach((element) => {
-    //     if (element instanceof HTMLElement) {
-    //       highlightElement(element, element.tagName, colors.native)
-    //     }
-    //   })
-    // }
 
     if (showListItems) {
       removeIndicators()

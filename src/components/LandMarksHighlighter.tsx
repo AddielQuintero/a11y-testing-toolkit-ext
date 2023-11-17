@@ -28,41 +28,36 @@ export const LandMarksHighlighter = ({ setTooltipText }: TooltipProps) => {
     let highlightedElements = new Set()
 
     const removeIndicators = () => {
-      const indicators = document.querySelectorAll('.LandMarks-indicator')
-      indicators.forEach((indicator) => {
-        const container = indicator.parentElement
-        if (container) {
-          container.style.outline = ''
-          container.style.position = ''
-          container.style.border = ''
+      const highlightedElements = document.querySelectorAll('.a11yToolkit-highlighted')
+      highlightedElements.forEach((element: any) => {
+        element.style.outline = ''
+        element.classList.remove('a11yToolkit-highlighted')
+
+        const span = element.previousSibling
+        if (span && span.classList.contains('a11yToolkit-landMarks-indicator')) {
+          span.remove()
         }
-        indicator.remove()
       })
     }
 
-    const highlightElement = (element: HTMLElement, label: string, color: string) => {
-      element.style.outline = `2px solid ${color === '#00F' ? color : 'none'}`
-      element.style.border = `2px solid ${color === 'red' ? color : 'none'}`
+    const highlightElement = (element: any, label: string, color: string) => {
+      const highlightedElement = element.classList.contains('a11yToolkit-highlighted')
+      if (!highlightedElement) {
+        element.classList.add('a11yToolkit-highlighted')
+        element.style.cssText += `outline: 2px solid ${color} !important;`
 
-      const positionStyle = window.getComputedStyle(element).position
+        const span = document.createElement('span')
+        span.className = 'a11yToolkit-landMarks-indicator'
+        span.innerText = label
+        span.style.position = 'relative'
+        span.style.height = 'max-content'
+        span.style.padding = '2px'
+        span.style.zIndex = '999'
+        span.style.background = color
+        span.style.color = 'white'
 
-      if (positionStyle === 'static') {
-        element.style.position = 'relative'
+        element.insertAdjacentElement('beforebegin', span)
       }
-
-      const labelElement = document.createElement('span')
-      labelElement.className = 'LandMarks-indicator'
-      labelElement.innerText = label
-      labelElement.style.position = 'absolute'
-      labelElement.style.padding = '2px'
-      labelElement.style.top = '0'
-      labelElement.style.left = '0'
-      labelElement.style.zIndex = '999'
-      labelElement.style.background = color
-      labelElement.style.color = 'white'
-
-      element.prepend(labelElement)
-      return labelElement
     }
 
     const ariaLandMarks = () => {
@@ -70,8 +65,8 @@ export const LandMarksHighlighter = ({ setTooltipText }: TooltipProps) => {
       landmarkRoles.forEach((role) => {
         const elements = document.querySelectorAll(`[role="${role}"]`)
         const formattedRole = 'a' + role.charAt(0).toUpperCase() + role.slice(1)
-        elements.forEach((element) => {
-          highlightElement(element as HTMLElement, formattedRole, colors.aria) // store the label element
+        elements.forEach((element: any) => {
+          highlightElement(element, formattedRole, colors.aria) // store the label element
           highlightedElements.add(element)
           ariaLandmarkCount++
         })
@@ -90,11 +85,11 @@ export const LandMarksHighlighter = ({ setTooltipText }: TooltipProps) => {
       console.log('NATIVE Landmark Roles in use:')
       landmarksNative.forEach((item) => {
         const elements = document.querySelectorAll(item.selector)
-        elements.forEach((element) => {
+        elements.forEach((element: any) => {
           if (element.hasAttribute('role')) {
             highlightedElements.add(element)
           } else if (!highlightedElements.has(element)) {
-            highlightElement(element as HTMLElement, item.selector, colors.native)
+            highlightElement(element, item.selector, colors.native)
           }
           nativeLandmarkCount++
         })
