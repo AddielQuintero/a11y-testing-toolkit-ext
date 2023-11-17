@@ -7641,7 +7641,6 @@ const TabIndexHighlighter = ({ setTooltipText }) => {
         span.style.zIndex = "999";
         span.style.background = "red";
         span.style.color = "white";
-        span.style.fontSize = "11px";
         span.innerText = valueTabIndex;
         const numericValueTabIndex = parseInt(valueTabIndex, 10);
         if (numericValueTabIndex >= 1) {
@@ -7784,7 +7783,6 @@ const AutocompleteHighlighter = ({ setTooltipText }) => {
         span.style.zIndex = "999";
         span.style.background = "red";
         span.style.color = "white";
-        span.style.fontSize = "11px";
         if (!autocompleteValue) {
           span.innerText = "No";
           console.error(`Input without autocomplete '${autocompleteValue}':`, element);
@@ -7846,7 +7844,7 @@ const AriaRolesHighlighter = ({ setTooltipText }) => {
   const [showAriaRoles, setShowAriaRoles, iconClass] = useLocalStorage("AriaRolesActive", false);
   const codeToExecute = function(showAriaRoles2) {
     const colors = { aria: "#00F", native: "red" };
-    let cssSpanBase = `position: relative; padding: 2px; z-index: 999; background: ${colors.aria}; color: white; font-size: 11px;`;
+    let cssSpanBase = `position: relative; padding: 2px; z-index: 999; background: ${colors.aria}; color: white;`;
     const validAriaRoles = [
       // Roles de widgets
       "button",
@@ -8199,7 +8197,6 @@ const HeadingsHighlighter = ({ setTooltipText }) => {
         span.style.zIndex = "999";
         span.style.background = color;
         span.style.color = "white";
-        span.style.fontSize = "11px";
         span.innerText = label;
         element.insertAdjacentElement("afterbegin", span);
       }
@@ -8276,7 +8273,7 @@ const ListItemsHighlighter = ({ setTooltipText }) => {
       if (existingIndicator) {
         return;
       }
-      let cssSpanBase = `position: relative; padding: 2px; z-index: 999; background: ${color}; color: white; font-size: 11px;`;
+      let cssSpanBase = `position: relative; padding: 2px; z-index: 999; background: ${color}; color: white;`;
       let cssOutlineBase = `outline: 2px solid ${color} !important;`;
       if (label === "LI" || label === "aLI") {
         cssOutlineBase += `outline: 1px solid ${color} !important; `;
@@ -8387,7 +8384,6 @@ const ImageAltTextHighlighter = ({ setTooltipText }) => {
       span.style.zIndex = "999";
       span.style.background = color;
       span.style.color = "white";
-      span.style.fontSize = "11px";
       span.innerText = label;
       element.insertAdjacentElement("beforebegin", span);
     };
@@ -8658,28 +8654,34 @@ const TargetSize = ({ setTooltipText }) => {
       tooltip2.style.left = `${tooltipLeft}px`;
       tooltip2.style.top = `${tooltipTop}px`;
     };
-    const handleKeyDown = (event) => {
-      if (!window.showTooltip)
-        return;
-      if (event.key === "Control" || event.key === "Ctrl") {
-        if (isSmall(widthValue, heightValue)) {
-          console.log(currentElement);
+    if (!window.handleKeyDown) {
+      window.handleKeyDown = (event) => {
+        if (!window.showTooltip)
+          return;
+        if (event.key === "Control" || event.key === "Ctrl") {
+          if (isSmall(widthValue, heightValue)) {
+            console.log(currentElement);
+          }
         }
-      }
-    };
-    const handleScroll = () => {
-      if (currentElement) {
-        updateTooltipPosition();
-      }
-    };
-    const handleMouseOut = () => {
-      if (currentElement) {
-        currentElement.style.outline = "";
-        currentElement.style.boxShadow = "";
-        currentElement.style.background = "";
-        currentElement.style.backgroundColor = "";
-      }
-    };
+      };
+    }
+    if (!window.handleScroll) {
+      window.handleScroll = () => {
+        if (currentElement) {
+          updateTooltipPosition();
+        }
+      };
+    }
+    if (!window.handleMouseOut) {
+      window.handleMouseOut = () => {
+        if (currentElement) {
+          currentElement.style.outline = "";
+          currentElement.style.boxShadow = "";
+          currentElement.style.background = "";
+          currentElement.style.backgroundColor = "";
+        }
+      };
+    }
     const handleMouseOver = (event) => {
       if (!window.showTooltip)
         return;
@@ -8740,26 +8742,16 @@ const TargetSize = ({ setTooltipText }) => {
         updateTooltipPosition();
       }
     };
-    const removeEventListeners = () => {
-      document.body.removeEventListener("mousemove", handleMouseOver);
-      window.removeEventListener("scroll", handleScroll);
-      document.body.removeEventListener("mouseout", handleMouseOut);
-      document.body.removeEventListener("keydown", handleKeyDown);
-    };
-    const addEventListeners = () => {
-      document.body.addEventListener("mousemove", handleMouseOver);
-      window.addEventListener("scroll", handleScroll);
-      document.body.addEventListener("keydown", handleKeyDown);
-      document.body.addEventListener("mouseout", handleMouseOut);
-    };
+    document.body.addEventListener("mousemove", handleMouseOver);
+    window.addEventListener("scroll", window.handleScroll);
+    document.body.addEventListener("keydown", window.handleKeyDown);
+    document.body.addEventListener("mouseout", window.handleMouseOut);
     if (isActive2) {
       window.showTooltip = false;
       const indicators = document.querySelectorAll(".a11yToolkit-size-tooltip");
       indicators.forEach((indicator) => indicator.remove());
-      removeEventListeners();
     } else {
       window.showTooltip = true;
-      addEventListeners();
     }
   };
   const handleClick = () => {
