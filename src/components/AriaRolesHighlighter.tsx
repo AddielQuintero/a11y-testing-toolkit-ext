@@ -8,6 +8,7 @@ export const AriaRolesHighlighter = ({ setTooltipText }: TooltipProps) => {
 
   const codeToExecute = function(showAriaRoles: boolean) {
     const colors = { aria: '#00F', native: 'red' }
+    let cssSpanBase = `position: relative; padding: 2px; z-index: 999; background: ${colors.aria}; color: white;`
     const validAriaRoles = [
       // Roles de widgets
       'button',
@@ -99,92 +100,60 @@ export const AriaRolesHighlighter = ({ setTooltipText }: TooltipProps) => {
       )
     }
 
-    const addImportantStyle = (element: Element, property: string, value: string) => {
-      let styleSheet = document.getElementById('importantStyles') as HTMLStyleElement | null
-      if (!styleSheet) {
-        styleSheet = document.createElement('style')
-        styleSheet.id = 'importantStyles'
-        document.head.appendChild(styleSheet)
-      }
-
-      if (!element.id) {
-        element.id =
-          'a11yToolkit-' +
-          Math.random()
-            .toString(36)
-            .substr(2, 9)
-      }
-
-      if (styleSheet.sheet) {
-        styleSheet.sheet.insertRule(
-          `#${element.id} { ${property}: ${value} !important; }`,
-          styleSheet.sheet.cssRules.length
-        )
-      }
-    }
-
     const removeIndicators = () => {
-      const styleSheet = document.getElementById('importantStyles')
-      if (styleSheet) {
-        styleSheet.remove()
-      }
+      const highlightedElements = document.querySelectorAll('.a11yToolkit-highlighted')
+      highlightedElements.forEach((element: any) => {
+        element.style.outline = ''
+        element.classList.remove('a11yToolkit-highlighted')
 
-      const indicators = document.querySelectorAll('.a11yToolkit-ariaRoles-indicator')
-      indicators.forEach((indicator) => {
-        const container = indicator.parentElement
-        if (container) {
-          // container.style.outline = ''
-          container.style.position = ''
+        const role = element.getAttribute('role')
+        const span = element.tagName === 'IMG' || (role === 'img' && element.previousSibling)
+        const container = element.querySelector('.a11yToolkit-ariaRoles-indicator')
+
+        if (span && span.classList.contains('a11yToolkit-ariaRoles-indicator')) {
+          span.remove()
         }
-        indicator.remove()
+        if (container) {
+          container.remove()
+        }
       })
     }
 
-    const highlightValidRoles = (element: HTMLElement, role: string) => {
-      const positionStyle = window.getComputedStyle(element).position
-      if (element) {
-        if (positionStyle === 'static') {
-          element.style.position = 'relative'
-        }
-
-        // element.style.outline = '2px solid blue'
-        addImportantStyle(element, 'outline', `2px solid ${colors.aria}`)
-        const label = document.createElement('span')
-        label.innerText = role
-        label.className = 'a11yToolkit-ariaRoles-indicator'
-        label.style.position = 'absolute'
-        label.style.padding = '2px'
-        label.style.top = '0'
-        label.style.left = '0'
-        label.style.zIndex = '999'
-        label.style.background = '#00F'
-        label.style.fontSize = '11px'
-        label.style.color = 'white'
-        element.appendChild(label)
+    const highlightValidRoles = (element: any, role: string) => {
+      if (element.classList.contains('a11yToolkit-highlighted')) {
+        return
       }
+      element.classList.add('a11yToolkit-highlighted')
+      element.style.cssText += `outline: 2px solid ${colors.aria} !important;`
+
+      const span = document.createElement('span')
+      span.className = 'a11yToolkit-ariaRoles-indicator'
+      span.style.cssText = cssSpanBase
+      span.innerText = role
+
+      const position = element.tagName === 'IMG' || role === 'img' ? 'beforebegin' : 'afterbegin'
+      element.insertAdjacentElement(position, span)
     }
 
-    const highlightInvalidRoles = (element: HTMLElement) => {
-      const positionStyle = window.getComputedStyle(element).position
-      if (positionStyle === 'static') {
-        element.style.position = 'relative'
+    const highlightInvalidRoles = (element: any) => {
+      if (element.classList.contains('a11yToolkit-highlighted')) {
+        return
       }
+      element.classList.add('a11yToolkit-highlighted')
+      element.style.cssText += `outline: 2px solid ${colors.native} !important;`
 
-      // element.style.outline = '2px solid red'
-      addImportantStyle(element, 'outline', `2px solid ${colors.native}`)
       const warningIcon = document.createElement('span')
       warningIcon.className = 'a11yToolkit-ariaRoles-indicator'
+      warningIcon.style.cssText = cssSpanBase + `background: ${colors.native};`
       warningIcon.innerText = ' ⚠️'
-      warningIcon.style.padding = '2px'
-      warningIcon.style.position = 'absolute'
-      warningIcon.style.top = '0'
-      warningIcon.style.left = '0'
-      warningIcon.style.zIndex = '9999'
-      element.appendChild(warningIcon)
+
+      const role = element.getAttribute('role')
+      const position = element.tagName === 'IMG' || role === 'img' ? 'beforebegin' : 'afterbegin'
+      element.insertAdjacentElement(position, warningIcon)
     }
 
     const highlightAriaRoles = () => {
-      elements.forEach((element) => {
+      elements.forEach((element: any) => {
         const role = element.getAttribute('role')
 
         if (role) {
@@ -195,7 +164,7 @@ export const AriaRolesHighlighter = ({ setTooltipText }: TooltipProps) => {
           }
 
           if (validAriaRoles.includes(role)) {
-            highlightValidRoles(element as HTMLElement, role)
+            highlightValidRoles(element, role)
           }
         }
       })
@@ -215,7 +184,7 @@ export const AriaRolesHighlighter = ({ setTooltipText }: TooltipProps) => {
             if (element.getAttribute('role') === role) {
               console.error(`Element with invalid role '${role}':`, element)
 
-              highlightInvalidRoles(element as HTMLElement)
+              highlightInvalidRoles(element)
             }
           })
         }

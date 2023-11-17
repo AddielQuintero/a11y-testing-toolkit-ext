@@ -64,48 +64,20 @@ export const AutocompleteHighlighter = ({ setTooltipText }: TooltipProps) => {
       'impp',
     ]
 
-    const addImportantStyle = (element: Element, property: string, value: string) => {
-      let styleSheet = document.getElementById('importantStyles') as HTMLStyleElement | null
-      if (!styleSheet) {
-        styleSheet = document.createElement('style')
-        styleSheet.id = 'importantStyles'
-        document.head.appendChild(styleSheet)
-      }
-
-      if (!element.id) {
-        element.id =
-          'a11yToolkit-' +
-          Math.random()
-            .toString(36)
-            .substr(2, 9)
-      }
-
-      if (styleSheet.sheet) {
-        styleSheet.sheet.insertRule(
-          `#${element.id} { ${property}: ${value} !important;}`,
-          styleSheet.sheet.cssRules.length
-        )
-      }
-    }
-
     const removeIndicators = () => {
-      const styleSheet = document.getElementById('importantStyles')
-      if (styleSheet) {
-        styleSheet.remove()
-      }
+      const highlightedElements = document.querySelectorAll('.a11yToolkit-highlighted')
+      highlightedElements.forEach((element: any) => {
+        element.style.outline = ''
+        element.classList.remove('a11yToolkit-highlighted')
 
-      const containers = document.querySelectorAll('.a11yToolkit-autocomplete-container')
-      containers.forEach((container) => {
-        const element = container.querySelector('input')
-        if (element) {
-          container.before(element)
-          element.style.outline = ''
+        const span = element.previousSibling
+        if (span && span.classList.contains('a11yToolkit-autocomplete-indicator')) {
+          span.remove()
         }
-        container.remove()
       })
     }
 
-    const isVisible = (element: HTMLElement) => {
+    const isVisible = (element: any) => {
       const isAriaHidden = (element: HTMLElement) => element.getAttribute('aria-hidden') === 'true'
       const isDisplayNone = (style: CSSStyleDeclaration) => style.display === 'none'
       const isVisibilityHidden = (style: CSSStyleDeclaration) => style.visibility === 'hidden'
@@ -122,60 +94,46 @@ export const AutocompleteHighlighter = ({ setTooltipText }: TooltipProps) => {
     const inputs = document.querySelectorAll('input')
     const visibleInputs = [...inputs].filter(isVisible)
 
-    const processAutocompleteValues = (
-      input: HTMLInputElement,
-      autocompleteCounts: Record<string, number>
-    ) => {
+    const processAutocompleteValues = (input: any, autocompleteCounts: Record<string, number>) => {
       const autocompleteValue = input.getAttribute('autocomplete')
       if (autocompleteValue !== null) {
         autocompleteCounts[autocompleteValue] = (autocompleteCounts[autocompleteValue] || 0) + 1
       }
     }
 
-    const highlightAutocomplete = (input: HTMLInputElement) => {
-      let container = input.closest('.a11yToolkit-autocomplete-container') as HTMLElement
-      if (!container) {
-        const autocompleteValue = input.getAttribute('autocomplete')
+    const highlightAutocomplete = (element: any) => {
+      let highlightedElement = element.classList.contains('a11yToolkit-highlighted')
+      if (!highlightedElement) {
+        const autocompleteValue = element.getAttribute('autocomplete')
 
-        container = document.createElement('div')
-        container.classList.add('a11yToolkit-autocomplete-container')
-        container.style.position = 'relative'
-        container.style.display = 'inline-block'
-        if (input.parentNode) {
-          input.parentNode.insertBefore(container, input)
-        }
-        container.appendChild(input)
-
-        // input.style.outline = '2px solid red'
-        addImportantStyle(input, 'outline', `2px solid red`)
+        element.classList.add('a11yToolkit-highlighted')
+        element.style.cssText += `outline: 2px solid red !important;`
 
         const span = document.createElement('span')
         span.className = 'a11yToolkit-autocomplete-indicator'
-        span.style.position = 'absolute'
+        span.style.position = 'relative'
         span.style.padding = '2px'
-        span.style.top = '0'
-        span.style.left = '0'
         span.style.zIndex = '999'
         span.style.background = 'red'
         span.style.color = 'white'
-        span.style.fontSize = '11px'
+        // span.style.fontSize = '11px'
 
         if (!autocompleteValue) {
           span.innerText = 'No'
-          console.error(`Input without autocomplete '${autocompleteValue}':`, input)
+          console.error(`Input without autocomplete '${autocompleteValue}':`, element)
         } else if (!validAutocompleteValues.includes(autocompleteValue)) {
           span.innerText = '⚠️'
-          console.error(`Input with invalid autocomplete '${autocompleteValue}':`, input)
+          console.error(`Input with invalid autocomplete '${autocompleteValue}':`, element)
         } else {
           span.innerText = autocompleteValue
         }
 
-        container.appendChild(span)
+        element.insertAdjacentElement('beforebegin', span)
       }
     }
 
     const annotateAndAttach = () => {
-      visibleInputs.forEach((input) => processAutocompleteValues(input, autocompleteCounts))
+      visibleInputs.forEach((element) => processAutocompleteValues(element, autocompleteCounts))
 
       console.log(`${visibleInputs.length} elements with autocomplete attribute were found on this page.`)
       console.log('Count of each autocomplete:')
@@ -183,7 +141,7 @@ export const AutocompleteHighlighter = ({ setTooltipText }: TooltipProps) => {
         console.log(`${role}: ${count} occurrences`)
       })
 
-      visibleInputs.forEach((input) => highlightAutocomplete(input))
+      visibleInputs.forEach((element) => highlightAutocomplete(element))
     }
 
     if (showAutoCompletes) {

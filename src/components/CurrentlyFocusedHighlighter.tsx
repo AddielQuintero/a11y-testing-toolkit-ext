@@ -17,34 +17,34 @@ export const CurrentlyFocusedHighlighter = ({ setTooltipText }: TooltipProps) =>
   )
 
   const codeToExecute = function(showCurrentlyFocused: boolean) {
-    const focusableElements = document.querySelectorAll('a, button, input, [tabindex]')
+    // const focusableElements = document.querySelectorAll('a, button, input, [tabindex]')
 
     if (!window.myExtensionKeyDownHandler) {
-      window.myExtensionKeyDownHandler = (event: KeyboardEvent) => {
-        if (event.key === 'Control' || event.key === 'Ctrl') {
+      window.myExtensionKeyDownHandler = () => {
+        // if (event.key === 'Control' || event.key === 'Ctrl') {
           console.clear()
           console.log('Current Focused Element:')
           console.log(document.activeElement)
-        }
+        // }
       }
     }
 
-    if (!window.myExtensionPreventDefaultClick) {
-      window.myExtensionPreventDefaultClick = (event: any) => {
-        event.preventDefault()
-      }
-    }
+    // if (!window.myExtensionPreventDefaultClick) {
+    //   window.myExtensionPreventDefaultClick = (event: any) => {
+    //     event.preventDefault()
+    //   }
+    // }
 
     const removeIndicators = () => {
       if (window.myExtensionKeyDownHandler) {
         document.body.removeEventListener('keydown', window.myExtensionKeyDownHandler)
       }
 
-      focusableElements.forEach((element) => {
-        if (window.myExtensionPreventDefaultClick) {
-          element.removeEventListener('click', window.myExtensionPreventDefaultClick)
-        }
-      })
+      // focusableElements.forEach((element) => {
+      //   if (window.myExtensionPreventDefaultClick) {
+      //     element.removeEventListener('click', window.myExtensionPreventDefaultClick)
+      //   }
+      // })
     }
 
     const highlightCurrentlyFocused = () => {
@@ -52,11 +52,11 @@ export const CurrentlyFocusedHighlighter = ({ setTooltipText }: TooltipProps) =>
         document.body.addEventListener('keydown', window.myExtensionKeyDownHandler)
       }
 
-      focusableElements.forEach((element) => {
-        if (window.myExtensionPreventDefaultClick) {
-          element.addEventListener('click', window.myExtensionPreventDefaultClick)
-        }
-      })
+      // focusableElements.forEach((element) => {
+      //   if (window.myExtensionPreventDefaultClick) {
+      //     element.addEventListener('click', window.myExtensionPreventDefaultClick)
+      //   }
+      // })
     }
 
     if (showCurrentlyFocused) {
