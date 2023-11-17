@@ -6,6 +6,9 @@ import { TooltipProps } from '../types/Tooltip'
 declare global {
   interface Window {
     handleMouseOver?: (event: MouseEvent) => void
+    handleScroll?: (event: Event) => void
+    handleMouseOut?: (event: MouseEvent) => void
+    handleKeyDown?: (event: KeyboardEvent) => void
     showTooltip?: boolean
   }
 }
@@ -16,12 +19,12 @@ export const TargetSize = ({ setTooltipText }: TooltipProps) => {
   const [isActive, setIsActive, iconClass] = useLocalStorage('TargetSizeActive', false)
 
   const codeToExecute = (isActive: boolean) => {
-    let currentElement: HTMLElement | null = null
-    let tooltip: HTMLElement
+    let currentElement: any = null
+    let tooltip: any
     let widthValue: number = 0
     let heightValue: number = 0
 
-    if (!document.querySelector('.a11y-toolkit-size-tooltip')) {
+    if (!document.querySelector('.a11yToolkit-size-tooltip')) {
       tooltip = document.createElement('figure')
       tooltip.style.display = 'flex'
       tooltip.style.flexDirection = 'column'
@@ -34,19 +37,44 @@ export const TargetSize = ({ setTooltipText }: TooltipProps) => {
       tooltip.style.boxShadow = ' rgba(0, 0, 0, 0.35) 0px 5px 15px'
       tooltip.style.transition = 'top 0.2s, left 0.2s'
       tooltip.style.fontFamily = ' monospace'
-      tooltip.style.zIndex = '9999'
-      tooltip.className = 'a11y-toolkit-size-tooltip'
+      tooltip.style.zIndex = '99999999999'
+      tooltip.className = 'a11yToolkit-size-tooltip'
 
       document.body.appendChild(tooltip)
     } else {
-      tooltip = document.querySelector('.a11y-toolkit-size-tooltip') as HTMLElement
+      tooltip = document.querySelector('.a11yToolkit-size-tooltip') as any
     }
 
     const isSmall = (width: number, height: number) => {
       return width < 24 || height < 24
     }
 
-    const printElement = (event: KeyboardEvent) => {
+    const updateTooltipPosition = () => {
+      const tooltip: any = document.querySelector('.a11yToolkit-size-tooltip')
+      if (!tooltip || !currentElement) return
+
+      const rect = currentElement.getBoundingClientRect()
+      const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop
+
+      // Ajustar la posición basada en la ubicación del elemento
+      let tooltipLeft = rect.right + scrollLeft + 50 // A la derecha del elemento
+      let tooltipTop = rect.top + scrollTop - tooltip.offsetHeight - 30 // Arriba del elemento
+
+      // Asegurarse de que el tooltip no se sale de la ventana
+      if (tooltipLeft + tooltip.offsetWidth > window.innerWidth) {
+        tooltipLeft = window.innerWidth - tooltip.offsetWidth - 70
+      }
+
+      if (tooltipTop < 0) {
+        tooltipTop = rect.bottom + scrollTop + 50 // Si no cabe arriba, mostrar debajo
+      }
+
+      tooltip.style.left = `${tooltipLeft}px`
+      tooltip.style.top = `${tooltipTop}px`
+    }
+
+    const handleKeyDown = (event: KeyboardEvent) => {
       if (!window.showTooltip) return
       if (event.key === 'Control' || event.key === 'Ctrl') {
         if (isSmall(widthValue, heightValue)) {
@@ -55,10 +83,25 @@ export const TargetSize = ({ setTooltipText }: TooltipProps) => {
       }
     }
 
-    window.handleMouseOver = (event: MouseEvent) => {
-      console.log('🚀  event:', event)
+    const handleScroll = () => {
+      if (currentElement) {
+        updateTooltipPosition()
+      }
+    }
+
+    const handleMouseOut = () => {
+      if (currentElement) {
+        currentElement.style.outline = ''
+        currentElement.style.boxShadow = ''
+        currentElement.style.background = ''
+        currentElement.style.backgroundColor = ''
+      }
+    }
+
+    const handleMouseOver = (event: any) => {
+      // console.log('🚀  event:', event)
       if (!window.showTooltip) return
-      const element = event.target as HTMLElement
+      const element = event.target
       if (element !== currentElement) {
         const computedStyle = window.getComputedStyle(element)
         let width = element.style.width || computedStyle.width
@@ -76,25 +119,31 @@ export const TargetSize = ({ setTooltipText }: TooltipProps) => {
         heightValue = parseFloat(height)
 
         let elementName = element.tagName.toLowerCase()
-        let idOrClass = element.id
-          ? `#${element.id}`
-          : element.className
-          ? `.${element.className.split(' ')[0]}`
-          : ''
+        let idOrClass = ''
+        if (element.id) {
+          idOrClass = `#${element.id}`
+        } else if (element.className) {
+          // Comprobar si className es una cadena o un objeto SVGAnimatedString
+          const className =
+            typeof element.className === 'string' ? element.className : element.className.baseVal // Para SVGs
+
+          idOrClass = className ? `.${className.split(' ')[0]}` : ''
+        }
+
         const tooltipWidth = tooltip.offsetWidth
         const tooltipHeight = tooltip.offsetHeight
 
-        let tooltipLeft = event.clientX
-        let tooltipTop = event.clientY
+        let tooltipLeft = event.clientX + 10
+        let tooltipTop = event.clientY + 60
 
-        if (tooltipLeft + tooltipWidth * 1.5 > window.innerWidth || event.clientX > window.innerWidth / 2) {
-          tooltipLeft = event.clientX - tooltipWidth * 1.5
+        if (tooltipLeft + tooltipWidth * 2 > window.innerWidth || event.clientX > window.innerWidth / 2) {
+          tooltipLeft = event.clientX - tooltipWidth * 2
         }
 
         if (event.clientY < window.innerHeight / 2) {
-          tooltipTop = event.clientY + 20
+          tooltipTop = event.clientY + 60
         } else {
-          tooltipTop = event.clientY - tooltipHeight - 20
+          tooltipTop = event.clientY - tooltipHeight - 60
         }
         tooltip.style.top = `${tooltipTop}px`
         tooltip.style.left = `${tooltipLeft}px`
@@ -113,37 +162,41 @@ export const TargetSize = ({ setTooltipText }: TooltipProps) => {
         }
 
         tooltip.innerHTML = `
-          <header style="padding: 10px;">
-            <strong style="color: white;">&lt${elementName}&gt${idOrClass}</strong>
-          </header>
-          <code style="background: ${codeBackgroundColor}; padding: 10px; border-radius: 8px; display: grid; grid-template-columns: max-content auto; gap: 0.25em 0.5em;">
-            <span style="color: ${codeColor};">Width:</span><span style="color: white;"> ${width}</span>
-            <span style="color: ${codeColor};">Height:</span><span style="color: white;">  ${height}</span>
-          </code>`
+            <header style="padding: 10px;">
+              <strong style="color: white;">&lt${elementName}&gt${idOrClass}</strong>
+            </header>
+            <code style="background: ${codeBackgroundColor}; padding: 10px; border-radius: 8px; display: grid; grid-template-columns: max-content auto; gap: 0.25em 0.5em;">
+              <span style="color: ${codeColor};">Width:</span><span style="color: white;"> ${width}</span>
+              <span style="color: ${codeColor};">Height:</span><span style="color: white;">  ${height}</span>
+            </code>`
 
         currentElement = element
+        updateTooltipPosition()
       }
     }
 
-    document.body.addEventListener('mouseover', window.handleMouseOver)
+    const removeEventListeners = () => {
+      document.body.removeEventListener('mousemove', handleMouseOver)
+      window.removeEventListener('scroll', handleScroll)
+      document.body.removeEventListener('mouseout', handleMouseOut)
+      document.body.removeEventListener('keydown', handleKeyDown)
+    }
 
-    document.body.addEventListener('keydown', printElement)
-
-    document.body.addEventListener('mouseout', () => {
-      if (currentElement) {
-        currentElement.style.outline = ''
-        currentElement.style.boxShadow = ''
-        currentElement.style.background = ''
-        currentElement.style.backgroundColor = ''
-      }
-    })
+    const addEventListeners = () => {
+      document.body.addEventListener('mousemove', handleMouseOver)
+      window.addEventListener('scroll', handleScroll)
+      document.body.addEventListener('keydown', handleKeyDown)
+      document.body.addEventListener('mouseout', handleMouseOut)
+    }
 
     if (isActive) {
       window.showTooltip = false
-      const indicators = document.querySelectorAll('.a11y-toolkit-size-tooltip')
+      const indicators = document.querySelectorAll('.a11yToolkit-size-tooltip')
       indicators.forEach((indicator) => indicator.remove())
+      removeEventListeners()
     } else {
       window.showTooltip = true
+      addEventListeners()
     }
   }
 
