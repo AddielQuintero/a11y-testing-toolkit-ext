@@ -7616,35 +7616,38 @@ const TabIndexHighlighter = ({ setTooltipText }) => {
   const [showTabIndexes, setShowTabIndexes, iconClass] = useLocalStorage("TabIndexActive", false);
   const codeToExecute = function(showTabIndexes2) {
     const removeIndicators = () => {
-      const indicators = document.querySelectorAll(".a11yToolkit-tabindex-indicator");
-      indicators.forEach((indicator) => indicator.remove());
+      const elements = document.querySelectorAll(".a11yToolkit-tabindex-processed");
+      elements.forEach((element) => {
+        element.classList.remove("a11yToolkit-tabindex-processed");
+        const indicator = element.previousElementSibling;
+        if (indicator && indicator.classList.contains("a11yToolkit-tabindex-indicator")) {
+          indicator.remove();
+        }
+      });
     };
     const highlightTabIndex = () => {
       const elements = document.querySelectorAll("[tabindex]");
       elements.forEach((element) => {
-        if (element instanceof HTMLElement) {
-          const valueTabIndex = element.getAttribute("tabindex") || "unknown";
-          const positionStyle = window.getComputedStyle(element).position;
-          if (positionStyle === "static") {
-            element.style.position = "relative";
-          }
-          const span = document.createElement("span");
-          span.className = "a11yToolkit-tabindex-indicator";
-          span.style.position = "absolute";
-          span.style.padding = "2px";
-          span.style.top = "0";
-          span.style.left = "0";
-          span.style.zIndex = "999";
-          span.style.background = "red";
-          span.style.color = "white";
-          span.style.fontSize = "11px";
-          span.innerText = valueTabIndex;
-          const numericValueTabIndex = parseInt(valueTabIndex, 10);
-          if (numericValueTabIndex >= 1) {
-            span.innerText += "⚠️";
-          }
-          element.appendChild(span);
+        if (element.classList.contains("a11yToolkit-tabindex-processed")) {
+          return;
         }
+        element.classList.add("a11yToolkit-tabindex-processed");
+        const valueTabIndex = element.getAttribute("tabindex") || "unknown";
+        const span = document.createElement("span");
+        span.className = "a11yToolkit-tabindex-indicator";
+        span.style.position = "relative";
+        span.style.padding = "2px";
+        span.style.height = "max-content";
+        span.style.zIndex = "999";
+        span.style.background = "red";
+        span.style.color = "white";
+        span.style.fontSize = "11px";
+        span.innerText = valueTabIndex;
+        const numericValueTabIndex = parseInt(valueTabIndex, 10);
+        if (numericValueTabIndex >= 1) {
+          span.innerText += "⚠️";
+        }
+        element.insertAdjacentElement("beforebegin", span);
       });
     };
     if (showTabIndexes2) {
@@ -7740,36 +7743,15 @@ const AutocompleteHighlighter = ({ setTooltipText }) => {
       "email",
       "impp"
     ];
-    const addImportantStyle = (element, property, value) => {
-      let styleSheet = document.getElementById("importantStyles");
-      if (!styleSheet) {
-        styleSheet = document.createElement("style");
-        styleSheet.id = "importantStyles";
-        document.head.appendChild(styleSheet);
-      }
-      if (!element.id) {
-        element.id = "a11yToolkit-" + Math.random().toString(36).substr(2, 9);
-      }
-      if (styleSheet.sheet) {
-        styleSheet.sheet.insertRule(
-          `#${element.id} { ${property}: ${value} !important;}`,
-          styleSheet.sheet.cssRules.length
-        );
-      }
-    };
     const removeIndicators = () => {
-      const styleSheet = document.getElementById("importantStyles");
-      if (styleSheet) {
-        styleSheet.remove();
-      }
-      const containers = document.querySelectorAll(".a11yToolkit-autocomplete-container");
-      containers.forEach((container) => {
-        const element = container.querySelector("input");
-        if (element) {
-          container.before(element);
-          element.style.outline = "";
+      const highlightedElements = document.querySelectorAll(".a11yToolkit-highlighted");
+      highlightedElements.forEach((element) => {
+        element.style.outline = "";
+        element.classList.remove("a11yToolkit-highlighted");
+        const span = element.previousSibling;
+        if (span && span.classList.contains("a11yToolkit-autocomplete-indicator")) {
+          span.remove();
         }
-        container.remove();
       });
     };
     const isVisible = (element) => {
@@ -7789,49 +7771,40 @@ const AutocompleteHighlighter = ({ setTooltipText }) => {
         autocompleteCounts2[autocompleteValue] = (autocompleteCounts2[autocompleteValue] || 0) + 1;
       }
     };
-    const highlightAutocomplete = (input) => {
-      let container = input.closest(".a11yToolkit-autocomplete-container");
-      if (!container) {
-        const autocompleteValue = input.getAttribute("autocomplete");
-        container = document.createElement("div");
-        container.classList.add("a11yToolkit-autocomplete-container");
-        container.style.position = "relative";
-        container.style.display = "inline-block";
-        if (input.parentNode) {
-          input.parentNode.insertBefore(container, input);
-        }
-        container.appendChild(input);
-        addImportantStyle(input, "outline", `2px solid red`);
+    const highlightAutocomplete = (element) => {
+      let highlightedElement = element.classList.contains("a11yToolkit-highlighted");
+      if (!highlightedElement) {
+        const autocompleteValue = element.getAttribute("autocomplete");
+        element.classList.add("a11yToolkit-highlighted");
+        element.style.cssText += `outline: 2px solid red !important;`;
         const span = document.createElement("span");
         span.className = "a11yToolkit-autocomplete-indicator";
-        span.style.position = "absolute";
+        span.style.position = "relative";
         span.style.padding = "2px";
-        span.style.top = "0";
-        span.style.left = "0";
         span.style.zIndex = "999";
         span.style.background = "red";
         span.style.color = "white";
         span.style.fontSize = "11px";
         if (!autocompleteValue) {
           span.innerText = "No";
-          console.error(`Input without autocomplete '${autocompleteValue}':`, input);
+          console.error(`Input without autocomplete '${autocompleteValue}':`, element);
         } else if (!validAutocompleteValues.includes(autocompleteValue)) {
           span.innerText = "⚠️";
-          console.error(`Input with invalid autocomplete '${autocompleteValue}':`, input);
+          console.error(`Input with invalid autocomplete '${autocompleteValue}':`, element);
         } else {
           span.innerText = autocompleteValue;
         }
-        container.appendChild(span);
+        element.insertAdjacentElement("beforebegin", span);
       }
     };
     const annotateAndAttach = () => {
-      visibleInputs.forEach((input) => processAutocompleteValues(input, autocompleteCounts));
+      visibleInputs.forEach((element) => processAutocompleteValues(element, autocompleteCounts));
       console.log(`${visibleInputs.length} elements with autocomplete attribute were found on this page.`);
       console.log("Count of each autocomplete:");
       Object.entries(autocompleteCounts).forEach(([role, count]) => {
         console.log(`${role}: ${count} occurrences`);
       });
-      visibleInputs.forEach((input) => highlightAutocomplete(input));
+      visibleInputs.forEach((element) => highlightAutocomplete(element));
     };
     if (showAutoCompletes2) {
       removeIndicators();
@@ -7873,6 +7846,7 @@ const AriaRolesHighlighter = ({ setTooltipText }) => {
   const [showAriaRoles, setShowAriaRoles, iconClass] = useLocalStorage("AriaRolesActive", false);
   const codeToExecute = function(showAriaRoles2) {
     const colors = { aria: "#00F", native: "red" };
+    let cssSpanBase = `position: relative; padding: 2px; z-index: 999; background: ${colors.aria}; color: white; font-size: 11px;`;
     const validAriaRoles = [
       // Roles de widgets
       "button",
@@ -7957,73 +7931,48 @@ const AriaRolesHighlighter = ({ setTooltipText }) => {
       const style = window.getComputedStyle(element);
       return style.display !== "none" && style.visibility !== "hidden" && element.getAttribute("role") !== "presentation" && element.getAttribute("role") !== "none";
     };
-    const addImportantStyle = (element, property, value) => {
-      let styleSheet = document.getElementById("importantStyles");
-      if (!styleSheet) {
-        styleSheet = document.createElement("style");
-        styleSheet.id = "importantStyles";
-        document.head.appendChild(styleSheet);
-      }
-      if (!element.id) {
-        element.id = "a11yToolkit-" + Math.random().toString(36).substr(2, 9);
-      }
-      if (styleSheet.sheet) {
-        styleSheet.sheet.insertRule(
-          `#${element.id} { ${property}: ${value} !important; }`,
-          styleSheet.sheet.cssRules.length
-        );
-      }
-    };
     const removeIndicators = () => {
-      const styleSheet = document.getElementById("importantStyles");
-      if (styleSheet) {
-        styleSheet.remove();
-      }
-      const indicators = document.querySelectorAll(".a11yToolkit-ariaRoles-indicator");
-      indicators.forEach((indicator) => {
-        const container = indicator.parentElement;
-        if (container) {
-          container.style.position = "";
+      const highlightedElements = document.querySelectorAll(".a11yToolkit-highlighted");
+      highlightedElements.forEach((element) => {
+        element.style.outline = "";
+        element.classList.remove("a11yToolkit-highlighted");
+        const role = element.getAttribute("role");
+        const span = element.tagName === "IMG" || role === "img" && element.previousSibling;
+        const container = element.querySelector(".a11yToolkit-ariaRoles-indicator");
+        if (span && span.classList.contains("a11yToolkit-ariaRoles-indicator")) {
+          span.remove();
         }
-        indicator.remove();
+        if (container) {
+          container.remove();
+        }
       });
     };
     const highlightValidRoles = (element, role) => {
-      const positionStyle = window.getComputedStyle(element).position;
-      if (element) {
-        if (positionStyle === "static") {
-          element.style.position = "relative";
-        }
-        addImportantStyle(element, "outline", `2px solid ${colors.aria}`);
-        const label = document.createElement("span");
-        label.innerText = role;
-        label.className = "a11yToolkit-ariaRoles-indicator";
-        label.style.position = "absolute";
-        label.style.padding = "2px";
-        label.style.top = "0";
-        label.style.left = "0";
-        label.style.zIndex = "999";
-        label.style.background = "#00F";
-        label.style.fontSize = "11px";
-        label.style.color = "white";
-        element.appendChild(label);
+      if (element.classList.contains("a11yToolkit-highlighted")) {
+        return;
       }
+      element.classList.add("a11yToolkit-highlighted");
+      element.style.cssText += `outline: 2px solid ${colors.aria} !important;`;
+      const span = document.createElement("span");
+      span.className = "a11yToolkit-ariaRoles-indicator";
+      span.style.cssText = cssSpanBase;
+      span.innerText = role;
+      const position = element.tagName === "IMG" || role === "img" ? "beforebegin" : "afterbegin";
+      element.insertAdjacentElement(position, span);
     };
     const highlightInvalidRoles = (element) => {
-      const positionStyle = window.getComputedStyle(element).position;
-      if (positionStyle === "static") {
-        element.style.position = "relative";
+      if (element.classList.contains("a11yToolkit-highlighted")) {
+        return;
       }
-      addImportantStyle(element, "outline", `2px solid ${colors.native}`);
+      element.classList.add("a11yToolkit-highlighted");
+      element.style.cssText += `outline: 2px solid ${colors.native} !important;`;
       const warningIcon = document.createElement("span");
       warningIcon.className = "a11yToolkit-ariaRoles-indicator";
+      warningIcon.style.cssText = cssSpanBase + `background: ${colors.native};`;
       warningIcon.innerText = " ⚠️";
-      warningIcon.style.padding = "2px";
-      warningIcon.style.position = "absolute";
-      warningIcon.style.top = "0";
-      warningIcon.style.left = "0";
-      warningIcon.style.zIndex = "9999";
-      element.appendChild(warningIcon);
+      const role = element.getAttribute("role");
+      const position = element.tagName === "IMG" || role === "img" ? "beforebegin" : "afterbegin";
+      element.insertAdjacentElement(position, warningIcon);
     };
     const highlightAriaRoles = () => {
       elements.forEach((element) => {
@@ -8116,36 +8065,32 @@ const LandMarksHighlighter = ({ setTooltipText }) => {
     let nativeLandmarkCount = 0;
     let highlightedElements = /* @__PURE__ */ new Set();
     const removeIndicators = () => {
-      const indicators = document.querySelectorAll(".LandMarks-indicator");
-      indicators.forEach((indicator) => {
-        const container = indicator.parentElement;
-        if (container) {
-          container.style.outline = "";
-          container.style.position = "";
-          container.style.border = "";
+      const highlightedElements2 = document.querySelectorAll(".a11yToolkit-highlighted");
+      highlightedElements2.forEach((element) => {
+        element.style.outline = "";
+        element.classList.remove("a11yToolkit-highlighted");
+        const span = element.previousSibling;
+        if (span && span.classList.contains("a11yToolkit-landMarks-indicator")) {
+          span.remove();
         }
-        indicator.remove();
       });
     };
     const highlightElement = (element, label, color) => {
-      element.style.outline = `2px solid ${color === "#00F" ? color : "none"}`;
-      element.style.border = `2px solid ${color === "red" ? color : "none"}`;
-      const positionStyle = window.getComputedStyle(element).position;
-      if (positionStyle === "static") {
-        element.style.position = "relative";
+      const highlightedElement = element.classList.contains("a11yToolkit-highlighted");
+      if (!highlightedElement) {
+        element.classList.add("a11yToolkit-highlighted");
+        element.style.cssText += `outline: 2px solid ${color} !important;`;
+        const span = document.createElement("span");
+        span.className = "a11yToolkit-landMarks-indicator";
+        span.innerText = label;
+        span.style.position = "relative";
+        span.style.height = "max-content";
+        span.style.padding = "2px";
+        span.style.zIndex = "999";
+        span.style.background = color;
+        span.style.color = "white";
+        element.insertAdjacentElement("beforebegin", span);
       }
-      const labelElement = document.createElement("span");
-      labelElement.className = "LandMarks-indicator";
-      labelElement.innerText = label;
-      labelElement.style.position = "absolute";
-      labelElement.style.padding = "2px";
-      labelElement.style.top = "0";
-      labelElement.style.left = "0";
-      labelElement.style.zIndex = "999";
-      labelElement.style.background = color;
-      labelElement.style.color = "white";
-      element.prepend(labelElement);
-      return labelElement;
     };
     const ariaLandMarks = () => {
       console.log("ARIA Landmark Roles in use:");
@@ -8230,55 +8175,26 @@ const HeadingsHighlighter = ({ setTooltipText }) => {
     const colors = { aria: "#00F", native: "red" };
     const pageHeadings = document.querySelectorAll("h1,h2,h3,h4,h5,h6");
     const ariaHeadings = document.querySelectorAll("[role='heading']");
-    const addImportantStyle = (element, property, value) => {
-      let styleSheet = document.getElementById("importantStyles");
-      if (!styleSheet) {
-        styleSheet = document.createElement("style");
-        styleSheet.id = "importantStyles";
-        document.head.appendChild(styleSheet);
-      }
-      if (!element.id) {
-        element.id = "a11yToolkit-" + Math.random().toString(36).substr(2, 9);
-      }
-      if (styleSheet.sheet) {
-        styleSheet.sheet.insertRule(
-          `#${element.id} { ${property}: ${value} !important;}`,
-          styleSheet.sheet.cssRules.length
-        );
-      }
-    };
-    const removeIndicators = () => {
-      const styleSheet = document.getElementById("importantStyles");
-      if (styleSheet) {
-        styleSheet.remove();
-      }
-      const indicators = document.querySelectorAll(".a11yToolkit-headings-indicator");
-      indicators.forEach((indicator) => {
-        const container = indicator.parentElement;
-        if (container) {
-          container.style.outline = "";
-          container.style.position = "";
-        }
-        indicator.remove();
-      });
-    };
     const ensureUniqueIndicator = (element, label) => {
       return !Array.from(element.getElementsByClassName("a11yToolkit-headings-indicator")).some(
         (indicator) => indicator.textContent === label
       );
     };
+    const removeIndicators = () => {
+      const indicators = document.querySelectorAll(".a11yToolkit-headings-indicator");
+      indicators.forEach((indicator) => {
+        const container = indicator.parentElement;
+        if (container) {
+          container.style.outline = "";
+        }
+        indicator.remove();
+      });
+    };
     const highlightElement = (element, label, color) => {
       if (ensureUniqueIndicator(element, label)) {
-        const positionStyle = window.getComputedStyle(element).position;
-        if (positionStyle === "static") {
-          element.style.position = "relative";
-        }
-        const existingIndicators = element.getElementsByClassName("a11yToolkit-headings-indicator");
         const span = document.createElement("span");
         span.className = "a11yToolkit-headings-indicator";
-        span.style.position = "absolute";
-        span.style.top = "0";
-        span.style.left = `${existingIndicators.length * 24}px`;
+        span.style.position = "relative";
         span.style.padding = "2px";
         span.style.zIndex = "999";
         span.style.background = color;
@@ -8291,18 +8207,14 @@ const HeadingsHighlighter = ({ setTooltipText }) => {
     const highlightHeadings = () => {
       ariaHeadings.forEach((element) => {
         const ariaLevel = element.getAttribute("aria-level");
-        if (element instanceof HTMLElement && ariaLevel) {
-          highlightElement(element, "aH" + ariaLevel, colors.aria);
-          addImportantStyle(element, "outline", `2px solid ${colors.aria}`);
-        }
+        highlightElement(element, "aH" + ariaLevel, colors.aria);
+        element.style.cssText += `outline: 2px solid ${colors.aria} !important;`;
       });
       pageHeadings.forEach((element) => {
-        if (element instanceof HTMLElement) {
-          const hasAria = element.hasAttribute("role") && element.getAttribute("role") === "heading";
-          highlightElement(element, element.tagName, colors.native);
-          if (!hasAria) {
-            addImportantStyle(element, "outline", `2px solid ${colors.native}`);
-          }
+        const hasAria = element.hasAttribute("role") && element.getAttribute("role") === "heading";
+        highlightElement(element, element.tagName, colors.native);
+        if (!hasAria) {
+          element.style.cssText += `outline: 2px solid ${colors.native} !important;`;
         }
       });
     };
@@ -8348,36 +8260,15 @@ const ListItemsHighlighter = ({ setTooltipText }) => {
     let ariaMarkCount = 0;
     let nativeMarkCount = 0;
     const roleCounts = {};
-    const addImportantStyle = (element, property, value) => {
-      let styleSheet = document.getElementById("importantStyles");
-      if (!styleSheet) {
-        styleSheet = document.createElement("style");
-        styleSheet.id = "importantStyles";
-        document.head.appendChild(styleSheet);
-      }
-      if (!element.id) {
-        element.id = "a11yToolkit-" + Math.random().toString(36).substr(2, 9);
-      }
-      if (styleSheet.sheet) {
-        styleSheet.sheet.insertRule(
-          `#${element.id} { ${property}: ${value} !important;}`,
-          styleSheet.sheet.cssRules.length
-        );
-      }
-    };
     const removeIndicators = () => {
-      const styleSheet = document.getElementById("importantStyles");
-      if (styleSheet) {
-        styleSheet.remove();
-      }
-      const indicators = document.querySelectorAll(".a11yToolkit-listItems-indicator");
-      indicators.forEach((indicator) => {
-        const container = indicator.parentElement;
-        if (container) {
-          container.style.outline = "";
-          container.style.position = "";
+      const elements = document.querySelectorAll(".a11yToolkit-listItems-indicator");
+      elements.forEach((indicator) => {
+        const parentElement = indicator.parentElement;
+        if (parentElement) {
+          parentElement.style.outline = "";
+          parentElement.style.position = "";
+          parentElement.removeChild(indicator);
         }
-        indicator.remove();
       });
     };
     const highlightElement = (element, label, color) => {
@@ -8385,26 +8276,17 @@ const ListItemsHighlighter = ({ setTooltipText }) => {
       if (existingIndicator) {
         return;
       }
-      let value = `${label === "LI" || label === "aLI" ? "1px" : "2px"} solid ${color}`;
-      addImportantStyle(element, "outline", value);
-      const positionStyle = window.getComputedStyle(element).position;
-      if (positionStyle === "static") {
-        element.style.position = "relative";
+      let cssSpanBase = `position: relative; padding: 2px; z-index: 999; background: ${color}; color: white; font-size: 11px;`;
+      let cssOutlineBase = `outline: 2px solid ${color} !important;`;
+      if (label === "LI" || label === "aLI") {
+        cssOutlineBase += `outline: 1px solid ${color} !important; `;
       }
+      element.style.cssText += cssOutlineBase;
       span = document.createElement("span");
       span.className = "a11yToolkit-listItems-indicator";
-      span.style.position = "relative";
-      span.style.padding = "2px";
-      span.style.zIndex = "999";
-      span.style.background = color;
-      span.style.color = "white";
-      span.style.fontSize = "11px";
+      span.style.cssText = cssSpanBase;
       span.innerText = label;
-      if (label === "LI" || label === "aLI") {
-        element.insertAdjacentElement("beforeend", span);
-      } else {
-        element.insertAdjacentElement("afterbegin", span);
-      }
+      element.insertAdjacentElement("afterbegin", span);
     };
     const logElement = (element) => {
       console.log(element);
@@ -8417,40 +8299,26 @@ const ListItemsHighlighter = ({ setTooltipText }) => {
       });
     };
     const highlightListItems = () => {
-      const ariaLists = document.querySelectorAll("[role='list']");
-      const ariaListItems = document.querySelectorAll("[role='listitem']");
+      const ariaLists = document.querySelectorAll("[role='list'], [role='listitem']");
+      const nativeLists = document.querySelectorAll(
+        'ul:not([role="list"]), ul[role]:not([role="list"]), ol:not([role="list"]), ol[role]:not([role="list"]), li:not([role="listitem"]), li[role]:not([role="listitem"])'
+      );
       ariaLists.forEach((element) => {
-        const role = element.getAttribute("role");
-        if (element instanceof HTMLElement && role) {
-          highlightElement(element, "aL", colors.aria);
-          roleCounts[role] = (roleCounts[role] || 0) + 1;
+        let role = element.getAttribute("role");
+        let name = role === "list" ? "aL" : "aLI";
+        highlightElement(element, name, colors.aria);
+        roleCounts[role] = (roleCounts[role] || 0) + 1;
+        if (name === "aL") {
           logElement(element);
         }
         ariaMarkCount++;
       });
-      ariaListItems.forEach((element) => {
-        const role = element.getAttribute("role");
-        if (element instanceof HTMLElement && role) {
-          highlightElement(element, "aLI", colors.aria);
-          roleCounts[role] = (roleCounts[role] || 0) + 1;
-        }
-        ariaMarkCount++;
-      });
-      const pageLists = document.querySelectorAll("ul:not([role]), ol:not([role])");
-      const pageListItems = document.querySelectorAll("li:not([role])");
-      pageLists.forEach((element) => {
-        if (element instanceof HTMLElement) {
-          highlightElement(element, element.tagName, colors.native);
+      nativeLists.forEach((element) => {
+        highlightElement(element, element.tagName, colors.native);
+        if (element.tagName === "UL" || element.tagName === "OL") {
           logElement(element);
-          roleCounts[element.tagName] = (roleCounts[element.tagName] || 0) + 1;
         }
-        nativeMarkCount++;
-      });
-      pageListItems.forEach((element) => {
-        if (element instanceof HTMLElement) {
-          highlightElement(element, element.tagName, colors.native);
-          roleCounts[element.tagName] = (roleCounts[element.tagName] || 0) + 1;
-        }
+        roleCounts[element.tagName] = (roleCounts[element.tagName] || 0) + 1;
         nativeMarkCount++;
       });
       logElementCounts();
@@ -8495,55 +8363,33 @@ const ImageAltTextHighlighter = ({ setTooltipText }) => {
     const colors = { aria: "#00F", native: "red" };
     const elements = document.querySelectorAll("img, [role='img']");
     const roleCounts = {};
-    const addImportantStyle = (element, property, value) => {
-      let styleSheet = document.getElementById("importantStyles");
-      if (!styleSheet) {
-        styleSheet = document.createElement("style");
-        styleSheet.id = "importantStyles";
-        document.head.appendChild(styleSheet);
-      }
-      if (!element.id) {
-        element.id = "a11yToolkit-" + Math.random().toString(36).substr(2, 9);
-      }
-      if (styleSheet.sheet) {
-        styleSheet.sheet.insertRule(
-          `#${element.id} { ${property}: ${value} !important; }`,
-          styleSheet.sheet.cssRules.length
-        );
-      }
-    };
     const removeIndicators = () => {
-      const styleSheet = document.getElementById("importantStyles");
-      if (styleSheet) {
-        styleSheet.remove();
-      }
-      const containers = document.querySelectorAll(".a11yToolkit-image-alt-text-container");
-      containers.forEach((container) => {
-        Array.from(container.querySelectorAll('img, [role="img"]')).forEach((element) => {
-          container.before(element);
-        });
-        container.remove();
+      const highlightedElements = document.querySelectorAll(".a11yToolkit-highlighted");
+      highlightedElements.forEach((element) => {
+        element.style.outline = "";
+        element.classList.remove("a11yToolkit-highlighted");
+        const span = element.previousSibling;
+        if (span && span.classList.contains("a11yToolkit-imageAltText-indicator")) {
+          span.remove();
+        }
       });
     };
     const highlightElement = (element, label, color) => {
-      let container = element.closest(".a11yToolkit-image-alt-text-container");
-      if (!container) {
-        container = document.createElement("div");
-        container.classList.add("a11yToolkit-image-alt-text-container");
-        element.before(container);
-        container.appendChild(element);
-        addImportantStyle(element, "outline", `2px solid ${color}`);
-        const span = document.createElement("span");
-        span.className = "a11yToolkit-imageAltText-indicator";
-        span.style.position = "relative";
-        span.style.padding = "2px";
-        span.style.zIndex = "999";
-        span.style.background = color;
-        span.style.color = "white";
-        span.style.fontSize = "11px";
-        span.innerText = label;
-        container.insertAdjacentElement("afterbegin", span);
+      if (element.classList.contains("a11yToolkit-highlighted")) {
+        return;
       }
+      element.classList.add("a11yToolkit-highlighted");
+      element.style.cssText += `outline: 2px solid ${color} !important;`;
+      const span = document.createElement("span");
+      span.className = "a11yToolkit-imageAltText-indicator";
+      span.style.position = "relative";
+      span.style.padding = "2px";
+      span.style.zIndex = "999";
+      span.style.background = color;
+      span.style.color = "white";
+      span.style.fontSize = "11px";
+      span.innerText = label;
+      element.insertAdjacentElement("beforebegin", span);
     };
     const logElementCounts = () => {
       console.log(`${elements.length} elements IMG and RoleIMG were found on this page.`);
@@ -8553,18 +8399,16 @@ const ImageAltTextHighlighter = ({ setTooltipText }) => {
     };
     const highlightImageAltText = () => {
       elements.forEach((element) => {
-        if (element) {
-          const alt = element.getAttribute("alt") || "No alt text";
-          const ariaRole = element.getAttribute("role");
-          const ariaLabel = element.getAttribute("aria-label") || "No alt text";
-          if (ariaRole === "img") {
-            highlightElement(element, ariaLabel, colors.aria);
-            roleCounts["RoleIMG"] = (roleCounts["RoleIMG"] || 0) + 1;
-          }
-          highlightElement(element, alt, colors.native);
-          if (element.tagName !== "DIV") {
-            roleCounts[element.tagName] = (roleCounts[element.tagName] || 0) + 1;
-          }
+        const alt = element.getAttribute("alt") || "No alt text";
+        const ariaRole = element.getAttribute("role");
+        const ariaLabel = element.getAttribute("aria-label") || "No alt text";
+        if (ariaRole === "img") {
+          highlightElement(element, ariaLabel, colors.aria);
+          roleCounts["RoleIMG"] = (roleCounts["RoleIMG"] || 0) + 1;
+        }
+        highlightElement(element, alt, colors.native);
+        if (element.tagName !== "DIV") {
+          roleCounts[element.tagName] = (roleCounts[element.tagName] || 0) + 1;
         }
       });
       logElementCounts();
@@ -8715,40 +8559,22 @@ const CurrentlyFocusedHighlighter = ({ setTooltipText }) => {
     false
   );
   const codeToExecute = function(showCurrentlyFocused2) {
-    const focusableElements = document.querySelectorAll("a, button, input, [tabindex]");
     if (!window.myExtensionKeyDownHandler) {
-      window.myExtensionKeyDownHandler = (event) => {
-        if (event.key === "Control" || event.key === "Ctrl") {
-          console.clear();
-          console.log("Current Focused Element:");
-          console.log(document.activeElement);
-        }
-      };
-    }
-    if (!window.myExtensionPreventDefaultClick) {
-      window.myExtensionPreventDefaultClick = (event) => {
-        event.preventDefault();
+      window.myExtensionKeyDownHandler = () => {
+        console.clear();
+        console.log("Current Focused Element:");
+        console.log(document.activeElement);
       };
     }
     const removeIndicators = () => {
       if (window.myExtensionKeyDownHandler) {
         document.body.removeEventListener("keydown", window.myExtensionKeyDownHandler);
       }
-      focusableElements.forEach((element) => {
-        if (window.myExtensionPreventDefaultClick) {
-          element.removeEventListener("click", window.myExtensionPreventDefaultClick);
-        }
-      });
     };
     const highlightCurrentlyFocused = () => {
       if (window.myExtensionKeyDownHandler) {
         document.body.addEventListener("keydown", window.myExtensionKeyDownHandler);
       }
-      focusableElements.forEach((element) => {
-        if (window.myExtensionPreventDefaultClick) {
-          element.addEventListener("click", window.myExtensionPreventDefaultClick);
-        }
-      });
     };
     if (showCurrentlyFocused2) {
       removeIndicators();
@@ -8792,7 +8618,7 @@ const TargetSize = ({ setTooltipText }) => {
     let tooltip;
     let widthValue = 0;
     let heightValue = 0;
-    if (!document.querySelector(".a11y-toolkit-size-tooltip")) {
+    if (!document.querySelector(".a11yToolkit-size-tooltip")) {
       tooltip = document.createElement("figure");
       tooltip.style.display = "flex";
       tooltip.style.flexDirection = "column";
@@ -8805,16 +8631,34 @@ const TargetSize = ({ setTooltipText }) => {
       tooltip.style.boxShadow = " rgba(0, 0, 0, 0.35) 0px 5px 15px";
       tooltip.style.transition = "top 0.2s, left 0.2s";
       tooltip.style.fontFamily = " monospace";
-      tooltip.style.zIndex = "9999";
-      tooltip.className = "a11y-toolkit-size-tooltip";
+      tooltip.style.zIndex = "99999999999";
+      tooltip.className = "a11yToolkit-size-tooltip";
       document.body.appendChild(tooltip);
     } else {
-      tooltip = document.querySelector(".a11y-toolkit-size-tooltip");
+      tooltip = document.querySelector(".a11yToolkit-size-tooltip");
     }
     const isSmall = (width, height) => {
       return width < 24 || height < 24;
     };
-    const printElement = (event) => {
+    const updateTooltipPosition = () => {
+      const tooltip2 = document.querySelector(".a11yToolkit-size-tooltip");
+      if (!tooltip2 || !currentElement)
+        return;
+      const rect = currentElement.getBoundingClientRect();
+      const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      let tooltipLeft = rect.right + scrollLeft + 50;
+      let tooltipTop = rect.top + scrollTop - tooltip2.offsetHeight - 30;
+      if (tooltipLeft + tooltip2.offsetWidth > window.innerWidth) {
+        tooltipLeft = window.innerWidth - tooltip2.offsetWidth - 70;
+      }
+      if (tooltipTop < 0) {
+        tooltipTop = rect.bottom + scrollTop + 50;
+      }
+      tooltip2.style.left = `${tooltipLeft}px`;
+      tooltip2.style.top = `${tooltipTop}px`;
+    };
+    const handleKeyDown = (event) => {
       if (!window.showTooltip)
         return;
       if (event.key === "Control" || event.key === "Ctrl") {
@@ -8823,8 +8667,20 @@ const TargetSize = ({ setTooltipText }) => {
         }
       }
     };
-    window.handleMouseOver = (event) => {
-      console.log("🚀  event:", event);
+    const handleScroll = () => {
+      if (currentElement) {
+        updateTooltipPosition();
+      }
+    };
+    const handleMouseOut = () => {
+      if (currentElement) {
+        currentElement.style.outline = "";
+        currentElement.style.boxShadow = "";
+        currentElement.style.background = "";
+        currentElement.style.backgroundColor = "";
+      }
+    };
+    const handleMouseOver = (event) => {
       if (!window.showTooltip)
         return;
       const element = event.target;
@@ -8841,18 +8697,24 @@ const TargetSize = ({ setTooltipText }) => {
         widthValue = parseFloat(width);
         heightValue = parseFloat(height);
         let elementName = element.tagName.toLowerCase();
-        let idOrClass = element.id ? `#${element.id}` : element.className ? `.${element.className.split(" ")[0]}` : "";
+        let idOrClass = "";
+        if (element.id) {
+          idOrClass = `#${element.id}`;
+        } else if (element.className) {
+          const className = typeof element.className === "string" ? element.className : element.className.baseVal;
+          idOrClass = className ? `.${className.split(" ")[0]}` : "";
+        }
         const tooltipWidth = tooltip.offsetWidth;
         const tooltipHeight = tooltip.offsetHeight;
-        let tooltipLeft = event.clientX;
-        let tooltipTop = event.clientY;
-        if (tooltipLeft + tooltipWidth * 1.5 > window.innerWidth || event.clientX > window.innerWidth / 2) {
-          tooltipLeft = event.clientX - tooltipWidth * 1.5;
+        let tooltipLeft = event.clientX + 10;
+        let tooltipTop = event.clientY + 60;
+        if (tooltipLeft + tooltipWidth * 2 > window.innerWidth || event.clientX > window.innerWidth / 2) {
+          tooltipLeft = event.clientX - tooltipWidth * 2;
         }
         if (event.clientY < window.innerHeight / 2) {
-          tooltipTop = event.clientY + 20;
+          tooltipTop = event.clientY + 60;
         } else {
-          tooltipTop = event.clientY - tooltipHeight - 20;
+          tooltipTop = event.clientY - tooltipHeight - 60;
         }
         tooltip.style.top = `${tooltipTop}px`;
         tooltip.style.left = `${tooltipLeft}px`;
@@ -8867,32 +8729,37 @@ const TargetSize = ({ setTooltipText }) => {
           element.style.backgroundColor = "#990000";
         }
         tooltip.innerHTML = `
-          <header style="padding: 10px;">
-            <strong style="color: white;">&lt${elementName}&gt${idOrClass}</strong>
-          </header>
-          <code style="background: ${codeBackgroundColor}; padding: 10px; border-radius: 8px; display: grid; grid-template-columns: max-content auto; gap: 0.25em 0.5em;">
-            <span style="color: ${codeColor};">Width:</span><span style="color: white;"> ${width}</span>
-            <span style="color: ${codeColor};">Height:</span><span style="color: white;">  ${height}</span>
-          </code>`;
+            <header style="padding: 10px;">
+              <strong style="color: white;">&lt${elementName}&gt${idOrClass}</strong>
+            </header>
+            <code style="background: ${codeBackgroundColor}; padding: 10px; border-radius: 8px; display: grid; grid-template-columns: max-content auto; gap: 0.25em 0.5em;">
+              <span style="color: ${codeColor};">Width:</span><span style="color: white;"> ${width}</span>
+              <span style="color: ${codeColor};">Height:</span><span style="color: white;">  ${height}</span>
+            </code>`;
         currentElement = element;
+        updateTooltipPosition();
       }
     };
-    document.body.addEventListener("mouseover", window.handleMouseOver);
-    document.body.addEventListener("keydown", printElement);
-    document.body.addEventListener("mouseout", () => {
-      if (currentElement) {
-        currentElement.style.outline = "";
-        currentElement.style.boxShadow = "";
-        currentElement.style.background = "";
-        currentElement.style.backgroundColor = "";
-      }
-    });
+    const removeEventListeners = () => {
+      document.body.removeEventListener("mousemove", handleMouseOver);
+      window.removeEventListener("scroll", handleScroll);
+      document.body.removeEventListener("mouseout", handleMouseOut);
+      document.body.removeEventListener("keydown", handleKeyDown);
+    };
+    const addEventListeners = () => {
+      document.body.addEventListener("mousemove", handleMouseOver);
+      window.addEventListener("scroll", handleScroll);
+      document.body.addEventListener("keydown", handleKeyDown);
+      document.body.addEventListener("mouseout", handleMouseOut);
+    };
     if (isActive2) {
       window.showTooltip = false;
-      const indicators = document.querySelectorAll(".a11y-toolkit-size-tooltip");
+      const indicators = document.querySelectorAll(".a11yToolkit-size-tooltip");
       indicators.forEach((indicator) => indicator.remove());
+      removeEventListeners();
     } else {
       window.showTooltip = true;
+      addEventListeners();
     }
   };
   const handleClick = () => {
@@ -8924,30 +8791,6 @@ const TargetSize = ({ setTooltipText }) => {
 };
 function App$1() {
   const [tooltipText, setTooltipText] = reactExports.useState("");
-  reactExports.useEffect(() => {
-    const resetLocalStorage = () => {
-      const keysToReset = [
-        "AriaRolesActive",
-        "LandMarksActive",
-        "TargetSizeActive",
-        "CurrentlyFocusedActive",
-        "TextSpacingHActive",
-        "HeadingsActive",
-        "FocusIndicatorActive",
-        "AutocompleteActive",
-        "ImageAltTextActive",
-        "ListItemsActive",
-        "TabIndexActive"
-      ];
-      keysToReset.forEach((key) => {
-        localStorage.setItem(key, "false");
-      });
-    };
-    window.addEventListener("unload", resetLocalStorage);
-    return () => {
-      window.removeEventListener("unload", resetLocalStorage);
-    };
-  }, []);
   return /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "toolkit", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "toolkit__container", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(HeadingsHighlighter, { setTooltipText }),
